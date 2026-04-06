@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouldergarten Irtona | Klettern & Action — Kontakt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f12;
+            --bg-card: #16161a;
+            --bg-input: #1e1e24;
+            --orange: #f04e0f;
+            --orange-glow: rgba(240, 78, 15, 0.25);
+            --white: #ffffff;
+            --gray: #6b6b72;
+            --gray-light: #2a2a32;
+            --border: rgba(255,255,255,0.07);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ====== NAV ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 22px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15,15,18,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-logo span { color: var(--orange); }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.55);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: white; }
+
+        .nav-btn {
+            background: var(--orange);
+            color: white;
+            text-decoration: none;
+            padding: 11px 26px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: #d94000;
+            transform: translateY(-1px);
+        }
+
+        /* ====== PAGE HEADER ====== */
+        .page-header {
+            padding-top: 140px;
+            padding-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: 'KONTAKT';
+            position: absolute;
+            top: 80px;
+            right: -20px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 18vw;
+            font-weight: 900;
+            color: rgba(255,255,255,0.018);
+            line-height: 1;
+            white-space: nowrap;
+            pointer-events: none;
+            letter-spacing: -0.03em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .eyebrow-line {
+            width: 36px;
+            height: 2px;
+            background: var(--orange);
+        }
+
+        .eyebrow-text {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--orange);
+        }
+
+        .page-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(4rem, 8vw, 8rem);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .page-title span {
+            color: var(--orange);
+            display: block;
+        }
+
+        /* ====== MAIN GRID ====== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 50px;
+            padding-bottom: 120px;
+            align-items: start;
+        }
+
+        /* ====== LEFT SIDE INFO ====== */
+        .contact-info {
+            position: sticky;
+            top: 100px;
+        }
+
+        .info-subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.7;
+            margin-bottom: 50px;
+            max-width: 320px;
+        }
+
+        .info-blocks {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .info-block {
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .info-block:last-child { border-bottom: 1px solid var(--border); }
+
+        .info-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.01em;
+        }
+
+        .info-value a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .info-value a:hover { color: var(--orange); }
+
+        .open-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .open-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+            animation: pulse-dot 2s ease infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .open-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ====== FORM ====== */
+        .form-wrapper {
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .form-header {
+            padding: 32px 40px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .form-header-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--orange);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .form-header h2 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .form-header p {
+            font-size: 0.82rem;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        form {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* Topic selector */
+        .topic-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        .topic-option {
+            position: relative;
+        }
+
+        .topic-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+        }
+
+        .topic-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 10px;
+            background: var(--bg-input);
+            border: 1.5px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .topic-option label:hover {
+            border-color: rgba(240,78,15,0.4);
+            background: rgba(240,78,15,0.05);
+        }
+
+        .topic-option input:checked + label {
+            border-color: var(--orange);
+            background: rgba(240,78,15,0.1);
+        }
+
+        .topic-icon { font-size: 1.3rem; }
+
+        .topic-name {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Form groups */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            padding: 14px 18px;
+            color: white;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.25s;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6b72' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .form-group select option { background: #1e1e24; }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.2);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--orange);
+            background: rgba(240,78,15,0.04);
+            box-shadow: 0 0 0 3px var(--orange-glow);
+        }
+
+        .form-group textarea {
+            resize: none;
+            min-height: 130px;
+            line-height: 1.6;
+        }
+
+        /* Date/time row */
+        .datetime-hint {
+            font-size: 0.72rem;
+            color: var(--gray);
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Participants */
+        .participants-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        /* Privacy checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 8px 0 28px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            margin-top: 2px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .checkbox-group input[type="checkbox"]:checked {
+            background: var(--orange);
+            border-color: var(--orange);
+        }
+
+        .checkbox-group input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            font-size: 0.75rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .checkbox-group label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .checkbox-group label a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+
+        /* Submit */
+        .submit-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 8px;
+        }
+
+        .btn-submit {
+            flex: 1;
+            background: var(--orange);
+            color: white;
+            border: none;
+            padding: 17px 32px;
+            border-radius: 6px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.4s;
+        }
+
+        .btn-submit:hover::before { left: 100%; }
+
+        .btn-submit:hover {
+            background: #d94000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(240,78,15,0.35);
+        }
+
+        .btn-submit:active { transform: translateY(0); }
+
+        .btn-arrow {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover .btn-arrow { transform: translateX(4px); }
+
+        .response-promise {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .response-promise strong {
+            display: block;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin-bottom: 2px;
+        }
+
+        /* Divider */
+        .form-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 4px 0 24px;
+        }
+
+        .form-divider::before,
+        .form-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .form-divider span {
+            font-size: 0.7rem;
+            color: var(--gray);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ====== SUCCESS STATE ====== */
+        .success-state {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            background: rgba(240,78,15,0.1);
+            border: 2px solid var(--orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.8rem;
+        }
+
+        .success-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .success-text {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 300px;
+        }
+
+        /* ====== FOOTER ====== */
+        .site-footer {
+            background: #0a0a0d;
+            border-top: 1px solid var(--border);
+            padding: 28px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.25);
+        }
+
+        .footer-logo span { color: rgba(240,78,15,0.5); }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.25);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: rgba(255,255,255,0.6); }
+
+        /* ====== ANIMATIONS ====== */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: slideIn 0.5s ease both;
+        }
+
+        .animate-in:nth-child(2) { animation-delay: 0.07s; }
+        .animate-in:nth-child(3) { animation-delay: 0.14s; }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 900px) {
+            nav { padding: 18px 24px; }
+            .nav-links { display: none; }
+            .container { padding: 0 24px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-info { position: static; }
+            .page-title { font-size: 4rem; }
+            .form-row, .participants-row { grid-template-columns: 1fr; }
+            .topic-selector { grid-template-columns: repeat(2, 1fr); }
+            form { padding: 24px; }
+            .form-header { padding: 24px; }
+            .site-footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="#" class="nav-logo">BOULDER<span>GARTEN</span></a>
+    <ul class="nav-links">
+        <li><a href="#">Die Halle</a></li>
+        <li><a href="#">Angebote</a></li>
+        <li><a href="#">Preise</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#" class="active" style="color:white;">Kontakt</a></li>
+    </ul>
+    <a href="#" class="nav-btn">Ticket Buchen (Muster)</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="container">
+        <div class="eyebrow animate-in">
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Bouldergarten Irtona · Musterstadt</span>
+        </div>
+        <h1 class="page-title animate-in">
+            Melde<br><span>Dich.</span>
+        </h1>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+    <div class="contact-grid">
+
+        <!-- LEFT: Info -->
+        <div class="contact-info animate-in">
+            <p class="info-subtitle">Fragen, Gruppenanfragen, Schulen oder einfach mal hallo sagen — wir antworten schnell.</p>
+            <div class="info-blocks">
+                <div class="info-block">
+                    <div class="info-label">Adresse</div>
+                    <div class="info-value">Kletterstraße 12<br>12345 Musterstadt</div>
+                </div>
+                <div class="info-block">
+                    <div class="info-label">Telefon</div>
+                    <div class="info-value"><a href="tel:+4901234567890">+49 0123 456 7890</a></div>
+                </div>
+                <div class="info-block">
+                    <div class="info-label">E-Mail</div>
+                    <div class="info-value"><a href="mailto:hallo@bouldergarten-irtona.de">hallo@bouldergarten-irtona.de</a></div>
+                </div>
+                <div class="info-block">
+                    <div class="info-label">Öffnungszeiten</div>
+                    <div class="info-value">Mo–Fr: 10–22 Uhr<br>Sa–So: 9–21 Uhr</div>
+                    <div class="open-badge">
+                        <div class="open-dot"></div>
+                        <span class="open-text">Jetzt geöffnet</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="form-wrapper animate-in">
+            <div class="form-header">
+                <div class="form-header-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2>Nachricht senden</h2>
+                    <p>Antwort in der Regel innerhalb von 24 Stunden</p>
+                </div>
+            </div>
+
+            <form id="contactForm">
+                <!-- Topic -->
+                <div class="form-divider" style="margin-top: 0; margin-bottom: 20px;"><span>Worum geht es?</span></div>
+                <div class="topic-selector">
+                    <div class="topic-option">
+                        <input type="radio" name="topic" id="topic-general" value="allgemein" checked>
+                        <label for="topic-general">
+                            <span class="topic-icon">💬</span>
+                            <span class="topic-name">Allgemein</span>
+                        </label>
+                    </div>
+                    <div class="topic-option">
+                        <input type="radio" name="topic" id="topic-group" value="gruppe">
+                        <label for="topic-group">
+                            <span class="topic-icon">👥</span>
+                            <span class="topic-name">Gruppe / Event</span>
+                        </label>
+                    </div>
+                    <div class="topic-option">
+                        <input type="radio" name="topic" id="topic-course" value="kurs">
+                        <label for="topic-course">
+                            <span class="topic-icon">🧗</span>
+                            <span class="topic-name">Kurs / Training</span>
+                        </label>
+                    </div>
+                    <div class="topic-option">
+                        <input type="radio" name="topic" id="topic-kids" value="kinder">
+                        <label for="topic-kids">
+                            <span class="topic-icon">🎒</span>
+                            <span class="topic-name">Kinder / Schule</span>
+                        </label>
+                    </div>
+                    <div class="topic-option">
+                        <input type="radio" name="topic" id="topic-membership" value="mitglied">
+                        <label for="topic-membership">
+                            <span class="topic-icon">🪪</span>
+                            <span class="topic-name">Mitgliedschaft</span>
+                        </label>
+                    </div>
+                    <div class="topic-option">
+                        <input type="radio" name="topic" id="topic-other" value="sonstiges">
+                        <label for="topic-other">
+                            <span class="topic-icon">✉️</span>
+                            <span class="topic-name">Sonstiges</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-divider"><span>Deine Daten</span></div>
+
+                <!-- Name row -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vorname">Vorname *</label>
+                        <input type="text" id="vorname" name="vorname" placeholder="Max" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nachname">Nachname *</label>
+                        <input type="text" id="nachname" name="nachname" placeholder="Mustermann" required>
+                    </div>
+                </div>
+
+                <!-- Email + Phone -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">E-Mail *</label>
+                        <input type="email" id="email" name="email" placeholder="max@beispiel.de" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefon">Telefon</label>
+                        <input type="tel" id="telefon" name="telefon" placeholder="+49 ...">
+                    </div>
+                </div>
+
+                <!-- Conditional: Group fields (shown when group/kids is selected) -->
+                <div id="group-fields" style="display: none;">
+                    <div class="form-divider"><span>Gruppendetails</span></div>
+                    <div class="participants-row">
+                        <div class="form-group">
+                            <label for="personen">Anzahl Personen</label>
+                            <select id="personen" name="personen">
+                                <option value="">Bitte wählen</option>
+                                <option value="5-10">5–10 Personen</option>
+                                <option value="10-20">10–20 Personen</option>
+                                <option value="20-30">20–30 Personen</option>
+                                <option value="30+">30+ Personen</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="wunschdatum">Wunschdatum</label>
+                            <input type="date" id="wunschdatum" name="wunschdatum">
+                            <div class="datetime-hint">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                Unverbindliche Anfrage 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message -->
+                <div class="form-divider"><span>Deine Nachricht</span></div>
+                <div class="form-group">
+                    <label for="nachricht">Nachricht *</label>
+                    <textarea id="nachricht" name="nachricht" placeholder="Stell uns deine Frage oder beschreib dein Anliegen..." required></textarea>
+                </div>
+
+                <!-- How found -->
+                <div class="form-group" style="margin-bottom: 24px;">
+                    <label for="gefunden">Wie hast du uns gefunden?</label>
+                    <select id="gefunden" name="gefunden">
+                        <option value="">Bitte wählen (optional)</option>
+                        <option value="google">Google</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="empfehlung">Empfehlung</option>
+                        <option value="vorbeigelaufen">Einfach vorbeigelaufen</option>
+                        <option value="sonstiges">Sonstiges</option>
+                    </select>
+                </div>
+
+                <!-- Privacy -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="datenschutz" name="datenschutz" required>
+                    <label for="datenschutz">Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Daten zur Bearbeitung meiner Anfrage zu. *</label>
+                </div>
+
+                <!-- Submit -->
+                <div class="submit-row">
+                    <button type="submit" class="btn-submit">
+                        Nachricht senden (Muster)
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <div class="response-promise">
+                        <strong>⚡ Schnelle Antwort</strong>
+                        in der Regel &lt; 24h
+                    </div>
+                </div>
+            </form>
+
+            <!-- Success -->
+            <div class="success-state" id="successState">
+                <div class="success-icon">🧗</div>
+                <div class="success-title">Nachricht<br><span style="color:var(--orange)">Versendet!</span></div>
+                <p class="success-text">Wir melden uns so schnell wie möglich bei dir. Bis dann — und gute Griffe! 🤙</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="footer-logo">BOULDER<span>GARTEN</span> IRTONA</div>
+    <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+    </div>
+    <div style="color: rgba(255,255,255,0.18); font-size: 0.8rem;">© Irtona.de 2026</div>
+</footer>
+
+<script>
+    // Show/hide group fields based on topic selection
+    const topicInputs = document.querySelectorAll('input[name="topic"]');
+    const groupFields = document.getElementById('group-fields');
+
+    topicInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            if (input.value === 'gruppe' || input.value === 'kinder') {
+                groupFields.style.display = 'block';
+                groupFields.style.animation = 'slideIn 0.3s ease both';
+            } else {
+                groupFields.style.display = 'none';
+            }
+        });
+    });
+
+    // Form submit
+    const form = document.getElementById('contactForm');
+    const successState = document.getElementById('successState');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('.btn-submit');
+        btn.textContent = '⏳ Wird gesendet...';
+        btn.disabled = true;
+
+        setTimeout(() => {
+            form.style.display = 'none';
+            const formHeader = document.querySelector('.form-header');
+            formHeader.style.display = 'none';
+            successState.style.display = 'flex';
+        }, 1200);
+    });
+
+    // Animate page header
+    document.querySelectorAll('.animate-in').forEach((el, i) => {
+        el.style.animationDelay = `${i * 0.1}s`;
+        el.style.animationFillMode = 'both';
+    });
+</script>
+</body>
+</html>

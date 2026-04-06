@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Unsere Geschichte | Trattoria Irtona</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="restaurant.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Spezifisches Layout für die Philosophie-Seite */
+        .story-section {
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .story-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .story-text p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Hero Image spezifisch für diese Seite */
+        .philosophie-hero {
+            background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: 180px 0 120px;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .mobile-reverse {
+                order: -1;
+            }
+            .story-image img {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="rustic-dark-theme">
+
+    <header class="restaurant-nav">
+        <div class="nav-container">
+            <a href="restaurant.html" class="restaurant-logo">Trattoria Irtona</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="restaurant.html">Start</a></li>
+                    <li><a href="project-c-philosophie.html" class="active">Philosophie</a></li>
+                    <li><a href="speisekarte.html">Speisekarte</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <a href="tel:+49123456789" class="phone-link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6.6 10.8a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 011-.24c1.1.37 2.3.57 3.6.57a1 1 0 011 1V21a1 1 0 01-1 1C10.3 22 2 13.7 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.3.2 2.5.6 3.6a1 1 0 01-.25 1l-2.25 2.2z"/>
+                    </svg>
+                    +49 123 456
+                </a>
+
+                <a href="#" class="cart-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 4h-2l-1 2h2l3.6 7.6-1.35 2.45A1 1 0 009 18h10v-2H9.42a.25.25 0 01-.22-.37L10 14h7a1 1 0 00.92-.62l3-7A1 1 0 0020 4H7zm0 16a2 2 0 102 2 2 2 0 00-2-2zm10 0a2 2 0 102 2 2 2 0 00-2-2z"/>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="philosophie-hero">
+        <div class="hero-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(18,18,18,0.7);"></div>
+        <div class="container relative-z" style="position:relative; z-index:2;">
+            <h1 class="rustic-title">Aus Liebe zur Tradition.</h1>
+            <p class="rustic-subtitle">Erfahre mehr über die Wurzeln, die Leidenschaft und die Menschen hinter unserem Restaurant.</p>
+        </div>
+    </section>
+
+    <section class="story-section dark-bg">
+        <div class="container">
+            
+            <div class="story-grid reveal">
+                <div class="story-text">
+                    <h2 class="rustic-heading">Wie alles begann.</h2>
+                    <p>Es war im späten Sommer 1982, als Nonna Rosa mit nicht viel mehr als einem alten Koffer und einem handgeschriebenen Rezeptbuch aus Apulien nach Deutschland kam. In diesem Buch standen keine exakten Mengenangaben – dort stand "eine Handvoll", "ein Schuss" und "nach Gefühl".</p>
+                    <p>Genau dieses Gefühl ist es, das die Trattoria Irtona bis heute prägt. Wir haben aus Rosas kleiner Familienküche ein Zuhause für all jene gemacht, die sich nach dem echten, unverfälschten Geschmack Italiens sehnen. Kein Schnickschnack, keine Kompromisse.</p>
+                </div>
+                <div class="story-image">
+                    <img src="https://images.unsplash.com/photo-1600803907087-f56d462fd26b?auto=format&fit=crop&q=80&w=800" alt="Alte italienische Küche und Familie">
+                </div>
+            </div>
+
+            <div class="story-grid reveal">
+                <div class="story-image mobile-reverse">
+                    <img src="https://images.unsplash.com/photo-1771360873707-f435ef9732ea?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=800" alt="Handgemachte Pasta Zubereitung">
+                </div>
+                <div class="story-text">
+                    <h2 class="rustic-heading">Ehrliches Handwerk braucht Zeit.</h2>
+                    <p>In unserer schnelllebigen Welt ist Zeit der wahre Luxus. Wir nehmen sie uns. Unser Pizzateig ruht volle 72 Stunden, um sein volles Aroma zu entfalten und unvergleichlich bekömmlich zu werden.</p>
+                    <p>Unsere Pasta wird jeden Morgen von Hand gerollt, geschnitten und geformt. Die Tomatensauce köchelt Stunden auf kleiner Flamme, bis sie genau so schmeckt, wie sie schmecken soll: Nach süßen, sonnengereiften San Marzano Tomaten und einer Brise Meersalz. Wir glauben an ehrliche Zutaten von Bauern, die wir beim Vornamen kennen.</p>
+                </div>
+            </div>
+
+            <div class="story-grid reveal" style="margin-bottom: 0;">
+                <div class="story-text">
+                    <h2 class="rustic-heading">Unser Versprechen an dich.</h2>
+                    <p>Wenn du bei uns durch die Tür trittst, bist du kein Gast – du bist Familie. Wir möchten, dass du für ein paar Stunden den Alltag vergisst. Dass das Klingen der Weingläser, der Duft nach frisch gebackenem Brot und das Lachen an den Nebentischen dich einhüllen.</p>
+                    <p>Essen ist bei uns keine reine Nahrungsaufnahme. Es ist ein Fest des Lebens, der Gemeinschaft und der Erinnerungen, die wir am Tisch miteinander teilen. <em>Buon appetito.</em></p>
+                </div>
+                <div class="story-image">
+                    <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=800" alt="Holzofen Pizza">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bella-cta-section section-padding dark-bg-alt">
+        <div class="bella-cta-container container reveal">
+            <h2 class="bella-cta-title rustic-heading">
+                Bereit für dein eigenes Meisterstück?
+            </h2>
+            <p class="bella-cta-text">
+                Lass uns gemeinsam etwas Außergewöhnliches schaffen.
+            </p>
+            <br>
+            <a href="kontakt.html" class="bella-cta-button">
+                Jetzt Projekt anfangen
+            </a>
+        </div>
+    </section>
+
+    <footer class="bella-footer">
+        <div class="bella-footer-container container">
+            <p>© 2026 Irtona.de</p>
+            <a href="impressum.html" class="bella-footer-link">
+                Impressum
+            </a>
+            <a href="datenschutz.html" class="bella-footer-link">
+                Datenschutzrichtlinien
+            </a>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll(".reveal");
+
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add("active");
+                }
+            });
+        };
+
+        window.addEventListener("scroll", revealOnScroll);
+        // direkt beim Laden prüfen
+        revealOnScroll();
+    });
+    </script>
+</body>
+</html>
