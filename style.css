@@ -1233,6 +1233,96 @@ price-target {
         gap: 1rem;
     }
 }
+
+/* --- Ende des Premium Footers --- */
+
+/* --- Beginn der Referenzkarten --- */
+
+/* Portfolio Card Basis */
+.apple-style {
+    position: relative;
+    display: block;
+    height: 450px; /* Einheitliche Höhe */
+    border-radius: 28px; /* Apple-typische starke Rundung */
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: #000; /* Fallback */
+}
+
+/* Hover-Effekt: Karte hebt sich leicht ab */
+.apple-style:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Das Hintergrundbild */
+.card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+}
+
+.apple-style:hover .card-image {
+    transform: scale(1.1); /* Sanfter Zoom beim Hover */
+}
+
+/* Dunkler Verlauf unten, damit der Text immer lesbar ist */
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 30px;
+}
+
+/* Text-Inhalt */
+.card-content {
+    color: #ffffff;
+}
+
+.card-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 10px 0 5px 0;
+    letter-spacing: -0.5px;
+}
+
+.card-content p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Glassmorphism Tag */
+.tag-glass {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* --- Ende der Referenzkarten --- */
+
+/*---Media Einstellungen---*/
 /* ============================================
    RESPONSIVE DESIGN (MOBILE FIXES)
 ============================================ */
@@ -1346,90 +1436,133 @@ html, body {
     .blob-1 { top: -50px; left: -50px; }
     .blob-2 { bottom: 0; right: -50px; }
 }
-/* --- Ende des Premium Footers --- */
 
-/* --- Beginn der Referenzkarten --- */
+/* Saubere Basis für Überschriften */
+h1, h2, h3, .section-title, .hero-title, .hero-title2 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    hyphens: auto;
+}
 
-/* Portfolio Card Basis */
-.apple-style {
-    position: relative;
+/* Überschriften skalieren statt über den Rand zu laufen */
+.section-title {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    line-height: 1.1;
+}
+
+.hero-title,
+.hero-title2 {
+    font-size: clamp(2.2rem, 9vw, 5.5rem);
+    line-height: 1.05;
+    max-width: 100%;
+    text-wrap: balance;
+}
+
+/* Header Actions */
+.desktop-cta {
+    display: inline-flex;
+}
+
+/* Burger Standard: versteckt */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1101;
+}
+
+.hamburger span {
+    width: 28px;
+    height: 2px;
+    background: #1d1d1f;
+    transition: 0.3s ease;
     display: block;
-    height: 450px; /* Einheitliche Höhe */
-    border-radius: 28px; /* Apple-typische starke Rundung */
-    overflow: hidden;
-    text-decoration: none;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    background-color: #000; /* Fallback */
 }
 
-/* Hover-Effekt: Karte hebt sich leicht ab */
-.apple-style:hover {
-    transform: scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-/* Das Hintergrundbild */
-.card-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.6s ease;
-}
-
-.apple-style:hover .card-image {
-    transform: scale(1.1); /* Sanfter Zoom beim Hover */
-}
-
-/* Dunkler Verlauf unten, damit der Text immer lesbar ist */
-.card-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+/* Mobile Overlay Menü */
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(251, 251, 253, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    z-index: 1100;
     display: flex;
-    align-items: flex-end;
-    padding: 30px;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Text-Inhalt */
-.card-content {
-    color: #ffffff;
+.mobile-menu.active {
+    transform: translateX(0);
 }
 
-.card-content h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 10px 0 5px 0;
-    letter-spacing: -0.5px;
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8rem;
+    text-align: center;
 }
 
-.card-content p {
-    font-size: 0.95rem;
-    opacity: 0.8;
-    line-height: 1.4;
-    margin: 0;
+.mobile-nav-links a {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1d1d1f;
+    text-decoration: none;
 }
 
-/* Glassmorphism Tag */
-.tag-glass {
-    display: inline-block;
-    padding: 6px 14px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+/* Burger wird nur auf Mobile sichtbar */
+@media (max-width: 700px) {
+    .main-nav,
+    .desktop-cta {
+        display: none !important;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .header-container {
+        gap: 12px;
+    }
+
+    .header-actions {
+        gap: 0.75rem;
+    }
+
+    .section-padding {
+        padding: 70px 0;
+    }
+
+    .hero-title,
+    .hero-title2,
+    .section-title {
+        padding-inline: 0.25rem;
+    }
+
+    .impressum-text,
+    .footer-brand,
+    .footer-col {
+        overflow-wrap: anywhere;
+    }
 }
 
-/* --- Ende der Referenzkarten --- */
+/* Ab 701px wieder Desktop-Menü */
+@media (min-width: 701px) {
+    .mobile-menu {
+        display: none;
+    }
+}
+
+/* Optional: Body-Scroll sperren, wenn Menü offen ist */
+body.menu-open {
+    overflow: hidden;
+}
