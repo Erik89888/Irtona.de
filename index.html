@@ -8,7 +8,6 @@
     <title>Irtona.de | Maßgeschneiderte Webseiten zu günstigen Preisen</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
 
@@ -52,7 +51,22 @@
             <a href="kontakt.html" class="btn btn-primary">Projekt starten</a>
         </div>
     </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+            <span></span><span></span><span></span>
+        </div>
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+    <nav class="mobile-nav-links">
+        <a href="index.html">Start</a>
+        <a href="index.html#leistungen">Leistungen</a>
+        <a href="portfolio.html">Beispielseiten</a>
+        <a href="preise.html">Pakete</a>
+        <hr style="width: 100%; border: 0; border-top: 1px solid rgba(0,0,0,0.05);">
+        <a href="login.html">Kunden-Login</a>
+        <a href="kontakt.html" class="btn btn-primary">Projekt starten</a>
+    </nav>
+</div>
 
     <section id="start" class="hero">
         <div class="hero-bg-blobs">
