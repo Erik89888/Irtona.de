@@ -1214,10 +1214,144 @@ price-target {
     color: #ffffff;
 }
 
+
+
+
+
+
+
+
+
+
 /* Responsive Design für Smartphones */
 @media (max-width: 992px) {
     .premium-footer .footer-top {
         grid-template-columns: 1fr 1fr;
+    }
+}
+/* --- Mobile Menu Styles --- */
+.mobile-menu {
+    position: fixed;
+    top: 60px; /* Under the header */
+    left: 0;
+    right: 0;
+    background: rgba(251, 251, 253, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    z-index: 99;
+}
+
+.mobile-menu.active {
+    max-height: 500px; /* Adjust based on content */
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem;
+    gap: 0.5rem;
+}
+
+.mobile-nav-links a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.mobile-nav-links a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--accent);
+}
+
+/* Hamburger Button Styles */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-main);
+    transition: all 0.3s ease;
+    border-radius: 1px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Hide desktop nav on mobile */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .main-nav {
+        display: none !important;
+    }
+
+    .search-container {
+        display: none !important;
+    }
+
+    .desktop-cta {
+        display: none !important;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    /* Hide specific icons on mobile (optional) */
+    .icon-btn {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 480px) {
+    .mobile-menu.active {
+        max-height: 600px;
+    }
+
+    .mobile-nav-links {
+        padding: 1rem;
+    }
+
+    .mobile-nav-links a {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
     }
 }
 
