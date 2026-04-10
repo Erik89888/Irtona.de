@@ -7,13 +7,15 @@
 
     <header class="glass-header">
     <div class="container header-container">
-        <div class="logo">Irtona.de</div>
+        <a href="index.html" class="logo">Irtona.de</a>
+
         <nav class="main-nav">
             <a href="index.html" class="active">Start</a>
             <a href="index.html#leistungen">Leistungen</a>
-            <a href="portfolio.html" class="active">Beispielseiten</a> 
+            <a href="portfolio.html">Beispielseiten</a>
             <a href="preise.html">Pakete</a>
         </nav>
+
         <div class="header-actions">
             <div class="search-container">
                 <form id="page-search-form" action="#" method="GET" class="search-form">
@@ -42,7 +44,13 @@
                 </svg>
             </a>
 
-            <a href="kontakt.html" class="btn btn-primary">Projekt starten</a>
+            <a href="kontakt.html" class="btn btn-primary desktop-cta">Projekt starten</a>
+
+            <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </div>
 </header>
