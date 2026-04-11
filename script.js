@@ -87,38 +87,50 @@ if (slider && imageAfter) {
     });
 }
 
-document.getElementById('page-search-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // Verhindert, dass die Seite neu lädt
-    let query = document.getElementById('search-input').value.trim();
+document.addEventListener('DOMContentLoaded', () => {
     
-    if(query) {
-        // Nutzt die integrierte Suchfunktion des Browsers, springt zum Text und markiert ihn
-        let found = window.find(query);
-        if (!found) {
-            // Falls das Wort auf der aktuellen Seite nicht existiert
-            alert('Leider wurde der Begriff "' + query + '" auf dieser Seite nicht gefunden.');
-        }
+    // --- 1. SUCHFUNKTION ---
+    const searchForm = document.getElementById('page-search-form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let query = document.getElementById('search-input').value.trim();
+            
+            if(query) {
+                // window.find ist ein alter Standard, funktioniert aber in den meisten Browsern
+                let found = window.find(query);
+                if (!found) {
+                    alert('Leider wurde der Begriff "' + query + '" auf dieser Seite nicht gefunden.');
+                }
+            }
+        });
     }
-});
-const hamburger = document.getElementById('hamburger');
+
+    // --- 2. BURGER-MENÜ LOGIK ---
+    const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
 
     if (hamburger && mobileMenu) {
         hamburger.addEventListener('click', () => {
+            // Toggle der Klassen
             const isOpen = mobileMenu.classList.toggle('active');
-            hamburger.classList.toggle('active', isOpen);
-            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-            mobileMenu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+            hamburger.classList.toggle('active'); // Löst die X-Animation aus
+            
+            // Barrierefreiheit & Body-Lock
+            hamburger.setAttribute('aria-expanded', isOpen);
+            mobileMenu.setAttribute('aria-hidden', !isOpen);
             document.body.classList.toggle('menu-open', isOpen);
         });
 
+        // Menü schließen, wenn ein Link geklickt wird
         mobileMenu.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
                 mobileMenu.classList.remove('active');
                 hamburger.classList.remove('active');
+                document.body.classList.remove('menu-open');
                 hamburger.setAttribute('aria-expanded', 'false');
                 mobileMenu.setAttribute('aria-hidden', 'true');
-                document.body.classList.remove('menu-open');
             }
         });
     }
+});
