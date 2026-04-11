@@ -1102,7 +1102,131 @@ price-target {
     margin-top: 1rem;
     cursor: pointer;
 }
+/* Burger menu Fixes*/
 
+/* --- Mobile Menu Styles --- */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background: rgba(251, 251, 253, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 99;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mobile-nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 1.05rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mobile-nav-links a:last-child {
+    border-bottom: none;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.hamburger span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-main);
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(10px, 10px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Responsive: Show hamburger on mobile */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+    
+    .main-nav {
+        display: none;
+    }
+    
+    .search-container {
+        display: none;
+    }
+    
+    .desktop-cta {
+        display: none;
+    }
+    
+    /* Portfolio cards on mobile */
+    .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .portfolio-card {
+        height: 300px;
+        max-width: 100%;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    body.menu-open {
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-card {
+        height: 250px;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .header-actions {
+        gap: 0.5rem;
+    }
+}
 /* --- FOOTER von Index.html --- */
 /* Premium Footer Styling passend zur Webdesign-Agentur */
 .premium-footer {
