@@ -158,6 +158,9 @@ body {
     font-size: 5.5rem;
     line-height: 1.05;
     margin-bottom: 2rem;
+    padding-bottom: 0.2em; /* Schafft Platz für die Unterlänge des 'g' */
+    margin-bottom: -0.1em; /* Kompensiert den Platz, damit title2 nicht zu weit rutscht */
+
     
     /* Der Farbverlauf */
     background: linear-gradient(135deg, #1d1d1f 0%, #434345 100%);
