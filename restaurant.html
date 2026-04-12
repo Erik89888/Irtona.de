@@ -543,6 +543,10 @@
         window.addEventListener("scroll", revealOnScroll);
         revealOnScroll(); // Direkt beim Laden prüfen
     });
+        // Dieser Teil sorgt dafür, dass das Menü auch wirklich aufploppt:
+document.querySelector('.hamburger').addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.toggle('active');
+});
     </script>
 </body>
 </html>
