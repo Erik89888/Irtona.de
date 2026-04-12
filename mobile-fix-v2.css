@@ -1,0 +1,585 @@
+/* ================================================================
+   IRTONA.DE — MOBILE COMPLETE FIX v2
+   Diesen Block ans ENDE der style.css pasten.
+   ALLE @keyframes stehen oben — nie innerhalb von @media.
+   ================================================================ */
+
+
+/* ================================================================
+   SECTION 1 — ALLE KEYFRAMES (global, kein Media Query)
+   ================================================================ */
+
+@keyframes irtona-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes irtona-fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0);     }
+}
+
+@keyframes irtona-fadeLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+@keyframes irtona-popIn {
+  0%   { opacity: 0; transform: scale(0.75) translateY(16px); }
+  70%  { transform: scale(1.06) translateY(-3px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes irtona-float {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-7px); }
+}
+
+@keyframes irtona-pulseStat {
+  0%, 100% { transform: scale(1);    }
+  50%       { transform: scale(1.07); }
+}
+
+@keyframes irtona-glowPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(0,102,204,0); }
+  50%       { box-shadow: 0 4px 30px rgba(0,102,204,0.25); }
+}
+
+@keyframes irtona-btnShine {
+  from { transform: translateX(-100%) skewX(-15deg); }
+  to   { transform: translateX(250%)  skewX(-15deg); }
+}
+
+@keyframes irtona-borderDraw {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0);   }
+}
+
+@keyframes irtona-ticker {
+  0%   { transform: translateX(0);    }
+  100% { transform: translateX(-50%); }
+}
+
+
+/* ================================================================
+   SECTION 2 — GLOBALE ANIMATION-FIXES (alle Breakpoints)
+   ================================================================ */
+
+/* Hero Shimmer — überschreibt bestehenden Gradient */
+.hero-title {
+  background: linear-gradient(
+    90deg,
+    #1d1d1f 0%, #1d1d1f 25%,
+    #6e6e73 45%, #1d1d1f 65%,
+    #1d1d1f 100%
+  ) !important;
+  background-size: 250% auto !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: irtona-shimmer 5s linear infinite !important;
+}
+
+/* Stat Zahlen pulsieren NACH dem Reveal */
+.reveal.active .stat-box:nth-child(1) .stat-number {
+  animation: irtona-pulseStat 3s ease-in-out 0.2s infinite;
+}
+.reveal.active .stat-box:nth-child(2) .stat-number {
+  animation: irtona-pulseStat 3s ease-in-out 0.8s infinite;
+}
+.reveal.active .stat-box:nth-child(3) .stat-number {
+  animation: irtona-pulseStat 3s ease-in-out 1.4s infinite;
+}
+
+/* Step-Nummern floaten nach Reveal */
+.reveal.active .process-step:nth-child(1) .step-number { animation: irtona-float 4s ease-in-out 0.0s infinite; }
+.reveal.active .process-step:nth-child(2) .step-number { animation: irtona-float 4s ease-in-out 0.6s infinite; }
+.reveal.active .process-step:nth-child(3) .step-number { animation: irtona-float 4s ease-in-out 1.2s infinite; }
+.reveal.active .process-step:nth-child(4) .step-number { animation: irtona-float 4s ease-in-out 1.8s infinite; }
+
+/* Process Steps Glow auf Hover */
+.process-step:hover {
+  animation: irtona-glowPulse 1.8s ease-in-out infinite !important;
+  transform: translateY(-4px) !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* Ticker Geschwindigkeit */
+.ticker {
+  animation: irtona-ticker 20s linear infinite !important;
+}
+
+/* Button Shine-Effekt */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 40%; height: 100%;
+  background: rgba(255,255,255,0.18);
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none;
+}
+.btn-primary:hover::before {
+  animation: irtona-btnShine 0.55s ease forwards;
+}
+
+/* Stats Grid IMMER 3-spaltig — kein leeres Feld */
+.stats-grid,
+.stats-section .grid-3 {
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+/* Smooth Scroll */
+html { scroll-behavior: smooth; }
+
+
+/* ================================================================
+   SECTION 3 — TABLET (≤ 1024px)
+   ================================================================ */
+
+@media (max-width: 1024px) {
+
+  .stats-grid,
+  .stats-section .grid-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+
+  .stat-number {
+    font-size: 2.8rem !important;
+  }
+
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.2rem !important;
+  }
+}
+
+
+/* ================================================================
+   SECTION 4 — SMARTPHONE (≤ 700px)  ← Kernstück
+   ================================================================ */
+
+@media (max-width: 700px) {
+
+  /* ─────────────────────────────────
+     4a. TYPOGRAFIE — Alles größer!
+  ───────────────────────────────── */
+
+  body {
+    font-size: 16px !important;  /* Browser-Standard wiederherstellen */
+  }
+
+  p {
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
+    color: #444 !important;
+  }
+
+  h1, h2, h3, h4 {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  .section-title {
+    font-size: clamp(1.85rem, 8.5vw, 2.5rem) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 2rem !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .section-subtitle {
+    font-size: 1.05rem !important;
+    margin-bottom: 2.5rem !important;
+    line-height: 1.6 !important;
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 5.5vw, 1.6rem) !important;
+    line-height: 1.3 !important;
+  }
+
+  .sub-headline {
+    font-size: clamp(1.35rem, 6vw, 1.8rem) !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ─────────────────────────────────
+     4b. ABSTÄNDE & CONTAINER
+  ───────────────────────────────── */
+
+  .section-padding {
+    padding: 70px 0 !important;
+  }
+
+  .container {
+    padding: 0 20px !important;
+  }
+
+  /* ─────────────────────────────────
+     4c. NAV
+  ───────────────────────────────── */
+
+  .glass-nav {
+    padding: 13px 0 !important;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .nav-btn {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+  }
+
+  .logo {
+    font-size: 1.15rem !important;
+  }
+
+  /* ─────────────────────────────────
+     4d. HERO
+  ───────────────────────────────── */
+
+  .hero-section {
+    padding-top: 100px !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.9rem, 9vw, 2.8rem) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .hero-image-wrapper {
+    border-radius: 14px !important;
+    margin: 1.5rem auto !important;
+  }
+
+  .hero-text-content {
+    margin-top: 2.5rem !important;
+    padding: 0 4px !important;
+  }
+
+  /* ─────────────────────────────────
+     4e. TICKER
+  ───────────────────────────────── */
+
+  .ticker {
+    animation: irtona-ticker 12s linear infinite !important;
+  }
+
+  .ticker-item {
+    font-size: 0.8rem !important;
+    margin: 0 1rem !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  /* ─────────────────────────────────
+     4f. STATS — 3 Spalten IMMER
+         Kein Umbruch, kein leeres Feld
+  ───────────────────────────────── */
+
+  .stats-section {
+    padding: 55px 0 !important;
+  }
+
+  .stats-grid,
+  .stats-section .grid-3 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .stat-box {
+    padding: 1.6rem 0.4rem !important;
+    text-align: center !important;
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .stat-box:last-child {
+    border-right: none !important;
+  }
+
+  /* Stat-Zahl: groß genug um zu beeindrucken, klein genug um zu passen */
+  .stat-number {
+    font-size: clamp(1.65rem, 8vw, 2.4rem) !important;
+    display: block !important;
+    white-space: nowrap !important;
+    line-height: 1.1 !important;
+    margin-bottom: 0.4rem !important;
+    color: #fff !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .stat-box p {
+    font-size: clamp(0.6rem, 2.5vw, 0.75rem) !important;
+    line-height: 1.35 !important;
+    color: #86868b !important;
+    max-width: 90px !important;
+    margin: 0 auto !important;
+  }
+
+  /* ─────────────────────────────────
+     4g. PROCESS GRID — 1 Spalte
+         Nummer links, Text rechts
+  ───────────────────────────────── */
+
+  .process-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* Jede Karte als horizontales 2-Spalten Layout */
+  .process-step {
+    display: grid !important;
+    grid-template-columns: 56px 1fr !important;
+    grid-template-rows: auto auto !important;
+    column-gap: 14px !important;
+    align-items: start !important;
+    padding: 1.4rem 1.4rem 1.4rem 1.2rem !important;
+    border-radius: 18px !important;
+    /* Keine opacity:0 hier — Reveal erledigt das */
+  }
+
+  /* Die große Zahl: links, über beide Textzeilen */
+  .process-step .step-number {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
+    font-size: 2.6rem !important;
+    line-height: 1 !important;
+    color: #e0e0e5 !important;
+    margin-bottom: 0 !important;
+    align-self: center !important;
+    animation: none !important; /* kein float auf Mobile */
+  }
+
+  /* Titel rechts oben */
+  .process-step h3 {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.3rem !important;
+    align-self: end !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Text rechts unten */
+  .process-step p {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    font-size: 0.9rem !important;
+    color: var(--text-light) !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Stagger-Animation NACH Reveal: process steps fliegen ein */
+  .reveal.active .process-step:nth-child(1) { animation: irtona-fadeLeft 0.45s cubic-bezier(.22,1,.36,1) 0.05s both; }
+  .reveal.active .process-step:nth-child(2) { animation: irtona-fadeLeft 0.45s cubic-bezier(.22,1,.36,1) 0.15s both; }
+  .reveal.active .process-step:nth-child(3) { animation: irtona-fadeLeft 0.45s cubic-bezier(.22,1,.36,1) 0.25s both; }
+  .reveal.active .process-step:nth-child(4) { animation: irtona-fadeLeft 0.45s cubic-bezier(.22,1,.36,1) 0.35s both; }
+
+  /* Stat Boxes pop in nach Reveal */
+  .reveal.active .stat-box:nth-child(1) { animation: irtona-popIn 0.5s cubic-bezier(.34,1.56,.64,1) 0.1s  both; }
+  .reveal.active .stat-box:nth-child(2) { animation: irtona-popIn 0.5s cubic-bezier(.34,1.56,.64,1) 0.25s both; }
+  .reveal.active .stat-box:nth-child(3) { animation: irtona-popIn 0.5s cubic-bezier(.34,1.56,.64,1) 0.4s  both; }
+
+  /* ─────────────────────────────────
+     4h. FEATURE SECTION
+  ───────────────────────────────── */
+
+  .grid-2-custom {
+    gap: 50px !important;
+    margin-top: 20px !important;
+  }
+
+  .feature-box {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    text-align: left !important;
+  }
+
+  /* Immer Bild oben, Text unten */
+  .feature-box .feature-image { order: -1 !important; direction: ltr !important; }
+  .feature-box .feature-text  { direction: ltr !important; }
+
+  .feature-image img {
+    height: 230px !important;
+    border-radius: 18px !important;
+  }
+
+  .feature-text h3 {
+    font-size: 1.5rem !important;
+  }
+
+  .feature-text p {
+    font-size: 0.98rem !important;
+  }
+
+  /* ─────────────────────────────────
+     4i. COMPARISON SLIDER
+  ───────────────────────────────── */
+
+  .comparison-slider {
+    height: 260px !important;
+    border-radius: 18px !important;
+  }
+
+  /* ─────────────────────────────────
+     4j. FAQ
+  ───────────────────────────────── */
+
+  .faq-item summary {
+    font-size: 1rem !important;
+    padding: 1.2rem 3.2rem 1.2rem 1.4rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .faq-item summary::after {
+    right: 1.3rem !important;
+    font-size: 1.4rem !important;
+  }
+
+  .faq-content {
+    padding: 0 1.4rem 1.3rem 1.4rem !important;
+    font-size: 0.95rem !important;
+    line-height: 1.65 !important;
+  }
+
+  /* ─────────────────────────────────
+     4k. MAP & KONTAKT
+  ───────────────────────────────── */
+
+  .map-wrapper iframe {
+    height: 300px !important;
+  }
+
+  .floating-contact-card {
+    padding: 1.8rem 1.5rem !important;
+    border-radius: 0 0 18px 18px !important;
+  }
+
+  .floating-contact-card h3 {
+    font-size: 1.15rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .floating-contact-card p {
+    font-size: 0.92rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  /* ─────────────────────────────────
+     4l. PORTFOLIO CARDS
+  ───────────────────────────────── */
+
+  .portfolio-card, .apple-style {
+    height: 300px !important;
+    border-radius: 20px !important;
+  }
+
+  .portfolio-card h3 {
+    font-size: 1.35rem !important;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 1.6rem !important;
+  }
+
+  /* ─────────────────────────────────
+     4m. CTA SECTION
+  ───────────────────────────────── */
+
+  .section-padding h2 {
+    font-size: clamp(1.6rem, 7.5vw, 2.2rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  .btn {
+    padding: 0.9rem 1.8rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* ─────────────────────────────────
+     4n. FOOTER
+  ───────────────────────────────── */
+
+  .premium-footer {
+    padding: 3rem 0 1.5rem !important;
+  }
+
+  .premium-footer .footer-top {
+    grid-template-columns: 1fr !important;
+    gap: 2.2rem !important;
+  }
+
+  .premium-footer .footer-brand p {
+    font-size: 0.92rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .premium-footer .footer-col h4 {
+    font-size: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .premium-footer .footer-col ul li a {
+    font-size: 0.92rem !important;
+  }
+
+  .premium-footer .footer-bottom {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 0.7rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .premium-footer .logo {
+    font-size: 1.3rem !important;
+  }
+
+}
+/* Ende @media 700px */
+
+
+/* ================================================================
+   SECTION 5 — KLEINE HANDYS (≤ 390px)
+   z.B. iPhone SE / ältere Androids
+   ================================================================ */
+
+@media (max-width: 390px) {
+
+  .section-title {
+    font-size: 1.75rem !important;
+  }
+
+  .stat-number {
+    font-size: 1.5rem !important;
+  }
+
+  .stat-box p {
+    font-size: 0.58rem !important;
+  }
+
+  .process-step h3 {
+    font-size: 1rem !important;
+  }
+
+  .hero-title {
+    font-size: 1.75rem !important;
+  }
+}
