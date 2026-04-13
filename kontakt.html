@@ -1,196 +1,928 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projekt starten | Irtona.de</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
-            margin: 0;
-            cursor: pointer;
-        }
-        .checkbox-group label {
-            margin: 0;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-        .checkbox-group a {
-            color: #007BFF; /* Anpassen an deine Primärfarbe */
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Projekt anfragen bei Irtona.de — kostenlos & unverbindlich." />
+  <title>Projekt starten | Irtona.de</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       TOKENS
+    ============================================================ */
+    :root {
+      --black:    #0a0a0a;
+      --white:    #ffffff;
+      --gray-50:  #f7f7f7;
+      --gray-100: #eeeeee;
+      --gray-200: #d8d8d8;
+      --gray-400: #999999;
+      --gray-600: #555555;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --shadow-sm: 0 4px 20px rgba(0,0,0,.06);
+      --shadow-md: 0 12px 40px rgba(0,0,0,.10);
+      --font: -apple-system, BlinkMacSystemFont, 'Outfit', 'Segoe UI', sans-serif;
+      --transition: 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.menu-open { overflow: hidden; }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul  { list-style: none; }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      padding: 18px 0;
+      transition: all .4s ease;
+    }
+    .site-header.scrolled {
+      padding: 12px 0;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo {
+      font-family: var(--font);
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--black);
+    }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .header-nav a {
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--gray-600);
+      transition: color .2s;
+      position: relative;
+    }
+    .header-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--black);
+      transition: width .3s ease;
+    }
+    .header-nav a:hover { color: var(--black); }
+    .header-nav a:hover::after { width: 100%; }
+
+    .header-right { display: flex; align-items: center; gap: 16px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-family: var(--font);
+      font-size: .95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .btn-dark { background: var(--black); color: var(--white); }
+    .btn-dark:hover { background: #1a1a1a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+    .btn-outline { background: transparent; color: var(--black); border: 1.5px solid var(--gray-200); }
+    .btn-outline:hover { border-color: var(--black); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1001;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 1.8px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+    }
+    .hamburger.is-active span:nth-child(1) { transform: translateY(6.8px) rotate(45deg); }
+    .hamburger.is-active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.is-active span:nth-child(3) { transform: translateY(-6.8px) rotate(-45deg); }
+
+    /* Mobile overlay */
+    .mobile-overlay {
+      position: fixed; inset: 0;
+      background: var(--white);
+      z-index: 1000;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 40px;
+      transform: translateX(100%);
+      transition: transform .55s cubic-bezier(.22,1,.36,1);
+      pointer-events: none;
+    }
+    .mobile-overlay::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%; background: var(--black);
+    }
+    .mobile-overlay.is-open { transform: translateX(0); pointer-events: all; }
+    .mobile-nav-links { display: flex; flex-direction: column; gap: 0; }
+    .mobile-nav-links a {
+      font-family: var(--font);
+      font-size: clamp(2.4rem, 9vw, 3.5rem);
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex; align-items: center; justify-content: space-between;
+      opacity: 0; transform: translateX(60px);
+      transition: opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1), color .2s;
+    }
+    .mobile-nav-links a:last-child { border-bottom: none; }
+    .mobile-nav-links a:hover { color: var(--gray-400); }
+    .mobile-overlay.is-open .mobile-nav-links a { opacity: 1; transform: translateX(0); }
+    .mobile-nav-links a:nth-child(1) { transition-delay: .05s; }
+    .mobile-nav-links a:nth-child(2) { transition-delay: .10s; }
+    .mobile-nav-links a:nth-child(3) { transition-delay: .15s; }
+    .mobile-nav-links a:nth-child(4) { transition-delay: .20s; }
+    .mobile-nav-links a:nth-child(5) { transition-delay: .25s; }
+    .mobile-meta {
+      position: absolute; bottom: 40px; left: 40px; right: 40px;
+      display: flex; justify-content: space-between;
+      font-size: .8rem; color: var(--gray-400); font-weight: 500;
+      opacity: 0; transition: opacity .5s .35s ease;
+    }
+    .mobile-overlay.is-open .mobile-meta { opacity: 1; }
+
+    /* ============================================================
+       PAGE HERO
+    ============================================================ */
+    .page-hero {
+      padding-top: 160px;
+      padding-bottom: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .page-hero-blob {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35;
+    }
+    .page-hero-blob-1 {
+      width: 500px; height: 500px; background: #e8e8e8;
+      top: -100px; right: -60px;
+      animation: blobDrift 14s infinite alternate ease-in-out;
+    }
+    .page-hero-blob-2 {
+      width: 300px; height: 300px; background: #d4d4d4;
+      bottom: 20px; left: -40px;
+      animation: blobDrift 10s 3s infinite alternate-reverse ease-in-out;
+    }
+    @keyframes blobDrift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,20px) scale(1.08); }
+    }
+    .page-hero-inner {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .page-hero-label {
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--gray-400); display: block; margin-bottom: 1.2rem;
+    }
+    .page-hero-title {
+      font-family: var(--font);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: .97;
+      letter-spacing: -.04em;
+    }
+    .page-hero-title .outline {
+      color: var(--white);
+      -webkit-text-stroke: 2px var(--black);
+      paint-order: stroke fill;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page-hero-sub {
+      margin-top: 1.6rem;
+      font-size: 1.05rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      font-weight: 300;
+      max-width: 420px;
+    }
+
+    /* Trust badges */
+    .trust-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 22px;
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .3s, transform .3s;
+    }
+    .trust-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .trust-icon {
+      width: 40px; height: 40px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .trust-icon svg { width: 18px; height: 18px; color: var(--black); }
+    .trust-item h4 {
+      font-family: var(--font);
+      font-size: .88rem; font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .trust-item p {
+      font-size: .82rem; color: var(--gray-400);
+      line-height: 1.5; font-weight: 300;
+    }
+
+    /* ============================================================
+       FORM SECTION
+    ============================================================ */
+    .form-section {
+      padding: 0 0 120px;
+    }
+    .form-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .form-card-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+    }
+
+    /* Left sidebar */
+    .form-sidebar {
+      background: var(--black);
+      color: var(--white);
+      padding: 52px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .form-sidebar-title {
+      font-family: var(--font);
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.15;
+    }
+    .form-sidebar-title span {
+      color: var(--white);
+      -webkit-text-stroke: 1.5px var(--white);
+      opacity: .35;
+    }
+    .sidebar-steps {
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .sidebar-step {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .sidebar-step-num {
+      width: 28px; height: 28px;
+      border: 1.5px solid rgba(255,255,255,.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
+      color: rgba(255,255,255,.5);
+      transition: all .3s;
+    }
+    .sidebar-step h4 {
+      font-family: var(--font);
+      font-size: .88rem; font-weight: 600;
+      margin-bottom: 3px;
+      color: var(--white);
+    }
+    .sidebar-step p {
+      font-size: .78rem; font-weight: 300;
+      color: rgba(255,255,255,.45); line-height: 1.5;
+    }
+    .sidebar-divider {
+      height: 1px;
+      background: rgba(255,255,255,.08);
+    }
+    .sidebar-contact {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .sidebar-contact-item {
+      display: flex; gap: 10px; align-items: center;
+    }
+    .sidebar-contact-item svg { width: 16px; height: 16px; color: rgba(255,255,255,.4); flex-shrink: 0; }
+    .sidebar-contact-item a,
+    .sidebar-contact-item span {
+      font-size: .82rem; color: rgba(255,255,255,.55);
+      font-weight: 300; transition: color .2s;
+    }
+    .sidebar-contact-item a:hover { color: var(--white); }
+
+    /* Right form area */
+    .form-body {
+      padding: 52px 48px;
+    }
+    .form-body-title {
+      font-family: var(--font);
+      font-size: 1.5rem; font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: .5rem;
+    }
+    .form-body-sub {
+      font-size: .88rem; color: var(--gray-400);
+      font-weight: 300; margin-bottom: 2.4rem;
+    }
+
+    /* Paket-Selector */
+    .package-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+    .pkg-option { display: none; }
+    .pkg-label {
+      display: flex; flex-direction: column;
+      padding: 14px 16px;
+      border: 1.5px solid var(--gray-100);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .pkg-label:hover { border-color: var(--gray-400); }
+    .pkg-option:checked + .pkg-label {
+      border-color: var(--black);
+      background: var(--gray-50);
+    }
+    .pkg-name {
+      font-family: var(--font);
+      font-size: .88rem; font-weight: 700;
+    }
+    .pkg-price {
+      font-size: .78rem; color: var(--gray-400); font-weight: 300; margin-top: 2px;
+    }
+
+    /* Fields */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase;
+      color: var(--gray-600); margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--gray-100);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: .95rem; font-weight: 300;
+      background: var(--white);
+      color: var(--black);
+      transition: border-color .25s, box-shadow .25s;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--gray-200); }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--black);
+      box-shadow: 0 0 0 3px rgba(10,10,10,.06);
+    }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    /* Checkbox */
+    .checkbox-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      margin-bottom: 28px;
+    }
+    .checkbox-row input[type="checkbox"] {
+      width: 18px; height: 18px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 5px;
+      cursor: pointer;
+      accent-color: var(--black);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .checkbox-row label {
+      font-size: .83rem; color: var(--gray-600);
+      font-weight: 300; line-height: 1.55; cursor: pointer;
+    }
+    .checkbox-row a { color: var(--black); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Submit */
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      position: relative; overflow: hidden;
+    }
+    .submit-btn:hover {
+      background: #1a1a1a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+    .submit-btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.10) 50%, transparent 70%);
+      background-size: 200% 100%; opacity: 0;
+    }
+    .submit-btn:hover::after { opacity: 1; animation: shine .5s linear; }
+    @keyframes shine {
+      from { background-position: 200% 0; }
+      to   { background-position: -200% 0; }
+    }
+    .submit-note {
+      text-align: center; margin-top: 12px;
+      font-size: .75rem; color: var(--gray-400); font-weight: 300;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .site-footer {
+      background: var(--black);
+      color: rgba(255,255,255,.5);
+      padding: 72px 0 32px;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 64px;
+    }
+    .footer-brand .logo {
+      color: var(--white); font-size: 1.4rem;
+      display: block; margin-bottom: 1rem;
+    }
+    .footer-brand p { font-size: .88rem; line-height: 1.7; max-width: 300px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .social-btn {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.4);
+      transition: var(--transition);
+    }
+    .social-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); transform: translateY(-2px); }
+    .social-btn svg { width: 16px; height: 16px; }
+    .footer-col h5 {
+      font-family: var(--font); font-size: .85rem; font-weight: 700;
+      color: var(--white); margin-bottom: 1.2rem; letter-spacing: .02em;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: .85rem; color: rgba(255,255,255,.4); transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .footer-bottom p { font-size: .8rem; }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: .8rem; color: rgba(255,255,255,.3); transition: color .2s; }
+    .footer-legal a:hover { color: var(--white); }
+
+    /* ============================================================
+       REVEAL
+    ============================================================ */
+    .reveal { transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    body.js-ready .reveal:not(.active) { opacity: 0; transform: translateY(36px); }
+    .reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 960px) {
+      .page-hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .form-card-inner { grid-template-columns: 1fr; }
+      .form-sidebar { padding: 40px 32px; }
+    }
+
+    @media (max-width: 768px) {
+      .header-nav, .header-right .btn { display: none; }
+      .hamburger { display: flex; }
+      .form-body { padding: 36px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .package-selector { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .package-selector { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
-<body class="subpage bg-light">
+<body>
 
-    <header class="glass-header">
-    <div class="container header-container">
-        <a href="index.html" class="logo">Irtona.de</a>
-
-        <nav class="main-nav">
-            <a href="index.html" class="active">Start</a>
-            <a href="index.html#leistungen">Leistungen</a>
-            <a href="portfolio.html">Beispielseiten</a>
-            <a href="preise.html">Pakete</a>
-        </nav>
-
-        <div class="header-actions">
-            <div class="search-container">
-                <form id="page-search-form" action="#" method="GET" class="search-form">
-                    <input type="text" id="search-input" name="q" placeholder="Suchen..." class="search-input" aria-label="Suchen">
-                    <button type="submit" class="icon-btn search-submit" aria-label="Suche ausführen">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </button>
-                </form>
-            </div>
-
-            <a href="login.html" class="icon-btn" aria-label="Login">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </a>
-
-            <a href="kontakt.html" class="icon-btn" aria-label="Warenkorb">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                </svg>
-            </a>
-
-            <a href="kontakt.html" class="btn btn-primary desktop-cta">Projekt starten</a>
-
-            <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">Irtona.de</a>
+    <nav class="header-nav">
+      <a href="index.html">Start</a>
+      <a href="portfolio.html">Referenzen</a>
+      <a href="preise.html">Pakete</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <div class="header-right">
+      <a href="index.html" class="btn btn-outline" style="padding:10px 22px; font-size:.88rem;">← Zurück</a>
+      <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </div>
 </header>
 
-    <section class="contact-section section-padding">
-        <div class="container">
-            <div class="text-center" style="max-width: 600px; margin: 0 auto 3rem auto;">
-                <h1 class="section-title">Lass uns starten.</h1>
-                <p>Erzähl uns von deinem Vorhaben. Fülle das Formular aus und wir melden uns innerhalb von 24 Stunden bei dir.</br></br>Jetzt kostenlos anfragen.</p>
-            </div>
-            
-            <div class="contact-form-wrapper">
-                <form action="/backend-placeholder" method="POST" class="custom-form">
-                    
-                    <input type="hidden" id="db_record_id" name="db_record_id" value="">
+<!-- Mobile overlay -->
+<div class="mobile-overlay" id="mobileOverlay">
+  <nav class="mobile-nav-links">
+    <a href="index.html">Start <span>→</span></a>
+    <a href="portfolio.html">Referenzen <span>→</span></a>
+    <a href="preise.html">Pakete <span>→</span></a>
+    <a href="index.html#faq">FAQ <span>→</span></a>
+    <a href="index.html">Startseite <span>→</span></a>
+  </nav>
+  <div class="mobile-meta">
+    <span>Irtona.de © 2026</span>
+    <span>Ludwigsburg, DE</span>
+  </div>
+</div>
 
-                    <div class="form-group">
-                        <label for="name">Name oder Unternehmen</label>
-                        <input type="text" id="name" name="name" required placeholder="Wie dürfen wir dich nennen?">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">E-Mail Adresse</label>
-                        <input type="email" id="email" name="email" required placeholder="deine@email.de">
-                    </div>
+<!-- ============================================================
+     PAGE HERO
+============================================================ -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <div class="page-hero-blob page-hero-blob-1"></div>
+    <div class="page-hero-blob page-hero-blob-2"></div>
+  </div>
+  <div class="container page-hero-inner">
 
-                    <div class="form-group">
-                        <label for="interest">Interesse an Paket</label>
-                        <select id="interest" name="interest">
-                            <option value="">Bitte wählen...</option>
-                            <option value="start">Start (330€)</option>
-                            <option value="wachstum">Wachstum (660€)</option>
-                            <option value="premium">Premium (990€)</option>
-                            <option value="beratung">Nur eine allgemeine Beratung</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Erzähl uns von deinem Projekt</label>
-                        <textarea id="message" name="message" rows="5" required placeholder="Was hast du vor? Gibt es schon erste Ideen?"></textarea>
-                    </div>
-                    
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="datenschutz" name="datenschutz" required>
-                        <label for="datenschutz">hiermit akzeptiere ich die <a href="datenschutz.html" target="_blank">Datenschutzrichtlinien</a></label>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary full-width">Anfrage unverbindlich senden (coming soon)</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer class="site-footer premium-footer">
-    <div class="container">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <a href="index.html" class="logo">Irtona.de</a>
-                <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen. Wir bauen Webseiten, die nicht nur gut aussehen, sondern Kunden gewinnen.</p>
-                <div class="footer-social">
-                    <a href="https://www.instagram.com/irtona.de" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                    </a>
-                    <a href="#" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    </a>
-                   
-                </div>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Agentur</h4>
-                <ul>
-                    <li><a href="index.html#start">Startseite</a></li>
-                    <li><a href="index.html#leistungen">Leistungen</a></li>
-                    <li><a href="portfolio.html">Beispielseiten</a></li>
-                    <li><a href="kontakt.html">Projekt anfragen</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Pakete & Preise</h4>
-                <ul>
-                    <li><a href="preise.html">Start-Paket</a></li>
-                    <li><a href="preise.html">Wachstum</a></li>
-                    <li><a href="preise.html">Premium</a></li>
-                    <li><a href="preise.html">Individuell</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Rechtliches</h4>
-                <ul>
-                    <li><a href="impressum.html">Impressum</a></li>
-                    <li><a href="datenschutz.html">Datenschutz</a></li>
-                    <li><a href="agb.html">AGB</a></li>
-                    <li><a href="login.html">Kunden-Login</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
-            <p class="footer-bottom-links">
-                <a href="impressum.html">Impressum</a> · 
-                <a href="datenschutz.html">Datenschutz</a> · 
-                <a href="agb.html">AGB</a>
-            </p>
-        </div>
+    <div class="reveal">
+      <span class="page-hero-label">Kostenlos & Unverbindlich</span>
+      <h1 class="page-hero-title">
+        Lass uns<br>
+        <span class="outline">starten.</span>
+      </h1>
+      <p class="page-hero-sub">
+        Erzähl uns von deinem Vorhaben. Wir antworten innerhalb von 24 Stunden — ohne Verkaufsdruck, ohne versteckte Kosten.
+      </p>
     </div>
+
+    <div class="trust-list reveal" style="transition-delay:.1s;">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9,12 11,14 15,10"/>
+          </svg>
+        </div>
+        <div>
+          <h4>100 % Festpreis</h4>
+          <p>Keine versteckten Kosten, kein Stundensatz-Risiko.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <polyline points="12,7 12,12 15.5,14.5"/>
+          </svg>
+        </div>
+        <div>
+          <h4>Antwort in 24 Stunden</h4>
+          <p>Wir melden uns schnell — Werktags meist noch am selben Tag.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <div>
+          <h4>Ohne Druck & Risiko</h4>
+          <p>Die Anfrage ist unverbindlich. Du entscheidest, ob es passt.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     FORM
+============================================================ -->
+<section class="form-section">
+  <div class="container">
+    <div class="form-card reveal">
+      <div class="form-card-inner">
+
+        <!-- Sidebar -->
+        <aside class="form-sidebar">
+          <div>
+            <p style="font-size:.72rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:1rem;">So läuft es ab</p>
+            <h2 class="form-sidebar-title">In 3 Schritten<br>zur fertigen<br><span>Website.</span></h2>
+          </div>
+
+          <div class="sidebar-steps">
+            <div class="sidebar-step">
+              <div class="sidebar-step-num">01</div>
+              <div>
+                <h4>Anfrage senden</h4>
+                <p>Füll das Formular aus — dauert 2 Minuten.</p>
+              </div>
+            </div>
+            <div class="sidebar-step">
+              <div class="sidebar-step-num">02</div>
+              <div>
+                <h4>Kurzes Gespräch</h4>
+                <p>Wir klären alles per WhatsApp, Telefon oder E-Mail.</p>
+              </div>
+            </div>
+            <div class="sidebar-step">
+              <div class="sidebar-step-num">03</div>
+              <div>
+                <h4>Go Live 🚀</h4>
+                <p>Deine Website ist in 7–14 Tagen online.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+          <div class="sidebar-contact">
+            <div class="sidebar-contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="3"/>
+                <polyline points="2,4 12,13 22,4"/>
+              </svg>
+              <a href="mailto:info@irtona.de">info@irtona.de</a>
+            </div>
+            <div class="sidebar-contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+              <span>Ludwigsburg, Baden-Württemberg</span>
+            </div>
+            <div class="sidebar-contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+              <a href="https://www.instagram.com/irtona.de" target="_blank" rel="noopener">@irtona.de</a>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Form body -->
+        <div class="form-body">
+          <h2 class="form-body-title">Projekt anfragen</h2>
+          <p class="form-body-sub">Welches Paket interessiert dich? Wähl direkt aus oder lass es uns einfach wissen.</p>
+
+          <form action="/backend-placeholder" method="POST" id="contactForm">
+            <input type="hidden" name="db_record_id" value="">
+
+            <!-- Package picker -->
+            <div class="package-selector">
+              <input type="radio" name="paket" id="pkg-start" value="start" class="pkg-option">
+              <label for="pkg-start" class="pkg-label">
+                <span class="pkg-name">Start</span>
+                <span class="pkg-price">330 € einmalig</span>
+              </label>
+
+              <input type="radio" name="paket" id="pkg-wachstum" value="wachstum" class="pkg-option" checked>
+              <label for="pkg-wachstum" class="pkg-label">
+                <span class="pkg-name">Wachstum ✦</span>
+                <span class="pkg-price">660 € einmalig</span>
+              </label>
+
+              <input type="radio" name="paket" id="pkg-premium" value="premium" class="pkg-option">
+              <label for="pkg-premium" class="pkg-label">
+                <span class="pkg-name">Premium</span>
+                <span class="pkg-price">990 € einmalig</span>
+              </label>
+
+              <input type="radio" name="paket" id="pkg-beratung" value="beratung" class="pkg-option">
+              <label for="pkg-beratung" class="pkg-label">
+                <span class="pkg-name">Beratung</span>
+                <span class="pkg-price">Kostenlos</span>
+              </label>
+            </div>
+
+            <!-- Name + Email -->
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Name / Unternehmen</label>
+                <input type="text" id="name" name="name" required placeholder="Wie dürfen wir dich nennen?">
+              </div>
+              <div class="form-group">
+                <label for="email">E-Mail Adresse</label>
+                <input type="email" id="email" name="email" required placeholder="deine@email.de">
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+              <label for="message">Dein Projekt</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Was hast du vor? Gibt es schon erste Ideen? Je mehr du erzählst, desto besser können wir helfen."></textarea>
+            </div>
+
+            <!-- Checkbox -->
+            <div class="checkbox-row">
+              <input type="checkbox" id="datenschutz" name="datenschutz" required>
+              <label for="datenschutz">
+                Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzrichtlinien</a> gelesen und akzeptiere diese.
+              </label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Anfrage unverbindlich senden
+            </button>
+            <p class="submit-note">Du hörst von uns innerhalb von 24 Stunden · Keine Kosten, kein Risiko</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Irtona.de</a>
+        <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/irtona.de" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Agentur</h5>
+        <ul>
+          <li><a href="index.html">Startseite</a></li>
+          <li><a href="index.html#leistungen">Leistungen</a></li>
+          <li><a href="portfolio.html">Referenzen</a></li>
+          <li><a href="kontakt.html">Projekt anfragen</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Pakete</h5>
+        <ul>
+          <li><a href="index.html#preise">Start — 330 €</a></li>
+          <li><a href="index.html#preise">Wachstum — 660 €</a></li>
+          <li><a href="index.html#preise">Premium — 990 €</a></li>
+          <li><a href="kontakt.html">Individuell</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Rechtliches</h5>
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+          <li><a href="agb.html">AGB</a></li>
+          <li><a href="login.html">Kunden-Login</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
+      <div class="footer-legal">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="agb.html">AGB</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
+<script>
+  // Header scroll
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
 
+  // Burger
+  const hamburger     = document.getElementById('hamburger');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+  function openMenu()  { hamburger.classList.add('is-active'); mobileOverlay.classList.add('is-open'); document.body.classList.add('menu-open'); hamburger.setAttribute('aria-expanded','true'); }
+  function closeMenu() { hamburger.classList.remove('is-active'); mobileOverlay.classList.remove('is-open'); document.body.classList.remove('menu-open'); hamburger.setAttribute('aria-expanded','false'); }
+
+  hamburger.addEventListener('click', () => hamburger.classList.contains('is-active') ? closeMenu() : openMenu());
+  mobileOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+  // Reveal
+  document.body.classList.add('js-ready');
+  const revealEls = document.querySelectorAll('.reveal');
+  function activateReveal(el) { el.classList.add('active'); }
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { activateReveal(e.target); obs.unobserve(e.target); } });
+    }, { threshold: 0 });
+    revealEls.forEach(el => obs.observe(el));
+    setTimeout(() => revealEls.forEach(activateReveal), 800);
+  } else {
+    revealEls.forEach(activateReveal);
+  }
+</script>
 </body>
 </html>
