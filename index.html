@@ -216,20 +216,6 @@
       align-items: center;
       gap: 16px;
     }
-    .glass-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(12px); /* Der typische Apple-Milchglas-Effekt */
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    padding: 15px 0;
-    transition: all 0.3s ease;
-}
-
 
     /* Hamburger */
     .hamburger {
@@ -431,12 +417,18 @@
     .hero-line {
       display: block;
       font-family: var(--font-display);
-      font-size: clamp(3rem, 8.5vw, 7rem);
+      /* clamp: min 2rem so long German words never overflow even on 320px screens */
+      font-size: clamp(2rem, 8.5vw, 7rem);
       font-weight: 800;
       line-height: 0.96;
       letter-spacing: -0.04em;
       opacity: 0;
       animation: fadeUp .8s cubic-bezier(.22,1,.36,1) forwards;
+      /* prevent any word from breaking outside the viewport */
+      overflow-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+      max-width: 100%;
     }
 
     .hero-line-1 { color: var(--black); animation-delay: .15s; }
@@ -1233,8 +1225,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
       flex-shrink: 0;
+      transition: background .2s, border-color .2s;
+    }
+
+    .location-detail:hover .location-icon {
+      background: var(--black);
+      border-color: var(--black);
+    }
+
+    .location-icon svg {
+      width: 18px; height: 18px;
+      color: var(--black);
+      transition: color .2s;
+    }
+
+    .location-detail:hover .location-icon svg {
+      color: var(--white);
     }
 
     .location-detail h4 {
@@ -1315,138 +1322,109 @@
     /* ============================================================
        FOOTER
     ============================================================ */
-    /* --- FOOTER von Index.html --- */
-/* Premium Footer Styling passend zur Webdesign-Agentur */
-.premium-footer {
-    background: #0f1115; /* Ein sehr dunkles, edles Grau/Schwarz passend zum Dark Mode */
-    color: #a0aab2;
-    padding: 4rem 0 2rem;
-    font-family: 'Inter', sans-serif;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    margin-top: 4rem;
-}
-
-.premium-footer .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.premium-footer .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 1rem;
-}
-
-.premium-footer .logo span {
-    color: #007aff; /* Deine primäre Akzentfarbe, ggf. anpassen */
-}
-
-.premium-footer .footer-brand p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-.premium-footer .footer-social {
-    display: flex;
-    gap: 1rem;
-}
-
-.premium-footer .footer-social a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    color: #ffffff;
-    transition: all 0.3s ease;
-}
-
-.premium-footer .footer-social a:hover {
-    background: #007aff; /* Hover-Farbe */
-    transform: translateY(-3px);
-}
-
-.premium-footer .footer-social svg {
-    width: 20px;
-    height: 20px;
-}
-
-.premium-footer .footer-col h4 {
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 1.2rem;
-}
-
-.premium-footer .footer-col ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.premium-footer .footer-col ul li {
-    margin-bottom: 0.8rem;
-}
-
-.premium-footer .footer-col ul li a {
-    color: #a0aab2;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    font-size: 0.95rem;
-}
-
-.premium-footer .footer-col ul li a:hover {
-    color: #ffffff;
-}
-
-.premium-footer .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.85rem;
-}
-
-.premium-footer .footer-bottom-links a {
-    color: #a0aab2;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.premium-footer .footer-bottom-links a:hover {
-    color: #ffffff;
-}
-
-/* Responsive Design für Smartphones */
-@media (max-width: 992px) {
-    .premium-footer .footer-top {
-        grid-template-columns: 1fr 1fr;
+    .site-footer {
+      background: var(--black);
+      color: rgba(255,255,255,.6);
+      padding: 72px 0 32px;
+      border-top: 1px solid rgba(255,255,255,.05);
     }
-}
 
-@media (max-width: 768px) {
-    .premium-footer .footer-top {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
     }
-    
-    .premium-footer .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-}
 
-/* --- Ende des Premium Footers --- */
+    .footer-brand .logo {
+      color: var(--white);
+      font-size: 1.4rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      margin-top: 1.5rem;
+    }
+
+    .social-btn {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.5);
+      transition: var(--transition);
+    }
+    .social-btn:hover {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+      transform: translateY(-2px);
+    }
+    .social-btn svg { width: 16px; height: 16px; }
+
+    .footer-col h5 {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-col ul {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col ul li a {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,.45);
+      transition: color .2s;
+    }
+    .footer-col ul li a:hover { color: var(--white); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-bottom p { font-size: 0.8rem; }
+
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-legal a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,.3);
+      transition: color .2s;
+    }
+    .footer-legal a:hover { color: var(--white); }
+
+    .footer-tax {
+      text-align: center;
+      padding: 16px 0 0;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,.25);
+    }
 
     /* ============================================================
        RESPONSIVE
@@ -1470,6 +1448,11 @@
       .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
       .hero-actions { flex-direction: column; width: 100%; }
       .hero-actions .btn { width: 100%; justify-content: center; }
+      /* headline: full width, no overflow */
+      .hero-headline { width: 100%; }
+      .hero-sub { max-width: 100%; font-size: 1rem; }
+      /* tag pill wraps gracefully */
+      .hero-tag { flex-wrap: wrap; max-width: 100%; }
 
       .features-layout { grid-template-columns: 1fr; gap: 40px; }
       .features-layout.reverse { direction: ltr; }
@@ -1491,8 +1474,37 @@
       .cta-actions { flex-direction: column; align-items: center; }
     }
 
-    @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    /* ── Small phones (≤ 430px — iPhone SE, Galaxy A-series etc.) ── */
+    @media (max-width: 430px) {
+      /* Tighter container so nothing bleeds to the edge */
+      .container { padding: 0 18px; }
+
+      /* Hero: scale headline down further, line-height a touch looser */
+      .hero { padding-top: 130px; padding-bottom: 60px; }
+      .hero-line {
+        font-size: clamp(1.9rem, 10vw, 2.8rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }
+      .hero-headline { margin-bottom: 2rem; }
+
+      /* Sub-text smaller */
+      .hero-sub { font-size: .95rem; }
+
+      /* Buttons always full-width and stacked */
+      .hero-actions { flex-direction: column; width: 100%; gap: 10px; }
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+        font-size: .9rem;
+        padding: 14px 20px;
+      }
+
+      /* Tag pill: smaller text, never wider than screen */
+      .hero-tag { font-size: .75rem; padding: 6px 12px; }
+
+      /* Scroll indicator can hide on tiny screens */
+      .hero-scroll { display: none; }
     }
   </style>
 </head>
@@ -1507,14 +1519,14 @@
 
     <nav class="header-nav">
       <a href="#leistungen">Leistungen</a>
-      <a href="portfolio.html">Referenzen</a>
-      <a href="preise.html">Pakete</a>
+      <a href="#portfolio">Referenzen</a>
+      <a href="#preise">Pakete</a>
       <a href="#faq">FAQ</a>
-      <a href="kontakt.html">Kontakt</a>
+      <a href="#kontakt">Kontakt</a>
     </nav>
 
     <div class="header-right">
-      <a href="kontakt.html" class="btn btn-dark" style="padding:10px 22px; font-size:.88rem;">Projekt starten →</a>
+      <a href="#kontakt" class="btn btn-dark" style="padding:10px 22px; font-size:.88rem;">Projekt starten →</a>
       <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
         <span></span>
         <span></span>
@@ -1528,11 +1540,11 @@
 <div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Navigation">
   <nav class="mobile-nav-links">
     <a href="#leistungen">Leistungen <span class="mobile-nav-arrow">→</span></a>
-    <a href="portfolio.html">Referenzen <span class="mobile-nav-arrow">→</span></a>
+    <a href="#portfolio">Referenzen <span class="mobile-nav-arrow">→</span></a>
     <a href="#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
-    <a href="preise.html">Pakete <span class="mobile-nav-arrow">→</span></a>
+    <a href="#preise">Pakete <span class="mobile-nav-arrow">→</span></a>
     <a href="#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
-    <a href="kontakt.html">Projekt starten <span class="mobile-nav-arrow">→</span></a>
+    <a href="#kontakt">Projekt starten <span class="mobile-nav-arrow">→</span></a>
   </nav>
   <div class="mobile-meta">
     <span>Irtona.de © 2026</span>
@@ -1568,8 +1580,8 @@
         zum Festpreis, alles inklusive.
       </p>
       <div class="hero-actions">
-        <a href="kontakt.html" class="btn btn-dark btn-lg">Jetzt Projekt anfragen →</a>
-        <a href="portfolio.html" class="btn btn-outline btn-lg">Beispiele ansehen</a>
+        <a href="#kontakt" class="btn btn-dark btn-lg">Jetzt Projekt anfragen →</a>
+        <a href="#portfolio" class="btn btn-outline btn-lg">Beispiele ansehen</a>
       </div>
     </div>
   </div>
@@ -1713,7 +1725,7 @@
 
     <div class="portfolio-grid">
 
-      <a href="project-a-v2.html" class="porto-card reveal">
+      <a href="project-a.html" class="porto-card reveal">
         <div class="porto-card-bg" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=900&auto=format&fit=crop');"></div>
         <div class="porto-card-overlay"></div>
         <div class="porto-arrow">↗</div>
@@ -1779,7 +1791,7 @@
       </div>
       <div class="process-step">
         <div class="process-step-num">04</div>
-        <h3>Go Live </h3>
+        <h3>Go Live 🚀</h3>
         <p>Wir veröffentlichen deine Website, richten Domain, Hosting und E-Mail ein. In spätestens 14 Tagen bist du online.</p>
       </div>
     </div>
@@ -1932,7 +1944,7 @@
           Falls deine Frage hier nicht dabei ist — kein Problem.
           Schreib uns einfach direkt.
         </p>
-        <a href="kontakt.html" class="btn btn-dark" style="margin-top:2rem;">Direkt fragen →</a>
+        <a href="#kontakt" class="btn btn-dark" style="margin-top:2rem;">Direkt fragen →</a>
       </div>
 
       <div class="faq-list reveal" id="faqList">
@@ -2049,7 +2061,7 @@
       <p>Aus Ludwigsburg für die Region. Persönlich, unkompliziert, schnell.</p>
     </div>
 
-  <div class="location-grid reveal">
+    <div class="location-grid reveal">
       <div class="map-frame">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42069.3!2d9.1903!3d48.8975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4799c3810a071c9b%3A0x1b096d56e3a4e2fa!2sLudwigsburg!5e0!3m2!1sde!2sde!4v1234567890"
@@ -2071,7 +2083,7 @@
           </div>
           <div>
             <h4>Standort</h4>
-            <p>Steinheim, Baden-Württemberg<br>Projekte auch bundesweit & remote</p>
+            <p>Ludwigsburg, Baden-Württemberg<br>Projekte auch bundesweit & remote</p>
           </div>
         </div>
 
@@ -2084,7 +2096,7 @@
           </div>
           <div>
             <h4>E-Mail</h4>
-            <a href="mailto:hallo@irtona.de">info@irtona.de</a>
+            <a href="/cdn-cgi/l/email-protection#99f1f8f5f5f6d9f0ebedf6f7f8b7fdfc"><span class="__cf_email__" data-cfemail="48202924242708213a3c272629662c2d">[email&#160;protected]</span></a>
           </div>
         </div>
 
@@ -2135,6 +2147,7 @@
     </div>
   </div>
 </section>
+
 <!-- ============================================================
      CTA
 ============================================================ -->
@@ -2157,75 +2170,70 @@
 <!-- ============================================================
      FOOTER
 ============================================================ -->
-<footer class="site-footer premium-footer">
-    <div class="container">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <a href="index.html" class="logo">Irtona.de</a>
-                <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen. Wir bauen Webseiten, die nicht nur gut aussehen, sondern Kunden gewinnen.</p>
-                <div class="footer-social">
-                    <a href="https://www.instagram.com/irtona.de" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                    </a>
-                    <a href="#" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    </a>
-                   
-                </div>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Agentur</h4>
-                <ul>
-                    <li><a href="index.html#start">Startseite</a></li>
-                    <li><a href="index.html#leistungen">Leistungen</a></li>
-                    <li><a href="portfolio.html">Beispielseiten</a></li>
-                    <li><a href="kontakt.html">Projekt anfragen</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Pakete & Preise</h4>
-                <ul>
-                    <li><a href="preise.html">Start-Paket</a></li>
-                    <li><a href="preise.html">Wachstum</a></li>
-                    <li><a href="preise.html">Premium</a></li>
-                    <li><a href="preise.html">Individuell</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Rechtliches</h4>
-                <ul>
-                    <li><a href="impressum.html">Impressum</a></li>
-                    <li><a href="datenschutz.html">Datenschutz</a></li>
-                    <li><a href="agb.html">AGB</a></li>
-                    <li><a href="login.html">Kunden-Login</a></li>
-                </ul>
-            </div>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">Irtona.de</a>
+        <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen. Wir bauen Webseiten, die nicht nur gut aussehen, sondern Kunden gewinnen.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/irtona.de" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
         </div>
-        
-        <div class="footer-bottom">
-            <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
-            <p class="footer-bottom-links">
-                <a href="impressum.html">Impressum</a> · 
-                <a href="datenschutz.html">Datenschutz</a> · 
-                <a href="agb.html">AGB</a>
-            </p>
-        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Agentur</h5>
+        <ul>
+          <li><a href="#start">Startseite</a></li>
+          <li><a href="#leistungen">Leistungen</a></li>
+          <li><a href="#portfolio">Referenzen</a></li>
+          <li><a href="#prozess">Ablauf</a></li>
+          <li><a href="kontakt.html">Projekt anfragen</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Pakete</h5>
+        <ul>
+          <li><a href="preise.html">Start — 330 €</a></li>
+          <li><a href="preise.html">Wachstum — 660 €</a></li>
+          <li><a href="preise.html">Premium — 990 €</a></li>
+          <li><a href="kontakt.html">Individuell anfragen</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Rechtliches</h5>
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+          <li><a href="agb.html">AGB</a></li>
+          <li><a href="login.html">Kunden-Login</a></li>
+        </ul>
+      </div>
     </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
+      <div class="footer-legal">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="agb.html">AGB</a>
+      </div>
+    </div>
+    <p class="footer-tax">* Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p>
+  </div>
 </footer>
-
-    <script src="script.js">
-
-    </script>
-</body>
-</html>
 
 <!-- ============================================================
      JAVASCRIPT
 ============================================================ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── HEADER SCROLL ──────────────────────────────────────────
   const header = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
@@ -2333,16 +2341,30 @@
     });
   });
 
-    // ── PRICE CARD HOVER GLOW ──────────────────────────────────
-    document.querySelectorAll('.price-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
+  // ── PERFORMANCE: LAZY LOAD IFRAME (MAP) ─────────────────────────
+  const mapIframe = document.getElementById('mapIframe');
+  const mapSrc = mapIframe.getAttribute('data-src');
+
+  const loadMap = () => {
+    mapIframe.setAttribute('src', mapSrc);
+    mapIframe.removeAttribute('data-src');
+    mapIframe.onload = null;
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          loadMap();
+          observer.unobserve(entry.target);
+        }
       });
     });
-  
-  </script>
+
+    observer.observe(mapIframe);
+  } else {
+    // Fallback for browsers without IntersectionObserver
+    loadMap();
+  }
+</script>
   
