@@ -1,262 +1,202 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datenschutzerklärung | Irtona.de</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png">
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datenschutzerklärung | Irtona.de</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root { --black:#0a0a0a;--white:#ffffff;--gray-50:#f7f7f7;--gray-100:#eeeeee;--gray-200:#d8d8d8;--gray-400:#999999;--gray-600:#555555;--radius-sm:12px;--font:-apple-system,BlinkMacSystemFont,'Outfit','Segoe UI',sans-serif;--transition:0.4s cubic-bezier(0.22,1,0.36,1); }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--white);color:var(--black);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    body.menu-open{overflow:hidden}a{text-decoration:none;color:inherit}ul{list-style:none}
+    .container{max-width:1160px;margin:0 auto;padding:0 24px}
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:900;padding:18px 0;transition:all .4s ease}
+    .site-header.scrolled{padding:12px 0;background:rgba(255,255,255,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--gray-100)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .logo{font-family:var(--font);font-size:1.35rem;font-weight:800;letter-spacing:-0.05em;color:var(--black)}
+    .header-nav{display:flex;align-items:center;gap:36px}
+    .header-nav a{font-size:.9rem;font-weight:500;color:var(--gray-600);transition:color .2s;position:relative}
+    .header-nav a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--black);transition:width .3s}
+    .header-nav a:hover{color:var(--black)}.header-nav a:hover::after{width:100%}
+    .header-right{display:flex;align-items:center;gap:16px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:100px;font-family:var(--font);font-size:.95rem;font-weight:500;cursor:pointer;border:none;transition:var(--transition);white-space:nowrap}
+    .btn-dark{background:var(--black);color:var(--white)}.btn-dark:hover{background:#1a1a1a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+    .hamburger span{display:block;width:26px;height:1.8px;background:var(--black);border-radius:2px;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s ease}
+    .hamburger.is-active span:nth-child(1){transform:translateY(6.8px) rotate(45deg)}.hamburger.is-active span:nth-child(2){opacity:0;transform:scaleX(0)}.hamburger.is-active span:nth-child(3){transform:translateY(-6.8px) rotate(-45deg)}
+    .mobile-overlay{position:fixed;inset:0;background:var(--white);z-index:1000;display:flex;flex-direction:column;justify-content:center;padding:0 40px;transform:translateX(100%);transition:transform .55s cubic-bezier(.22,1,.36,1);pointer-events:none}
+    .mobile-overlay::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--black)}
+    .mobile-overlay.is-open{transform:translateX(0);pointer-events:all}
+    .mobile-nav-links{display:flex;flex-direction:column}
+    .mobile-nav-links a{font-family:var(--font);font-size:clamp(2.2rem,8vw,3.2rem);font-weight:800;color:var(--black);letter-spacing:-0.04em;line-height:1.2;padding:12px 0;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateX(60px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1),color .2s}
+    .mobile-nav-links a:last-child{border-bottom:none}.mobile-nav-links a:hover{color:var(--gray-400)}
+    .mobile-overlay.is-open .mobile-nav-links a{opacity:1;transform:translateX(0)}
+    .mobile-nav-links a:nth-child(1){transition-delay:.05s}.mobile-nav-links a:nth-child(2){transition-delay:.10s}.mobile-nav-links a:nth-child(3){transition-delay:.15s}.mobile-nav-links a:nth-child(4){transition-delay:.20s}.mobile-nav-links a:nth-child(5){transition-delay:.25s}
+    .mobile-meta{position:absolute;bottom:40px;left:40px;right:40px;display:flex;justify-content:space-between;font-size:.8rem;color:var(--gray-400);opacity:0;transition:opacity .5s .35s ease}
+    .mobile-overlay.is-open .mobile-meta{opacity:1}
+    .page-hero{padding-top:160px;padding-bottom:64px;border-bottom:1px solid var(--gray-100)}
+    .page-hero-label{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:1rem}
+    .page-hero-title{font-family:var(--font);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;letter-spacing:-.04em;line-height:1.05}
+    .page-hero-meta{margin-top:1rem;font-size:.88rem;color:var(--gray-400);font-weight:300}
+    .page-hero-meta strong{color:var(--black);font-weight:600}
+    .legal-section{padding:80px 0 120px}
+    .legal-layout{display:grid;grid-template-columns:220px 1fr;gap:80px;align-items:start}
+    .legal-toc{position:sticky;top:100px}
+    .legal-toc-title{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-400);margin-bottom:1rem}
+    .legal-toc-links{display:flex;flex-direction:column;gap:2px}
+    .legal-toc-links a{font-size:.83rem;color:var(--gray-400);padding:7px 10px;border-radius:8px;transition:background .2s,color .2s}
+    .legal-toc-links a:hover,.legal-toc-links a.active{background:var(--gray-50);color:var(--black);font-weight:500}
+    .legal-content{max-width:720px}
+    .legal-block{margin-bottom:56px;scroll-margin-top:110px}.legal-block:last-child{margin-bottom:0}
+    .legal-block-num{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:.5rem}
+    .legal-block h2{font-family:var(--font);font-size:1.2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--gray-100)}
+    .legal-block h3{font-family:var(--font);font-size:1rem;font-weight:600;margin:1.4rem 0 .6rem;color:var(--black)}
+    .legal-block p{font-size:.95rem;color:var(--gray-600);line-height:1.8;font-weight:300;margin-bottom:1rem}
+    .legal-block p:last-child{margin-bottom:0}
+    .legal-block ul{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
+    .legal-block ul li{font-size:.95rem;color:var(--gray-600);line-height:1.7;font-weight:300;padding-left:1.2rem;position:relative}
+    .legal-block ul li::before{content:'—';position:absolute;left:0;color:var(--gray-200)}
+    .legal-block strong{color:var(--black);font-weight:600}
+    .legal-block a{color:var(--black);text-decoration:underline;text-underline-offset:2px}
+    .site-footer{background:var(--black);color:rgba(255,255,255,.5);padding:72px 0 32px;border-top:1px solid rgba(255,255,255,.05)}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px}
+    .footer-brand .logo{color:var(--white);font-size:1.4rem;display:block;margin-bottom:1rem}
+    .footer-brand p{font-size:.88rem;line-height:1.7;max-width:300px}
+    .footer-social{display:flex;gap:10px;margin-top:1.5rem}
+    .social-btn{width:38px;height:38px;border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);transition:var(--transition)}
+    .social-btn:hover{background:var(--white);color:var(--black);border-color:var(--white);transform:translateY(-2px)}
+    .social-btn svg{width:16px;height:16px}
+    .footer-col h5{font-family:var(--font);font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:1.2rem}
+    .footer-col ul{display:flex;flex-direction:column;gap:10px}
+    .footer-col ul li a{font-size:.85rem;color:rgba(255,255,255,.4);transition:color .2s}.footer-col ul li a:hover{color:var(--white)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .footer-bottom p{font-size:.8rem}
+    .footer-legal{display:flex;gap:20px}
+    .footer-legal a{font-size:.8rem;color:rgba(255,255,255,.3);transition:color .2s}.footer-legal a:hover{color:var(--white)}
+    @media(max-width:900px){.legal-layout{grid-template-columns:1fr;gap:32px}.legal-toc{position:static}.legal-toc-links{flex-direction:row;flex-wrap:wrap}}
+    @media(max-width:768px){.header-nav,.header-right .btn{display:none}.hamburger{display:flex}.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.footer-grid{grid-template-columns:1fr;gap:28px}.footer-bottom{flex-direction:column;text-align:center}}
+  </style>
 </head>
-
-<header class="glass-header">
-    <div class="container header-container">
-        <a href="index.html" class="logo">Irtona.de</a>
-
-        <nav class="main-nav">
-            <a href="index.html" class="active">Start</a>
-            <a href="index.html#leistungen">Leistungen</a>
-            <a href="portfolio.html">Beispielseiten</a>
-            <a href="preise.html">Pakete</a>
-        </nav>
-
-        <div class="header-actions">
-            <div class="search-container">
-                <form id="page-search-form" action="#" method="GET" class="search-form">
-                    <input type="text" id="search-input" name="q" placeholder="Suchen..." class="search-input" aria-label="Suchen">
-                    <button type="submit" class="icon-btn search-submit" aria-label="Suche ausführen">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </button>
-                </form>
-            </div>
-
-            <a href="login.html" class="icon-btn" aria-label="Login">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </a>
-
-            <a href="kontakt.html" class="icon-btn" aria-label="Warenkorb">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                </svg>
-            </a>
-
-            <a href="kontakt.html" class="btn btn-primary desktop-cta">Projekt starten</a>
-
-            <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
+<body>
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">Irtona.de</a>
+    <nav class="header-nav"><a href="index.html">Start</a><a href="portfolio.html">Referenzen</a><a href="preise.html">Pakete</a><a href="index.html#faq">FAQ</a></nav>
+    <div class="header-right">
+      <a href="kontakt.html" class="btn btn-dark" style="padding:10px 22px;font-size:.88rem;">Projekt starten →</a>
+      <button class="hamburger" id="hamburger" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
     </div>
+  </div>
 </header>
-<body class="subpage">
+<div class="mobile-overlay" id="mobileOverlay">
+  <nav class="mobile-nav-links">
+    <a href="index.html">Start <span>→</span></a><a href="portfolio.html">Referenzen <span>→</span></a>
+    <a href="preise.html">Pakete <span>→</span></a><a href="index.html#faq">FAQ <span>→</span></a>
+    <a href="kontakt.html">Projekt starten <span>→</span></a>
+  </nav>
+  <div class="mobile-meta"><span>Irtona.de © 2026</span><span>Ludwigsburg, DE</span></div>
+</div>
 
-    <section class="impressum-section section-padding">
-        <div class="container">
-            <h1 class="section-title">Datenschutzerklärung </h1>
-            <div class="grid-2-custom">
-                <div class="impressum-text">
-                    
-                        
-<h3> 1. Datenschutz auf einen Blick </h3></br></br>
+<section class="page-hero">
+  <div class="container">
+    <span class="page-hero-label">Rechtliches</span>
+    <h1 class="page-hero-title">Datenschutz­erklärung</h1>
+    <p class="page-hero-meta">Stand: <strong>April 2026</strong> · Irtona.de Webdesign, Ludwigsburg</p>
+  </div>
+</section>
 
-<h4>Allgemeine Hinweise</h4></br>
-
-<p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
-</p>
-
-
-<h3>2. Verantwortliche Stelle</h3> </br>
-
-<p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber.
-Die Kontaktdaten können Sie dem Impressum entnehmen.
-</p>
-</br>
-
-<h4> Datenerfassung auf dieser Website </h4> 
-
-<h5>Server-Log-Dateien:</h5> <br>
-
-<p>Diese Website wird gehostet bei: <br>
-Github.com<br><br>
-Der Hostinganbieter verarbeitet Daten wie IP-Adressen und Server-Logs im Rahmen einer Auftragsverarbeitung (Art. 28 DSGVO)</p><br><br>
-
-<p>Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt. Dies sind:</p><br>
-<ul><p>
-<li> Browsertyp und Browserversion</li>
-<li>verwendetes Betriebssystem</li>
-<li>Referrer URL</li>
-<li>Hostname des zugreifenden Rechners</li>
-<li>Uhrzeit der Serveranfrage</li>
-<li>IP-Adresse </li></p>
-</ul><br>
-<p>Diese Daten werden nicht mit anderen Datenquellen zusammengeführt. <br><br>Zweck: Sicherheit und Stabilität der Website</p><br><br>
-
-<p>Die Erfassung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. <br>
-Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und Sicherheit der Website. <br><br>
-    Es wurde ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO abgeschlossen.
-</p>
-
-
-<h3>3. Kontaktaufnahme </h3> </br>
-
-<p>Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. <br><br>
-
-Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde.<br><br>
-
-Die von Ihnen an uns per Kontaktanfragen übersandten Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihres Anliegens). Zwingende gesetzliche Bestimmungen, insbesondere gesetzliche Aufbewahrungsfristen, bleiben unberührt. </br>
-                
- </p>
-</br></br>
-
-<p>Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</br>
-
-Die Verarbeitung erfolgt auf Grundlage von:</br></br></p>
-
-<p>Art. 6 Abs. 1 lit. b DSGVO (Vertrag / Anfrage) und
-Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse). </br>
-
-Die Daten werden gelöscht, sobald der Zweck der Verarbeitung entfällt, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.
-</p>
-
-
-
-
-
-
-<h3> 4. Keine Verwendung von Cookies oder Tracking</h3> </br>
-
-<p>Diese Website verwendet nur technisch notwendige Cookies.<br><br>
-Falls Tracking eingesetzt wird:<br>
-nur mit Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)
-</br>
-
-Es erfolgt keine Auswertung Ihres Nutzerverhaltens.</br>
-</p>
-
-
-<h3>5. Ihre Rechte</h3></br>
-
-<p>Sie haben jederzeit folgende Rechte:<br><br>
-<ul>
-<li>Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</li></br>
-<li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li></br>
-<li>Löschung Ihrer Daten (Art. 17 DSGVO)</li></br>
-<li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li></br>
-<li>Datenübertragbarkeit (Art. 20 DSGVO)</li></br>
-<li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
-</ul><br>
-Sie können sich jederzeit an die im Impressum angegebene Adresse wenden.<br>
-</p>
-
-
-<h3> 6. Widerruf Ihrer Einwilligung</h3></br>
-
-<p>Sofern die Datenverarbeitung auf Ihrer Einwilligung beruht, können Sie diese jederzeit widerrufen.
-Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt unberührt.</br>
-</p>
-
-
-<h3>7. Beschwerderecht bei der Aufsichtsbehörde</h3></br>
-
-<p>Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu. Das Beschwerderecht besteht unbeschadet anderweitiger verwaltungsrechtlicher oder gerichtlicher Rechtsbehelfe.
-
- </br>
-</p>
-
-
-<h3> 8. Datensicherheit</h3></br>
-
-<p>Wir verwenden geeignete technische und organisatorische Maßnahmen, um Ihre Daten vor Verlust, Manipulation oder unberechtigtem Zugriff zu schützen.</br>
-</p>
-
-
-<h3>9. Änderungen dieser Datenschutzerklärung</h3> </br>
-
-<p>Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf anzupassen, um sie an aktuelle rechtliche Anforderungen oder Änderungen unserer Leistungen anzupassen.</br>
-</p>
-                    </p>
-                </div>
-                
-            </div>
+<section class="legal-section">
+  <div class="container">
+    <div class="legal-layout">
+      <nav class="legal-toc">
+        <p class="legal-toc-title">Inhalt</p>
+        <div class="legal-toc-links">
+          <a href="#d1">1. Überblick</a><a href="#d2">2. Verantwortliche Stelle</a>
+          <a href="#d3">3. Kontaktaufnahme</a><a href="#d4">4. Hosting</a>
+          <a href="#d5">5. Cookies & Tracking</a><a href="#d6">6. Ihre Rechte</a>
+          <a href="#d7">7. Widerruf</a><a href="#d8">8. Beschwerderecht</a>
+          <a href="#d9">9. Datensicherheit</a><a href="#d10">10. Änderungen</a>
         </div>
-    </section>
-
-    </body>
-</html></p>
-                </div>
-            </div>
+      </nav>
+      <div class="legal-content">
+        <div class="legal-block" id="d1">
+          <span class="legal-block-num">1</span><h2>Datenschutz auf einen Blick</h2>
+          <h3>Allgemeine Hinweise</h3>
+          <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+          <h3>Server-Log-Dateien</h3>
+          <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt:</p>
+          <ul><li>Browsertyp und Browserversion</li><li>Verwendetes Betriebssystem</li><li>Referrer URL</li><li>Hostname des zugreifenden Rechners</li><li>Uhrzeit der Serveranfrage sowie IP-Adresse</li></ul>
+          <p>Diese Daten werden nicht mit anderen Datenquellen zusammengeführt. Die Erfassung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.</p>
         </div>
-    </section>
-
-    <footer class="site-footer premium-footer">
-    <div class="container">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <a href="index.html" class="logo">Irtona.de</a>
-                <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen. Wir bauen Webseiten, die nicht nur gut aussehen, sondern Kunden gewinnen.</p>
-                <div class="footer-social">
-                    <a href="https://www.instagram.com/irtona.de" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                    </a>
-                    <a href="#" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    </a>
-                   
-                </div>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Agentur</h4>
-                <ul>
-                    <li><a href="index.html#start">Startseite</a></li>
-                    <li><a href="index.html#leistungen">Leistungen</a></li>
-                    <li><a href="portfolio.html">Beispielseiten</a></li>
-                    <li><a href="kontakt.html">Projekt anfragen</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Pakete & Preise</h4>
-                <ul>
-                    <li><a href="preise.html">Start-Paket</a></li>
-                    <li><a href="preise.html">Wachstum</a></li>
-                    <li><a href="preise.html">Premium</a></li>
-                    <li><a href="preise.html">Individuell</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Rechtliches</h4>
-                <ul>
-                    <li><a href="impressum.html">Impressum</a></li>
-                    <li><a href="datenschutz.html">Datenschutz</a></li>
-                    <li><a href="agb.html">AGB</a></li>
-                    <li><a href="login.html">Kunden-Login</a></li>
-                </ul>
-            </div>
+        <div class="legal-block" id="d2">
+          <span class="legal-block-num">2</span><h2>Verantwortliche Stelle</h2>
+          <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Die Kontaktdaten können Sie dem <a href="impressum.html">Impressum</a> entnehmen.</p>
         </div>
-        
-        <div class="footer-bottom">
-            <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
-            <p class="footer-bottom-links">
-                <a href="impressum.html">Impressum</a> · 
-                <a href="datenschutz.html">Datenschutz</a> · 
-                <a href="agb.html">AGB</a>
-            </p>
+        <div class="legal-block" id="d3">
+          <span class="legal-block-num">3</span><h2>Kontaktaufnahme</h2>
+          <p>Wenn Sie uns per E-Mail kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+          <p>Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertrag / Anfrage) und Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse). Die Daten werden gelöscht, sobald der Zweck der Verarbeitung entfällt, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
         </div>
+        <div class="legal-block" id="d4">
+          <span class="legal-block-num">4</span><h2>Hosting</h2>
+          <p>Diese Website wird bei einem externen Dienstleister <strong>(Spaceship.com)</strong> gehostet. Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es sich insbesondere um IP-Adressen, Kontaktanfragen und technische Daten handeln.</p>
+          <p>Der Einsatz des Hosters erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Es wurde ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO abgeschlossen.</p>
+        </div>
+        <div class="legal-block" id="d5">
+          <span class="legal-block-num">5</span><h2>Keine Cookies oder Tracking</h2>
+          <p>Diese Website verwendet <strong>keine Cookies</strong> und keine Tracking- oder Analyse-Tools. Es erfolgt keine Auswertung Ihres Nutzerverhaltens.</p>
+        </div>
+        <div class="legal-block" id="d6">
+          <span class="legal-block-num">6</span><h2>Ihre Rechte</h2>
+          <p>Sie haben jederzeit folgende Rechte:</p>
+          <ul><li>Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</li><li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li><li>Löschung Ihrer Daten (Art. 17 DSGVO)</li><li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li><li>Datenübertragbarkeit (Art. 20 DSGVO)</li><li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li></ul>
+          <p>Sie können sich jederzeit an die im Impressum angegebene Adresse wenden.</p>
+        </div>
+        <div class="legal-block" id="d7">
+          <span class="legal-block-num">7</span><h2>Widerruf Ihrer Einwilligung</h2>
+          <p>Sofern die Datenverarbeitung auf Ihrer Einwilligung beruht, können Sie diese jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt unberührt.</p>
+        </div>
+        <div class="legal-block" id="d8">
+          <span class="legal-block-num">8</span><h2>Beschwerderecht bei der Aufsichtsbehörde</h2>
+          <p>Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu.</p>
+        </div>
+        <div class="legal-block" id="d9">
+          <span class="legal-block-num">9</span><h2>Datensicherheit</h2>
+          <p>Wir verwenden geeignete technische und organisatorische Maßnahmen, um Ihre Daten vor Verlust, Manipulation oder unberechtigtem Zugriff zu schützen.</p>
+        </div>
+        <div class="legal-block" id="d10">
+          <span class="legal-block-num">10</span><h2>Änderungen dieser Datenschutzerklärung</h2>
+          <p>Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf anzupassen, um sie an aktuelle rechtliche Anforderungen oder Änderungen unserer Leistungen anzupassen.</p>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="logo">Irtona.de</a><p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen.</p><div class="footer-social"><a href="https://www.instagram.com/irtona.de" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+      <div class="footer-col"><h5>Agentur</h5><ul><li><a href="index.html">Startseite</a></li><li><a href="index.html#leistungen">Leistungen</a></li><li><a href="portfolio.html">Referenzen</a></li><li><a href="kontakt.html">Projekt anfragen</a></li></ul></div>
+      <div class="footer-col"><h5>Pakete</h5><ul><li><a href="index.html#preise">Start — 330 €</a></li><li><a href="index.html#preise">Wachstum — 660 €</a></li><li><a href="index.html#preise">Premium — 990 €</a></li><li><a href="kontakt.html">Individuell</a></li></ul></div>
+      <div class="footer-col"><h5>Rechtliches</h5><ul><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li><li><a href="agb.html">AGB</a></li><li><a href="login.html">Kunden-Login</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p><div class="footer-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></div></div>
+  </div>
 </footer>
-
-
-    </body>
+<script>
+  const header=document.getElementById('site-header');
+  window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+  const hamburger=document.getElementById('hamburger'),overlay=document.getElementById('mobileOverlay');
+  const openMenu=()=>{hamburger.classList.add('is-active');overlay.classList.add('is-open');document.body.classList.add('menu-open')};
+  const closeMenu=()=>{hamburger.classList.remove('is-active');overlay.classList.remove('is-open');document.body.classList.remove('menu-open')};
+  hamburger.addEventListener('click',()=>hamburger.classList.contains('is-active')?closeMenu():openMenu());
+  overlay.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+  const blocks=document.querySelectorAll('.legal-block'),tocLinks=document.querySelectorAll('.legal-toc-links a');
+  window.addEventListener('scroll',()=>{let cur='';blocks.forEach(b=>{if(window.scrollY>=b.offsetTop-140)cur=b.id});tocLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur))},{passive:true});
+</script>
+</body>
 </html>
