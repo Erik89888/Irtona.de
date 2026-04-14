@@ -1,157 +1,227 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impressum | Irtona.de</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png">
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impressum | Irtona.de</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
+  <style>
+    :root{--black:#0a0a0a;--white:#ffffff;--gray-50:#f7f7f7;--gray-100:#eeeeee;--gray-200:#d8d8d8;--gray-400:#999999;--gray-600:#555555;--radius-sm:12px;--radius-lg:32px;--shadow-md:0 12px 40px rgba(0,0,0,.08);--font:-apple-system,BlinkMacSystemFont,'Outfit','Segoe UI',sans-serif;--transition:0.4s cubic-bezier(0.22,1,0.36,1)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--white);color:var(--black);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    body.menu-open{overflow:hidden}a{text-decoration:none;color:inherit}ul{list-style:none}
+    .container{max-width:1160px;margin:0 auto;padding:0 24px}
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:900;padding:18px 0;transition:all .4s ease}
+    .site-header.scrolled{padding:12px 0;background:rgba(255,255,255,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--gray-100)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .logo{font-family:var(--font);font-size:1.35rem;font-weight:800;letter-spacing:-0.05em;color:var(--black)}
+    .header-nav{display:flex;align-items:center;gap:36px}
+    .header-nav a{font-size:.9rem;font-weight:500;color:var(--gray-600);transition:color .2s;position:relative}
+    .header-nav a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--black);transition:width .3s}
+    .header-nav a:hover{color:var(--black)}.header-nav a:hover::after{width:100%}
+    .header-right{display:flex;align-items:center;gap:16px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:100px;font-family:var(--font);font-size:.95rem;font-weight:500;cursor:pointer;border:none;transition:var(--transition);white-space:nowrap}
+    .btn-dark{background:var(--black);color:var(--white)}.btn-dark:hover{background:#1a1a1a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+    .hamburger span{display:block;width:26px;height:1.8px;background:var(--black);border-radius:2px;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s ease}
+    .hamburger.is-active span:nth-child(1){transform:translateY(6.8px) rotate(45deg)}.hamburger.is-active span:nth-child(2){opacity:0;transform:scaleX(0)}.hamburger.is-active span:nth-child(3){transform:translateY(-6.8px) rotate(-45deg)}
+    .mobile-overlay{position:fixed;inset:0;background:var(--white);z-index:1000;display:flex;flex-direction:column;justify-content:center;padding:0 40px;transform:translateX(100%);transition:transform .55s cubic-bezier(.22,1,.36,1);pointer-events:none}
+    .mobile-overlay::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--black)}
+    .mobile-overlay.is-open{transform:translateX(0);pointer-events:all}
+    .mobile-nav-links{display:flex;flex-direction:column}
+    .mobile-nav-links a{font-family:var(--font);font-size:clamp(2.2rem,8vw,3.2rem);font-weight:800;color:var(--black);letter-spacing:-0.04em;line-height:1.2;padding:12px 0;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateX(60px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1),color .2s}
+    .mobile-nav-links a:last-child{border-bottom:none}.mobile-nav-links a:hover{color:var(--gray-400)}
+    .mobile-overlay.is-open .mobile-nav-links a{opacity:1;transform:translateX(0)}
+    .mobile-nav-links a:nth-child(1){transition-delay:.05s}.mobile-nav-links a:nth-child(2){transition-delay:.10s}.mobile-nav-links a:nth-child(3){transition-delay:.15s}.mobile-nav-links a:nth-child(4){transition-delay:.20s}.mobile-nav-links a:nth-child(5){transition-delay:.25s}
+    .mobile-meta{position:absolute;bottom:40px;left:40px;right:40px;display:flex;justify-content:space-between;font-size:.8rem;color:var(--gray-400);opacity:0;transition:opacity .5s .35s ease}
+    .mobile-overlay.is-open .mobile-meta{opacity:1}
+
+    /* PAGE HERO */
+    .page-hero{padding-top:160px;padding-bottom:64px;border-bottom:1px solid var(--gray-100)}
+    .page-hero-label{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:1rem}
+    .page-hero-title{font-family:var(--font);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;letter-spacing:-.04em;line-height:1.05}
+    .page-hero-meta{margin-top:1rem;font-size:.88rem;color:var(--gray-400);font-weight:300}
+
+    /* IMPRESSUM LAYOUT */
+    .impressum-section{padding:80px 0 120px}
+    .impressum-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+
+    /* Info cards */
+    .info-blocks{display:flex;flex-direction:column;gap:4px}
+    .info-card{background:var(--white);border:1px solid var(--gray-100);border-radius:20px;padding:32px;transition:box-shadow .3s,transform .3s}
+    .info-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+    .info-card-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:.8rem}
+    .info-card h3{font-family:var(--font);font-size:1rem;font-weight:700;margin-bottom:.8rem;letter-spacing:-.01em}
+    .info-card p{font-size:.92rem;color:var(--gray-600);line-height:1.75;font-weight:300}
+    .info-card a{color:var(--black);transition:opacity .2s}.info-card a:hover{opacity:.6}
+    .info-card strong{color:var(--black);font-weight:600}
+
+    /* Image side */
+    .impressum-visual{position:sticky;top:100px}
+    .impressum-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-lg);box-shadow:var(--shadow-md)}
+    .impressum-caption{margin-top:20px;display:flex;flex-direction:column;gap:16px}
+    .caption-item{display:flex;gap:14px;align-items:flex-start}
+    .caption-icon{width:36px;height:36px;background:var(--gray-50);border:1px solid var(--gray-100);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .caption-icon svg{width:16px;height:16px;color:var(--black)}
+    .caption-item h4{font-family:var(--font);font-size:.82rem;font-weight:700;margin-bottom:2px}
+    .caption-item p,.caption-item a{font-size:.82rem;color:var(--gray-400);font-weight:300}
+    .caption-item a:hover{color:var(--black)}
+
+    /* FOOTER */
+    .site-footer{background:var(--black);color:rgba(255,255,255,.5);padding:72px 0 32px;border-top:1px solid rgba(255,255,255,.05)}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px}
+    .footer-brand .logo{color:var(--white);font-size:1.4rem;display:block;margin-bottom:1rem}
+    .footer-brand p{font-size:.88rem;line-height:1.7;max-width:300px}
+    .footer-social{display:flex;gap:10px;margin-top:1.5rem}
+    .social-btn{width:38px;height:38px;border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);transition:var(--transition)}
+    .social-btn:hover{background:var(--white);color:var(--black);border-color:var(--white);transform:translateY(-2px)}
+    .social-btn svg{width:16px;height:16px}
+    .footer-col h5{font-family:var(--font);font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:1.2rem}
+    .footer-col ul{display:flex;flex-direction:column;gap:10px}
+    .footer-col ul li a{font-size:.85rem;color:rgba(255,255,255,.4);transition:color .2s}.footer-col ul li a:hover{color:var(--white)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .footer-bottom p{font-size:.8rem}
+    .footer-legal{display:flex;gap:20px}
+    .footer-legal a{font-size:.8rem;color:rgba(255,255,255,.3);transition:color .2s}.footer-legal a:hover{color:var(--white)}
+
+    @media(max-width:900px){.impressum-grid{grid-template-columns:1fr;gap:40px}.impressum-visual{position:static}}
+    @media(max-width:768px){.header-nav,.header-right .btn{display:none}.hamburger{display:flex}.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.footer-grid{grid-template-columns:1fr;gap:28px}.footer-bottom{flex-direction:column;text-align:center}}
+  </style>
 </head>
-
-<header class="glass-header">
-    <div class="container header-container">
-        <a href="index.html" class="logo">Irtona.de</a>
-
-        <nav class="main-nav">
-            <a href="index.html" class="active">Start</a>
-            <a href="index.html#leistungen">Leistungen</a>
-            <a href="portfolio.html">Beispielseiten</a>
-            <a href="preise.html">Pakete</a>
-        </nav>
-
-        <div class="header-actions">
-            <div class="search-container">
-                <form id="page-search-form" action="#" method="GET" class="search-form">
-                    <input type="text" id="search-input" name="q" placeholder="Suchen..." class="search-input" aria-label="Suchen">
-                    <button type="submit" class="icon-btn search-submit" aria-label="Suche ausführen">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </button>
-                </form>
-            </div>
-
-            <a href="login.html" class="icon-btn" aria-label="Login">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </a>
-
-            <a href="kontakt.html" class="icon-btn" aria-label="Warenkorb">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                </svg>
-            </a>
-
-            <a href="kontakt.html" class="btn btn-primary desktop-cta">Projekt starten</a>
-
-            <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
+<body>
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">Irtona.de</a>
+    <nav class="header-nav"><a href="index.html">Start</a><a href="portfolio.html">Referenzen</a><a href="preise.html">Pakete</a><a href="index.html#faq">FAQ</a></nav>
+    <div class="header-right">
+      <a href="kontakt.html" class="btn btn-dark" style="padding:10px 22px;font-size:.88rem;">Projekt starten →</a>
+      <button class="hamburger" id="hamburger" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
     </div>
+  </div>
 </header>
-<body class="subpage">
+<div class="mobile-overlay" id="mobileOverlay">
+  <nav class="mobile-nav-links">
+    <a href="index.html">Start <span>→</span></a><a href="portfolio.html">Referenzen <span>→</span></a>
+    <a href="preise.html">Pakete <span>→</span></a><a href="index.html#faq">FAQ <span>→</span></a>
+    <a href="kontakt.html">Projekt starten <span>→</span></a>
+  </nav>
+  <div class="mobile-meta"><span>Irtona.de © 2026</span><span>Ludwigsburg, DE</span></div>
+</div>
 
+<section class="page-hero">
+  <div class="container">
+    <span class="page-hero-label">Rechtliches</span>
+    <h1 class="page-hero-title">Impressum</h1>
+    <p class="page-hero-meta">Angaben gemäß § 5 TMG · Irtona.de Webdesign</p>
+  </div>
+</section>
 
-    <section class="impressum-section section-padding">
-        <div class="container">
-            <h1 class="section-title">Impressum</h1>
-            <div class="grid-2-custom">
-                <div class="impressum-text">
-                    <h3>Angaben gemäß § 5 TMG</h3>
-                    <p>
-                        <strong>Irtona.de Webdesign</strong><br>
-                        Hermann-Spaich-Straße 16<br>
-                        71711 Steinheim an der Murr <br><br>
-                        Inhaber: <br>
-                        Erik Palus
-                    </p>
-                    
-                    <h3>Kontakt</h3>
-                    <p>
-                        Telefon: +49 (0) 179 6676977<br>
-                        E-Mail: info@irtona.de
-                    </p>
-                    
-                    <h3>Umsatzsteuer-ID</h3>
-                    <p>
-Kleinunternehmer nach § 19 UStG</p>
-                    
-                    <h3>Verbraucherstreitbeilegung</h3>
-                    <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
-                </div>
-                <div class="impressum-image">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800" alt="Irtona Büro" class="img-rounded shadow">
-                </div>
-            </div>
+<section class="impressum-section">
+  <div class="container">
+    <div class="impressum-grid">
+
+      <!-- Info Cards -->
+      <div class="info-blocks">
+
+        <div class="info-card">
+          <span class="info-card-label">Betreiber</span>
+          <h3>Irtona.de Webdesign</h3>
+          <p>
+            <strong>Irtona.de Webdesign</strong><br>
+            Musterstraße 123<br>
+            71634 Ludwigsburg<br>
+            Baden-Württemberg, Deutschland
+          </p>
         </div>
-    </section>
-<footer class="site-footer premium-footer">
-    <div class="container">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <a href="index.html" class="logo">Irtona.de</a>
-                <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen. Wir bauen Webseiten, die nicht nur gut aussehen, sondern Kunden gewinnen.</p>
-                <div class="footer-social">
-                    <a href="https://www.instagram.com/irtona.de" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                    </a>
-                    <a href="#" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    </a>
-                    
-                </div>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Agentur</h4>
-                <ul>
-                    <li><a href="index.html#start">Startseite</a></li>
-                    <li><a href="index.html#leistungen">Leistungen</a></li>
-                    <li><a href="portfolio.html">Beispielseiten</a></li>
-                    <li><a href="kontakt.html">Projekt anfragen</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Pakete & Preise</h4>
-                <ul>
-                    <li><a href="preise.html">Start-Paket</a></li>
-                    <li><a href="preise.html">Wachstum</a></li>
-                    <li><a href="preise.html">Premium</a></li>
-                    <li><a href="preise.html">Individuell</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-col">
-                <h4>Rechtliches</h4>
-                <ul>
-                    <li><a href="impressum.html">Impressum</a></li>
-                    <li><a href="datenschutz.html">Datenschutz</a></li>
-                    <li><a href="agb.html">AGB</a></li>
-                    <li><a href="login.html">Kunden-Login</a></li>
-                </ul>
-            </div>
+
+        <div class="info-card">
+          <span class="info-card-label">Kontakt</span>
+          <h3>Erreichbarkeit</h3>
+          <p>
+            Telefon: <a href="tel:+4912344556">+49 (0) 123 44 55 66</a><br>
+            E-Mail: <a href="mailto:hallo@irtona.de">hallo@irtona.de</a><br>
+            Instagram: <a href="https://www.instagram.com/irtona.de" target="_blank" rel="noopener">@irtona.de</a>
+          </p>
         </div>
-        
-        <div class="footer-bottom">
-            <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
-            <p class="footer-bottom-links">
-                <a href="impressum.html">Impressum</a> · 
-                <a href="datenschutz.html">Datenschutz</a> · 
-                <a href="agb.html">AGB</a>
-            </p>
+
+        <div class="info-card">
+          <span class="info-card-label">Steuer</span>
+          <h3>Umsatzsteuer</h3>
+          <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br><strong>DE999999999</strong></p>
+          <p style="margin-top:.8rem;">Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p>
         </div>
+
+        <div class="info-card">
+          <span class="info-card-label">Streitbeilegung</span>
+          <h3>Verbraucherstreit­beilegung</h3>
+          <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+        </div>
+
+        <div class="info-card">
+          <span class="info-card-label">Haftung</span>
+          <h3>Haftung für Inhalte</h3>
+          <p>Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+        </div>
+
+      </div>
+
+      <!-- Visual side -->
+      <div class="impressum-visual">
+        <img
+          src="https://images.unsplash.com/photo-1535957998253-26ae1ef29506?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=900"
+          alt="Irtona Büro Steinheim"
+          class="impressum-img"
+          loading="lazy"
+        />
+        <div class="impressum-caption">
+          <div class="caption-item">
+            <div class="caption-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </div>
+            <div><h4>Standort</h4><p>Ludwigsburg, Baden-Württemberg<br>Projekte bundesweit & remote</p></div>
+          </div>
+          <div class="caption-item">
+            <div class="caption-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><polyline points="2,4 12,13 22,4"/></svg>
+            </div>
+            <div><h4>E-Mail</h4><a href="mailto:info@irtona.de">info@irtona.de</a></div>
+          </div>
+          <div class="caption-item">
+            <div class="caption-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <div><h4>Instagram</h4><a href="https://www.instagram.com/irtona.de" target="_blank" rel="noopener">@irtona.de</a></div>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="logo">Irtona.de</a><p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen.</p><div class="footer-social"><a href="https://www.instagram.com/irtona.de" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a></div></div>
+      <div class="footer-col"><h5>Agentur</h5><ul><li><a href="index.html">Startseite</a></li><li><a href="index.html#leistungen">Leistungen</a></li><li><a href="portfolio.html">Referenzen</a></li><li><a href="kontakt.html">Projekt anfragen</a></li></ul></div>
+      <div class="footer-col"><h5>Pakete</h5><ul><li><a href="preise.html">Start — 330 €</a></li><li><a href="preise.html">Wachstum — 660 €</a></li><li><a href="preise.html">Premium — 990 €</a></li><li><a href="kontakt.html">Individuell</a></li></ul></div>
+      <div class="footer-col"><h5>Rechtliches</h5><ul><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li><li><a href="agb.html">AGB</a></li><li><a href="login.html">Kunden-Login</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p><div class="footer-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></div></div>
+  </div>
 </footer>
 
-    </body>
+<script>
+  const header=document.getElementById('site-header');
+  window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+  const hamburger=document.getElementById('hamburger'),overlay=document.getElementById('mobileOverlay');
+  const openMenu=()=>{hamburger.classList.add('is-active');overlay.classList.add('is-open');document.body.classList.add('menu-open')};
+  const closeMenu=()=>{hamburger.classList.remove('is-active');overlay.classList.remove('is-open');document.body.classList.remove('menu-open')};
+  hamburger.addEventListener('click',()=>hamburger.classList.contains('is-active')?closeMenu():openMenu());
+  overlay.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+</script>
+</body>
 </html>
