@@ -2,13 +2,16 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trattoria Irtona | Echtes italienisches Erlebnis</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="restaurant.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* ===== DESKTOP STYLES (unverändert) ===== */
+        /* ============================================================
+           DESKTOP STYLES (unverändert)
+           ============================================================ */
 
         .hero-fullscreen {
             height: 100vh;
@@ -52,25 +55,13 @@
             gap: 5rem;
             align-items: center;
         }
-
-        .premium-split-img {
-            position: relative;
-        }
-
-        .premium-split-img img {
-            width: 100%;
-            height: 600px;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
+        .premium-split-img { position: relative; }
+        .premium-split-img img { width: 100%; height: 600px; object-fit: cover; border-radius: 4px; }
         .premium-split-img::after {
             content: '';
             position: absolute;
-            top: 20px;
-            left: -20px;
-            width: 100%;
-            height: 100%;
+            top: 20px; left: -20px;
+            width: 100%; height: 100%;
             border: 2px solid #d4af37;
             z-index: -1;
             border-radius: 4px;
@@ -82,50 +73,24 @@
             gap: 2rem;
             margin-top: 3rem;
         }
-
         .world-card {
             position: relative;
             height: 450px;
             overflow: hidden;
             border-radius: 4px;
             cursor: pointer;
+            display: block;
+            text-decoration: none;
         }
-
         .world-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100%; height: 100%; object-fit: cover;
             transition: transform 0.7s ease, filter 0.7s ease;
             filter: brightness(0.6) grayscale(30%);
         }
-
-        .world-card:hover img {
-            transform: scale(1.05);
-            filter: brightness(0.8) grayscale(0%);
-        }
-
-        .world-content {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            right: 30px;
-            z-index: 2;
-        }
-
-        .world-content h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-
-        .world-content span {
-            color: #d4af37;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        .world-card:hover img { transform: scale(1.05); filter: brightness(0.8) grayscale(0%); }
+        .world-content { position: absolute; bottom: 30px; left: 30px; right: 30px; z-index: 2; }
+        .world-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem; }
+        .world-content span { color: #d4af37; font-family: 'Inter', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
 
         .parallax-quote {
             height: 60vh;
@@ -139,204 +104,153 @@
             position: relative;
             text-align: center;
         }
-
         .parallax-quote h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: #fff;
-            font-style: italic;
-            max-width: 800px;
-            line-height: 1.4;
-            z-index: 2;
-            padding: 0 20px;
+            font-size: 3rem; color: #fff; font-style: italic;
+            max-width: 800px; line-height: 1.4; z-index: 2; padding: 0 20px;
         }
 
-        /* ===== HAMBURGER MENÜ ===== */
-
+        /* ============================================================
+           BURGER BUTTON – Desktop versteckt
+           ============================================================ */
         .burger-btn {
-            display: none;
+            display: none !important;
             flex-direction: column;
             justify-content: space-between;
-            width: 26px;
-            height: 18px;
+            width: 28px;
+            height: 20px;
             background: none;
             border: none;
             cursor: pointer;
             padding: 0;
-            z-index: 1100;
+            flex-shrink: 0;
         }
-
         .burger-btn span {
             display: block;
             width: 100%;
             height: 2px;
             background-color: #f4ede4;
             border-radius: 2px;
-            transition: all 0.35s ease;
+            transition: transform 0.35s ease, opacity 0.35s ease;
             transform-origin: center;
         }
+        .burger-btn.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .burger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-        /* Burger → X Animation */
-        .burger-btn.open span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .burger-btn.open span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-        .burger-btn.open span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-
-        /* Mobile Nav Overlay */
-        .mobile-nav-overlay {
-            display: none;
+        /* Mobile Overlay */
+        #mobileNav {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(18, 15, 13, 0.97);
+            background: rgba(14, 11, 9, 0.98);
             z-index: 1050;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2.5rem;
+            pointer-events: none;
             opacity: 0;
             transition: opacity 0.35s ease;
         }
-
-        .mobile-nav-overlay.open {
-            display: flex;
+        #mobileNav.open {
+            pointer-events: all;
             opacity: 1;
         }
-
-        .mobile-nav-overlay a {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: #f4ede4;
-            text-decoration: none;
+        #mobileNav a {
+            font-family: 'Playfair Display', serif !important;
+            font-size: 2.4rem !important;
+            color: #f4ede4 !important;
+            text-decoration: none !important;
+            padding: 0.8rem 0;
             letter-spacing: 1px;
             transition: color 0.2s ease;
+            display: block;
         }
+        #mobileNav a:hover, #mobileNav a.active { color: #d4af37 !important; }
+        #mobileNav .mn-divider { width: 40px; height: 1px; background: rgba(212,175,55,0.35); margin: 0.3rem 0; }
+        #mobileNav .mn-contact { margin-top: 2.5rem; text-align: center; }
+        #mobileNav .mn-contact p { color: #b0a8a0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        #mobileNav .mn-contact a { font-family: 'Inter', sans-serif !important; font-size: 1.1rem !important; color: #d4af37 !important; }
 
-        .mobile-nav-overlay a:hover,
-        .mobile-nav-overlay a.active {
-            color: #d4af37;
-        }
-
-        .mobile-nav-divider {
-            width: 40px;
-            height: 1px;
-            background: #d4af37;
-            opacity: 0.4;
-        }
-
-        .mobile-nav-contact {
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        .mobile-nav-contact p {
-            color: #b0a8a0;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .mobile-nav-contact a {
-            font-family: 'Inter', sans-serif !important;
-            font-size: 1rem !important;
-            color: #d4af37 !important;
-        }
-
-        /* ===== MOBILE RESPONSIVE ===== */
-
+        /* ============================================================
+           MOBILE ≤ 768px
+           ============================================================ */
         @media (max-width: 768px) {
 
-            /* --- Burger anzeigen, Desktop-Nav ausblenden --- */
-            .burger-btn {
-                display: flex;
-            }
+            /* Burger einblenden */
+            .burger-btn { display: flex !important; }
 
-            .restaurant-nav .nav-links,
-            .restaurant-nav .phone-link {
-                display: none;
-            }
+            /* Desktop-Nav verstecken */
+            .restaurant-nav .nav-links { display: none !important; }
+            .restaurant-nav .phone-link { display: none !important; }
 
-            /* --- Hero Fix: kein background-attachment: fixed auf Mobile (iOS-Zoom-Bug) --- */
+            /* Hero: iOS background-attachment:fixed Bug-Fix */
             .hero-fullscreen {
-                background-attachment: scroll;
-                background-position: center center;
-                background-size: cover;
-                min-height: 100svh; /* safe viewport height für iOS */
+                background-attachment: scroll !important;
+                background-position: center center !important;
+                min-height: 100vh;
             }
 
-            /* Hero Schriftgrößen verkleinern */
-            .hero-fullscreen .rustic-title {
-                font-size: 2.6rem !important;
+            /* Hero Text skalieren */
+            .hero-fullscreen h1 {
+                font-size: 2.4rem !important;
                 margin-bottom: 1rem !important;
             }
-
-            .hero-fullscreen .rustic-subtitle {
+            .hero-fullscreen p.rustic-subtitle {
                 font-size: 1rem !important;
-                margin-bottom: 2rem !important;
+                margin-bottom: 1.5rem !important;
             }
 
-            /* --- Parallax Quote ebenfalls fixen --- */
+            /* Parallax Quote iOS-Fix */
             .parallax-quote {
-                background-attachment: scroll;
-                height: auto;
-                padding: 5rem 1.5rem;
+                background-attachment: scroll !important;
+                height: auto !important;
+                padding: 4rem 1.5rem !important;
             }
+            .parallax-quote h2 { font-size: 1.5rem !important; }
 
-            .parallax-quote h2 {
-                font-size: 1.7rem;
-            }
+            /* Split Layout → 1 Spalte */
+            .premium-split { grid-template-columns: 1fr !important; gap: 2rem !important; }
+            .premium-split-img img { height: 280px !important; }
+            .premium-split-img::after { display: none !important; }
 
-            /* --- Split Layout --- */
-            .premium-split {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-
-            .premium-split-img {
-                margin-top: 0;
-            }
-
-            .premium-split-img img {
-                height: 320px;
-            }
-
-            .premium-split-img::after {
-                display: none;
-            }
-
-            /* --- Worlds Grid --- */
+            /* Worlds Grid: 3 Spalten behalten, kleiner */
             .worlds-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.4rem !important;
+                margin-top: 1.5rem !important;
             }
+            .world-card { height: 160px !important; border-radius: 3px !important; }
+            .world-content { bottom: 8px !important; left: 8px !important; right: 8px !important; }
+            .world-content h3 { font-size: 0.85rem !important; margin-bottom: 0.15rem !important; }
+            .world-content span { font-size: 0.6rem !important; letter-spacing: 0.5px !important; }
 
-            .world-card {
-                height: 260px;
+            /* Reviews: 3 Spalten behalten */
+            .grid-3 {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.5rem !important;
             }
+            .review-card { padding: 0.75rem !important; border-radius: 5px !important; }
+            .stars { font-size: 0.55rem !important; margin-bottom: 0.4rem !important; }
+            .review-text { font-size: 0.6rem !important; line-height: 1.4 !important; margin-bottom: 0.5rem !important; }
+            .review-author { font-size: 0.6rem !important; }
+
+            /* Contact Grid → 1 Spalte */
+            .contact-grid { grid-template-columns: 1fr !important; }
         }
 
+        /* Tablet */
         @media (max-width: 992px) and (min-width: 769px) {
-            .premium-split {
-                grid-template-columns: 1fr;
-            }
-            .worlds-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .premium-split-img::after {
-                display: none;
-            }
+            .premium-split { grid-template-columns: 1fr !important; }
+            .premium-split-img::after { display: none !important; }
+            .world-card { height: 300px !important; }
         }
     </style>
 </head>
 <body class="rustic-dark-theme">
 
-    <!-- ===== NAVIGATION ===== -->
     <header class="restaurant-nav">
         <div class="nav-container">
             <a href="restaurant.html" class="restaurant-logo">Trattoria Irtona</a>
@@ -348,19 +262,18 @@
                 </ul>
             </nav>
             <div class="nav-actions">
-                <a href="tel:+491796676977" class="phone-link">
+                <a href="tel:+49123456789" class="phone-link">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M6.6 10.8a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 011-.24c1.1.37 2.3.57 3.6.57a1 1 0 011 1V21a1 1 0 01-1 1C10.3 22 2 13.7 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.3.2 2.5.6 3.6a1 1 0 01-.25 1l-2.25 2.2z"/>
                     </svg>
-                    +49 179 6676977
+                    +49 123 456
                 </a>
-                <a href="kontakt.html" class="cart-icon">
+                <a href="#" class="cart-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M7 4h-2l-1 2h2l3.6 7.6-1.35 2.45A1 1 0 009 18h10v-2H9.42a.25.25 0 01-.22-.37L10 14h7a1 1 0 00.92-.62l3-7A1 1 0 0020 4H7zm0 16a2 2 0 102 2 2 2 0 00-2-2zm10 0a2 2 0 102 2 2 2 0 00-2-2z"/>
                     </svg>
                     <span class="cart-count">0</span>
                 </a>
-                <!-- Burger Button -->
                 <button class="burger-btn" id="burgerBtn" aria-label="Menü öffnen">
                     <span></span>
                     <span></span>
@@ -370,20 +283,19 @@
         </div>
     </header>
 
-    <!-- Mobile Nav Overlay -->
-    <div class="mobile-nav-overlay" id="mobileNav">
+    <!-- Mobile Overlay -->
+    <div id="mobileNav">
         <a href="index.html" class="active">Start</a>
-        <div class="mobile-nav-divider"></div>
+        <div class="mn-divider"></div>
         <a href="project-b-philosophie.html">Philosophie</a>
-        <div class="mobile-nav-divider"></div>
+        <div class="mn-divider"></div>
         <a href="speisekarte.html">Speisekarte</a>
-        <div class="mobile-nav-contact">
+        <div class="mn-contact">
             <p>Reservierung</p>
-            <a href="tel:+491796676977">+49 179 6676977</a>
+            <a href="tel:+491796676977">+49 179 667 6977</a>
         </div>
     </div>
 
-    <!-- ===== HERO ===== -->
     <section class="hero-fullscreen">
         <div class="hero-overlay"></div>
         <div class="container relative-z">
@@ -397,7 +309,6 @@
         <div class="scroll-down-indicator">↓</div>
     </section>
 
-    <!-- ===== SPLIT SECTION ===== -->
     <section class="section-padding dark-bg">
         <div class="container reveal">
             <div class="premium-split">
@@ -418,41 +329,29 @@
         </div>
     </section>
 
-    <!-- ===== UNSERE WELTEN ===== -->
     <section class="section-padding dark-bg-alt">
         <div class="container reveal">
             <div style="text-align: center; margin-bottom: 4rem;">
                 <span style="color: #d4af37; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Entdecke</span>
                 <h2 class="rustic-heading" style="font-size: 3rem; margin-top: 0.5rem;">Unsere Welten</h2>
             </div>
-            
             <div class="worlds-grid">
                 <a href="speisekarte.html" class="world-card">
                     <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=987&auto=format&fit=crop" alt="Restaurant">
-                    <div class="world-content">
-                        <span>Kulinarik</span>
-                        <h3>Das Restaurant</h3>
-                    </div>
+                    <div class="world-content"><span>Kulinarik</span><h3>Das Restaurant</h3></div>
                 </a>
                 <a href="#" class="world-card">
                     <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800" alt="Weinbar">
-                    <div class="world-content">
-                        <span>Genuss</span>
-                        <h3>Die Weinbar</h3>
-                    </div>
+                    <div class="world-content"><span>Genuss</span><h3>Die Weinbar</h3></div>
                 </a>
                 <a href="#" class="world-card">
                     <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Events">
-                    <div class="world-content">
-                        <span>Erinnerungen</span>
-                        <h3>Feiern & Events</h3>
-                    </div>
+                    <div class="world-content"><span>Erinnerungen</span><h3>Feiern & Events</h3></div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- ===== REVIEWS ===== -->
     <section class="section-padding dark-bg-alt">
         <div class="container reveal">
             <h2 class="section-title rustic-heading">Was unsere Gäste sagen.</h2>
@@ -476,31 +375,24 @@
         </div>
     </section>
 
-    <!-- ===== PARALLAX QUOTE ===== -->
     <section class="parallax-quote reveal">
         <div style="position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);"></div>
         <h2>"Das Geheimnis der guten Küche ist die Liebe zu dem, was man tut."</h2>
     </section>
 
-    <!-- ===== MAP & CONTACT ===== -->
     <section class="contact-map-section section-padding dark-bg">
         <div class="container reveal">
             <h2 class="section-title rustic-heading" style="text-align: center; margin-bottom: 4rem;">Wir freuen uns auf dich.</h2>
-            
             <div class="map-wrapper rustic-map-wrapper">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.308898950005!2d9.278913315647087!3d48.96678507929828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4799d5cf1564cdb1%3A0x41ffd3c8d091a10!2sSteinheim%20an%20der%20Murr!5e0!3m2!1sde!2sde!4v1679000000000!5m2!1sde!2sde" 
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.308898950005!2d9.278913315647087!3d48.96678507929828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4799d5cf1564cdb1%3A0x41ffd3c8d091a10!2sSteinheim%20an%20der%20Murr!5e0!3m2!1sde!2sde!4v1679000000000!5m2!1sde!2sde" 
                     width="100%" height="600" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy">
                 </iframe>
-                
                 <div class="floating-contact-card rustic-contact-card">
                     <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1.5rem;">Trattoria Irtona</h3>
-                    
                     <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                         <div>
                             <h4 style="color: #d4af37; margin-bottom: 0.5rem;">📍 Adresse</h4>
                             <p style="color: #ccc; margin-bottom: 1.5rem;">Mustergasse 14<br>71711 Steinheim</p>
-                            
                             <h4 style="color: #d4af37; margin-bottom: 0.5rem;">📞 Kontakt</h4>
                             <p style="color: #ccc;">0123 / 456 789<br>info@irtona.de</p>
                         </div>
@@ -516,22 +408,14 @@
         </div>
     </section>
 
-    <!-- ===== CTA ===== -->
     <section class="bella-cta-section section-padding dark-bg">
         <div class="bella-cta-container container reveal">
-            <h2 class="bella-cta-title rustic-heading">
-                Bereit für dein eigenes Meisterstück?
-            </h2>
-            <p class="bella-cta-text">
-               Lass uns gemeinsam etwas Außergewöhnliches schaffen.<br><br><br>
-            </p>
-            <a href="kontakt.html" class="bella-cta-button">
-                Jetzt Projekt anfangen
-            </a>
+            <h2 class="bella-cta-title rustic-heading">Bereit für dein eigenes Meisterstück?</h2>
+            <p class="bella-cta-text">Lass uns gemeinsam etwas Außergewöhnliches schaffen.<br><br><br></p>
+            <a href="kontakt.html" class="bella-cta-button">Jetzt Projekt anfangen</a>
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
     <footer class="bella-footer">
         <div class="bella-footer-container container">
             <p>© 2026 Irtona.de</p>
@@ -541,44 +425,40 @@
     </footer>
 
     <script>
-    // ===== Scroll Reveal =====
     document.addEventListener("DOMContentLoaded", () => {
+        // Scroll Reveal
         const reveals = document.querySelectorAll(".reveal");
-
         const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
+            const wh = window.innerHeight;
             reveals.forEach(el => {
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add("active");
-                }
+                if (el.getBoundingClientRect().top < wh - 100) el.classList.add("active");
             });
         };
-
         window.addEventListener("scroll", revealOnScroll);
         revealOnScroll();
-    });
 
-    // ===== Hamburger Menü =====
-    const burgerBtn = document.getElementById("burgerBtn");
-    const mobileNav = document.getElementById("mobileNav");
+        // Burger Menü
+        const burgerBtn = document.getElementById("burgerBtn");
+        const mobileNav = document.getElementById("mobileNav");
 
-    burgerBtn.addEventListener("click", () => {
-        const isOpen = mobileNav.classList.toggle("open");
-        burgerBtn.classList.toggle("open", isOpen);
-        // Scrollen sperren wenn Menü offen
-        document.body.style.overflow = isOpen ? "hidden" : "";
-        burgerBtn.setAttribute("aria-label", isOpen ? "Menü schließen" : "Menü öffnen");
-    });
+        burgerBtn.addEventListener("click", () => {
+            const isOpen = !mobileNav.classList.contains("open");
+            mobileNav.classList.toggle("open", isOpen);
+            burgerBtn.classList.toggle("open", isOpen);
+            document.body.style.overflow = isOpen ? "hidden" : "";
+            burgerBtn.setAttribute("aria-label", isOpen ? "Menü schließen" : "Menü öffnen");
+        });
 
-    // Menü schließen wenn ein Link geklickt wird
-    mobileNav.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-            mobileNav.classList.remove("open");
-            burgerBtn.classList.remove("open");
-            document.body.style.overflow = "";
+        mobileNav.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                mobileNav.classList.remove("open");
+                burgerBtn.classList.remove("open");
+                document.body.style.overflow = "";
+            });
         });
     });
     </script>
+</body>
+</html>
 </body>
 </html>
