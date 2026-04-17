@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vielen Dank | Irtona.de</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* Hier kopierst du am besten deine :root Variablen und das Basis-CSS aus der index.html rein */
+    :root {
+      --black: #0a0a0a; --white: #ffffff; --gray-50: #f7f7f7; --gray-100: #eeeeee;
+      --gray-400: #999999; --gray-600: #555555; --radius-lg: 32px;
+      --font: -apple-system, BlinkMacSystemFont, 'Outfit', sans-serif;
+      --transition: 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    
+    body { font-family: var(--font); background: var(--white); color: var(--black); margin: 0; text-align: center; }
+    
+    .thanks-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Der Blob-Effekt aus deiner Hero-Sektion */
+    .blob {
+      position: absolute; width: 400px; height: 400px; background: #f0f0f0;
+      filter: blur(80px); border-radius: 50%; z-index: -1;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+    }
+
+    .thanks-card {
+      max-width: 600px;
+      padding: 60px 40px;
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+    }
+
+    .icon-circle {
+      width: 80px; height: 80px; background: var(--black); color: var(--white);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 30px;
+    }
+
+    h1 { font-size: 3rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 15px; }
+    p { color: var(--gray-600); font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; font-weight: 300; }
+
+    .kn-display {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--gray-50);
+      border: 1px dashed var(--gray-200);
+      border-radius: 12px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 40px;
+    }
+
+    .btn-large {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 40px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 100px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .btn-large:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    /* Header Styles (vereinfacht für die Danke-Seite) */
+    .simple-header {
+      position: absolute; top: 0; width: 100%; padding: 20px 0;
+    }
+    .logo { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.05em; }
+  </style>
+</head>
+<body>
+
+  <header class="simple-header">
+    <div class="logo">Irtona.de</div>
+  </header>
+
+  <main class="thanks-section">
+    <div class="blob"></div>
+    
+    <div class="thanks-card">
+      <div class="icon-circle">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      
+      <h1>Danke!</h1>
+      <p>Deine Anfrage ist sicher bei uns gelandet. Wir schauen uns die Details an und melden uns innerhalb von 24 Stunden bei dir.</p>
+      
+      <div id="kn-container" style="display: none;">
+        <span style="display: block; font-size: 0.8rem; color: var(--gray-400); text-transform: uppercase; margin-bottom: 5px;">Deine Kundennummer</span>
+        <div class="kn-display" id="display-kn">KN-000000</div>
+      </div>
+
+      <a href="index.html" class="btn-large">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Zurück zur Startseite
+      </a>
+    </div>
+  </main>
+
+  <script>
+    // Kleiner Trick: Wir holen uns die Kundennummer aus dem LocalStorage, 
+    // falls wir sie dort vorher gespeichert haben.
+    const savedKN = localStorage.getItem('last_kn');
+    if (savedKN) {
+      document.getElementById('kn-container').style.display = 'block';
+      document.getElementById('display-kn').innerText = savedKN;
+    }
+  </script>
+</body>
+</html>
