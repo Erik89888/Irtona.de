@@ -745,7 +745,7 @@
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
                 <circle cx="12" cy="9" r="2.5"/>
               </svg>
-              <span>Ludwigsburg, Baden-Württemberg</span>
+              <span>Steinheim, Baden-Württemberg</span>
             </div>
             <div class="sidebar-contact-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -763,8 +763,9 @@
           <h2 class="form-body-title">Projekt anfragen</h2>
           <p class="form-body-sub">Welches Paket interessiert dich? Wähl direkt aus oder lass es uns einfach wissen.</p>
 
-          <form action="send_mail.php" method="POST" id="contactForm">
+          <form action="https://formspree.io/f/mojydjwy" method="POST" id="contactForm">
             <input type="hidden" name="kundennummer" id="kundennummer_input">
+            <input type="hidden" name="_next" value="https://irtona.de/danke.html">
 
             <!-- Package picker -->
             <div class="package-selector">
@@ -924,18 +925,20 @@
     revealEls.forEach(activateReveal);
   }
   document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm');
     const knInput = document.getElementById('kundennummer_input');
-    
+
+    // Generiert eine 6-stellige Nummer (z.B. 482930)
+    const generateKN = () => {
+        return Math.floor(100000 + Math.random() * 900000);
+    };
+
+    // Nummer beim Laden generieren und ins versteckte Feld setzen
     if (knInput) {
-        const nr = Math.floor(100000 + Math.random() * 900000);
-        const fullKN = "KN-" + nr;
-        knInput.value = fullKN;
-        
-        // NEU: Speichert die Nummer im Browser des Kunden, 
-        // damit die danke.html sie auslesen kann
-        localStorage.setItem('last_kn', fullKN);
+        knInput.value = "KN-" + generateKN();
     }
 });
+
 
 </script>
 </body>
