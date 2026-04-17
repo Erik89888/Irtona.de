@@ -924,20 +924,18 @@
     revealEls.forEach(activateReveal);
   }
   document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('contactForm');
     const knInput = document.getElementById('kundennummer_input');
-
-    // Generiert eine 6-stellige Nummer (z.B. 482930)
-    const generateKN = () => {
-        return Math.floor(100000 + Math.random() * 900000);
-    };
-
-    // Nummer beim Laden generieren und ins versteckte Feld setzen
+    
     if (knInput) {
-        knInput.value = "KN-" + generateKN();
+        const nr = Math.floor(100000 + Math.random() * 900000);
+        const fullKN = "KN-" + nr;
+        knInput.value = fullKN;
+        
+        // NEU: Speichert die Nummer im Browser des Kunden, 
+        // damit die danke.html sie auslesen kann
+        localStorage.setItem('last_kn', fullKN);
     }
 });
-
 
 </script>
 </body>
