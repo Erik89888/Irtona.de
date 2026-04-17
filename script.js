@@ -1,136 +1,156 @@
-// 1. Sanftes Scrollen für die Navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetElement = document.querySelector(this.getAttribute('href'));
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 100,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
+// ============================================================
+// 1. JS-Ready Class (für Reveal-Animationen)
+// ============================================================
+document.body.classList.add('js-ready');
 
-// 2. Reveal on Scroll (Elemente fliegen sanft ein)
-const revealElements = document.querySelectorAll('.reveal');
-
-const revealCallback = (entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            // Optional: Wenn es einmal geladen ist, nicht wieder ausblenden
-            // observer.unobserve(entry.target); 
-        }
-    });
-};
-
-const revealOptions = {
-    threshold: 0.15, // Löst aus, wenn 15% des Elements sichtbar sind
-    rootMargin: "0px 0px -50px 0px"
-};
-
-const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
-
-revealElements.forEach(el => revealObserver.observe(el));
-
-
-// 3. 3D Tilt Effekt für Portfolio und Preiskarten (Maus-Tracking)
-const tiltElements = document.querySelectorAll('.tilt-element');
-
-tiltElements.forEach(el => {
-    el.addEventListener('mousemove', (e) => {
-        const rect = el.getBoundingClientRect();
-        
-        // Berechne die Mausposition innerhalb des Elements (von -0.5 bis 0.5)
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        
-        // Multiplikator für die Stärke der Neigung
-        const intensity = 20; 
-        
-        // Wende die 3D Transformation an
-        el.style.transform = `perspective(1000px) rotateY(${x * intensity}deg) rotateX(${-y * intensity}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-
-    // Zurücksetzen, wenn die Maus das Element verlässt
-    el.addEventListener('mouseleave', () => {
-        el.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
-        el.style.transition = 'transform 0.5s ease'; // Weicher Übergang zurück
-    });
-    
-    // Übergang entfernen, solange die Maus sich bewegt, damit es direkt reagiert
-    el.addEventListener('mouseenter', () => {
-        el.style.transition = 'none';
-    });
-    // Maus-Position für den Glow-Effekt tracken
-document.querySelectorAll('.price-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-    });
-
-    });
-});
-
-// Vorher-Nachher Slider Logik - PROJEKT A
-const slider = document.getElementById('comparison-slider');
-const imageAfter = document.querySelector('.image-after');
-
-if (slider && imageAfter) {
-    slider.addEventListener('input', (e) => {
-        const sliderValue = e.target.value;
-        imageAfter.style.width = `${sliderValue}%`;
+// ============================================================
+// 2. Header Scroll-Effekt
+// ============================================================
+const siteHeader = document.getElementById('site-header');
+if (siteHeader) {
+    window.addEventListener('scroll', () => {
+        siteHeader.classList.toggle('scrolled', window.scrollY > 30);
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. SUCHFUNKTION ---
-    const searchForm = document.getElementById('page-search-form');
-    if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
+// ============================================================
+// 3. Sanftes Scrollen für Anchor-Links
+// ============================================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
             e.preventDefault();
-            let query = document.getElementById('search-input').value.trim();
-            
-            if(query) {
-                // window.find ist ein alter Standard, funktioniert aber in den meisten Browsern
-                let found = window.find(query);
-                if (!found) {
-                    alert('Leider wurde der Begriff "' + query + '" auf dieser Seite nicht gefunden.');
-                }
-            }
-        });
-    }
-
-    // --- 2. BURGER-MENÜ LOGIK ---
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (hamburger && mobileMenu) {
-        hamburger.addEventListener('click', () => {
-            // Toggle der Klassen
-            const isOpen = mobileMenu.classList.toggle('active');
-            hamburger.classList.toggle('active'); // Löst die X-Animation aus
-            
-            // Barrierefreiheit & Body-Lock
-            hamburger.setAttribute('aria-expanded', isOpen);
-            mobileMenu.setAttribute('aria-hidden', !isOpen);
-            document.body.classList.toggle('menu-open', isOpen);
-        });
-
-        // Menü schließen, wenn ein Link geklickt wird
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                mobileMenu.classList.remove('active');
-                hamburger.classList.remove('active');
-                document.body.classList.remove('menu-open');
-                hamburger.setAttribute('aria-expanded', 'false');
-                mobileMenu.setAttribute('aria-hidden', 'true');
-            }
-        });
-    }
+            window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
+        }
+    });
 });
+
+// ============================================================
+// 4. Reveal on Scroll
+// ============================================================
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ============================================================
+// 5. HAMBURGER MENÜ  ← Das war der Bug: falsche IDs
+//    HTML hat: id="hamburger" + id="mobileOverlay" + class="is-open"
+//    Altes Script suchte: id="mobile-menu" + class="active"  ✗
+// ============================================================
+const hamburger    = document.getElementById('hamburger');
+const mobileOverlay = document.getElementById('mobileOverlay');
+
+if (hamburger && mobileOverlay) {
+    hamburger.addEventListener('click', () => {
+        const isOpen = !mobileOverlay.classList.contains('is-open');
+
+        mobileOverlay.classList.toggle('is-open', isOpen);
+        hamburger.classList.toggle('is-active', isOpen);
+        document.body.classList.toggle('menu-open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        hamburger.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+    });
+
+    // Overlay schließen wenn ein Link geklickt wird
+    mobileOverlay.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileOverlay.classList.remove('is-open');
+            hamburger.classList.remove('is-active');
+            document.body.classList.remove('menu-open');
+            hamburger.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    // Schließen mit Escape-Taste
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && mobileOverlay.classList.contains('is-open')) {
+            mobileOverlay.classList.remove('is-open');
+            hamburger.classList.remove('is-active');
+            document.body.classList.remove('menu-open');
+            hamburger.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
+// ============================================================
+// 6. FAQ Accordion
+// ============================================================
+document.querySelectorAll('.faq-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item');
+        const body = item.querySelector('.faq-body');
+        const isOpen = item.classList.contains('open');
+
+        // Alle schließen
+        document.querySelectorAll('.faq-item.open').forEach(openItem => {
+            openItem.classList.remove('open');
+            openItem.querySelector('.faq-body').style.maxHeight = '0';
+        });
+
+        // Dieses öffnen, wenn es vorher zu war
+        if (!isOpen) {
+            item.classList.add('open');
+            body.style.maxHeight = body.scrollHeight + 'px';
+        }
+    });
+});
+
+// ============================================================
+// 7. 3D Tilt-Effekt für .tilt-element
+// ============================================================
+document.querySelectorAll('.tilt-element').forEach(el => {
+    el.addEventListener('mouseenter', () => { el.style.transition = 'none'; });
+
+    el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        el.style.transform = `perspective(1000px) rotateY(${x * 20}deg) rotateX(${-y * 20}deg) scale3d(1.02,1.02,1.02)`;
+    });
+
+    el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform 0.5s ease';
+        el.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)';
+    });
+});
+
+// ============================================================
+// 8. Mouse-Glow für Preiskarten
+// ============================================================
+document.querySelectorAll('.price-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+});
+
+// ============================================================
+// 9. Vorher-Nachher Slider (Projekt A)
+// ============================================================
+const slider    = document.getElementById('comparison-slider');
+const imageAfter = document.querySelector('.image-after');
+if (slider && imageAfter) {
+    slider.addEventListener('input', e => {
+        imageAfter.style.width = `${e.target.value}%`;
+    });
+}
+
+// ============================================================
+// 10. Seitensuche (falls vorhanden)
+// ============================================================
+const searchForm = document.getElementById('page-search-form');
+if (searchForm) {
+    searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const query = document.getElementById('search-input').value.trim();
+        if (query && !window.find(query)) {
+            alert(`"${query}" wurde auf dieser Seite nicht gefunden.`);
+        }
+    });
+}
