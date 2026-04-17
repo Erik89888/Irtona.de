@@ -59,7 +59,7 @@
     .site-header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 900;
+      z-index: 1100;
       padding: 18px 0;
       transition: all .4s ease;
     }
@@ -625,7 +625,7 @@
   </nav>
   <div class="mobile-meta">
     <span>Irtona.de © 2026</span>
-    <span>Ludwigsburg, DE</span>
+    <span>Steinheim, DE</span>
   </div>
 </div>
 
@@ -763,8 +763,8 @@
           <h2 class="form-body-title">Projekt anfragen</h2>
           <p class="form-body-sub">Welches Paket interessiert dich? Wähl direkt aus oder lass es uns einfach wissen.</p>
 
-          <form action="/backend-placeholder" method="POST" id="contactForm">
-            <input type="hidden" name="db_record_id" value="">
+          <form action="send_mail.php" method="POST" id="contactForm">
+            <input type="hidden" name="kundennummer" id="kundennummer_input">
 
             <!-- Package picker -->
             <div class="package-selector">
@@ -923,6 +923,22 @@
   } else {
     revealEls.forEach(activateReveal);
   }
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm');
+    const knInput = document.getElementById('kundennummer_input');
+
+    // Generiert eine 6-stellige Nummer (z.B. 482930)
+    const generateKN = () => {
+        return Math.floor(100000 + Math.random() * 900000);
+    };
+
+    // Nummer beim Laden generieren und ins versteckte Feld setzen
+    if (knInput) {
+        knInput.value = "KN-" + generateKN();
+    }
+});
+
+
 </script>
 </body>
 </html>
