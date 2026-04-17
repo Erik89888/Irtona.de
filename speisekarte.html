@@ -3,47 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <title>Speisekarte | Trattoria Irtona</title>
-    <link rel="icon" type="image/png" href="favicon.png">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="restaurant.css">
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
-
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_16x16.png"
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESKTOP STYLES (unverändert)
+           ============================================================ */
+
+        .hero-fullscreen {
+            height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-fullscreen .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.4) 50%, rgba(18,18,18,0.9) 100%);
+        }
+
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #d4af37;
+            font-size: 24px;
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        .premium-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .premium-split-img { position: relative; }
+        .premium-split-img img { width: 100%; height: 600px; object-fit: cover; border-radius: 4px; }
+        .premium-split-img::after {
+            content: '';
+            position: absolute;
+            top: 20px; left: -20px;
+            width: 100%; height: 100%;
+            border: 2px solid #d4af37;
+            z-index: -1;
+            border-radius: 4px;
+        }
+
+        .worlds-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .world-card {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+        }
+        .world-card img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.7s ease, filter 0.7s ease;
+            filter: brightness(0.6) grayscale(30%);
+        }
+        .world-card:hover img { transform: scale(1.05); filter: brightness(0.8) grayscale(0%); }
+        .world-content { position: absolute; bottom: 30px; left: 30px; right: 30px; z-index: 2; }
+        .world-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem; }
+        .world-content span { color: #d4af37; font-family: 'Inter', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .parallax-quote {
+            height: 60vh;
+            background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+        }
+        .parallax-quote h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem; color: #fff; font-style: italic;
+            max-width: 800px; line-height: 1.4; z-index: 2; padding: 0 20px;
+        }
+
+        /* ============================================================
+           BURGER BUTTON – Desktop versteckt
+           ============================================================ */
+        .burger-btn {
+            display: none !important;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            flex-shrink: 0;
+        }
+        .burger-btn span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #f4ede4;
+            border-radius: 2px;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+            transform-origin: center;
+        }
+        .burger-btn.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .burger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* Mobile Overlay */
+        #mobileNav {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(14, 11, 9, 0.98);
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        #mobileNav.open {
+            pointer-events: all;
+            opacity: 1;
+        }
+        #mobileNav a {
+            font-family: 'Playfair Display', serif !important;
+            font-size: 2.4rem !important;
+            color: #f4ede4 !important;
+            text-decoration: none !important;
+            padding: 0.8rem 0;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+            display: block;
+        }
+        #mobileNav a:hover, #mobileNav a.active { color: #d4af37 !important; }
+        #mobileNav .mn-divider { width: 40px; height: 1px; background: rgba(212,175,55,0.35); margin: 0.3rem 0; }
+        #mobileNav .mn-contact { margin-top: 2.5rem; text-align: center; }
+        #mobileNav .mn-contact p { color: #b0a8a0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        #mobileNav .mn-contact a { font-family: 'Inter', sans-serif !important; font-size: 1.1rem !important; color: #d4af37 !important; }
+
+        /* ============================================================
+           MOBILE ≤ 768px
+           ============================================================ */
+        @media (max-width: 768px) {
+
+            /* Burger einblenden */
+            .burger-btn { display: flex !important; }
+
+            /* Desktop-Nav verstecken */
+            .restaurant-nav .nav-links { display: none !important; }
+            .restaurant-nav .phone-link { display: none !important; }
+
+            /* Hero: iOS background-attachment:fixed Bug-Fix */
+            .hero-fullscreen {
+                background-attachment: scroll !important;
+                background-position: center center !important;
+                min-height: 100vh;
+            }
+
+            /* Hero Text skalieren */
+            .hero-fullscreen h1 {
+                font-size: 2.4rem !important;
+                margin-bottom: 1rem !important;
+            }
+            .hero-fullscreen p.rustic-subtitle {
+                font-size: 1rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            /* Parallax Quote iOS-Fix */
+            .parallax-quote {
+                background-attachment: scroll !important;
+                height: auto !important;
+                padding: 4rem 1.5rem !important;
+            }
+            .parallax-quote h2 { font-size: 1.5rem !important; }
+
+            /* Split Layout → 1 Spalte */
+            .premium-split { grid-template-columns: 1fr !important; gap: 2rem !important; }
+            .premium-split-img img { height: 280px !important; }
+            .premium-split-img::after { display: none !important; }
+
+            /* Worlds Grid: 3 Spalten behalten, kleiner */
+            .worlds-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.4rem !important;
+                margin-top: 1.5rem !important;
+            }
+            .world-card { height: 160px !important; border-radius: 3px !important; }
+            .world-content { bottom: 8px !important; left: 8px !important; right: 8px !important; }
+            .world-content h3 { font-size: 0.85rem !important; margin-bottom: 0.15rem !important; }
+            .world-content span { font-size: 0.6rem !important; letter-spacing: 0.5px !important; }
+
+            /* Reviews: 3 Spalten behalten */
+            .grid-3 {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.5rem !important;
+            }
+            .review-card { padding: 0.75rem !important; border-radius: 5px !important; }
+            .stars { font-size: 0.55rem !important; margin-bottom: 0.4rem !important; }
+            .review-text { font-size: 0.6rem !important; line-height: 1.4 !important; margin-bottom: 0.5rem !important; }
+            .review-author { font-size: 0.6rem !important; }
+
+            /* Contact Grid → 1 Spalte */
+            .contact-grid { grid-template-columns: 1fr !important; }
+        }
+
+        /* Tablet */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .premium-split { grid-template-columns: 1fr !important; }
+            .premium-split-img::after { display: none !important; }
+            .world-card { height: 300px !important; }
+        }
+    </style>
 </head>
 
 <body class="rustic-dark-theme">
 
 <header class="restaurant-nav">
-    <div class="nav-container">
-        <a href="restaurant.html" class="restaurant-logo">Trattoria Irtona.</a>
+        <div class="nav-container">
+            <a href="restaurant.html" class="restaurant-logo">Trattoria Irtona</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Start</a></li>
+                    <li><a href="project-b-philosophie.html">Philosophie</a></li>
+                    <li><a href="speisekarte.html">Speisekarte</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <a href="tel:+49123456789" class="phone-link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6.6 10.8a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 011-.24c1.1.37 2.3.57 3.6.57a1 1 0 011 1V21a1 1 0 01-1 1C10.3 22 2 13.7 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.3.2 2.5.6 3.6a1 1 0 01-.25 1l-2.25 2.2z"/>
+                    </svg>
+                    +49 123 456
+                </a>
+                <a href="kontakt.html" class="cart-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 4h-2l-1 2h2l3.6 7.6-1.35 2.45A1 1 0 009 18h10v-2H9.42a.25.25 0 01-.22-.37L10 14h7a1 1 0 00.92-.62l3-7A1 1 0 0020 4H7zm0 16a2 2 0 102 2 2 2 0 00-2-2zm10 0a2 2 0 102 2 2 2 0 00-2-2z"/>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="burger-btn" id="burgerBtn" aria-label="Menü öffnen">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-        <nav>
-            <ul class="nav-links">
-                <li><a href="restaurant.html">Start</a></li>
-                <li><a href="restaurant.html#philosophie">Philosophie</a></li>
-                <li><a href="speisekarte.html" class="active">Speisekarte</a></li>
-            </ul>
-        </nav>
-
-        <div class="nav-actions">
-            <a href="tel:+491796676977" class="phone-link">
-                <!-- 📞 ersetzt -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6.6 10.8a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 011-.24c1.1.37 2.3.57 3.6.57a1 1 0 011 1V21a1 1 0 01-1 1C10.3 22 2 13.7 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.3.2 2.5.6 3.6a1 1 0 01-.25 1l-2.25 2.2z"/>
-                </svg>
-                +49 123 456
-            </a>
-
-            <a href="#" class="cart-icon">
-                <!-- 🛒 ersetzt -->
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7 4h-2l-1 2h2l3.6 7.6-1.35 2.45A1 1 0 009 18h10v-2H9.42a.25.25 0 01-.22-.37L10 14h7a1 1 0 00.92-.62l3-7A1 1 0 0020 4H7zm0 16a2 2 0 102 2 2 2 0 00-2-2zm10 0a2 2 0 102 2 2 2 0 00-2-2z"/>
-                </svg>
-                <span class="cart-count">0</span>
-            </a>
+    <!-- Mobile Overlay -->
+    <div id="mobileNav">
+        <a href="index.html" class="active">Start</a>
+        <div class="mn-divider"></div>
+        <a href="project-b-philosophie.html">Philosophie</a>
+        <div class="mn-divider"></div>
+        <a href="speisekarte.html">Speisekarte</a>
+        <div class="mn-contact">
+            <p>Reservierung</p>
+            <a href="tel:+491796676977">+49 179 667 6977</a>
         </div>
     </div>
-</header>
 
 <section class="section-padding dark-bg" style="padding-top: 150px;">
     <div class="container reveal">
@@ -155,24 +408,39 @@
 
 <!-- ✅ Reveal Script -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const reveals = document.querySelectorAll(".reveal");
+    document.addEventListener("DOMContentLoaded", () => {
+        // Scroll Reveal
+        const reveals = document.querySelectorAll(".reveal");
+        const revealOnScroll = () => {
+            const wh = window.innerHeight;
+            reveals.forEach(el => {
+                if (el.getBoundingClientRect().top < wh - 100) el.classList.add("active");
+            });
+        };
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll();
 
-    const revealOnScroll = () => {
-        const windowHeight = window.innerHeight;
+        // Burger Menü
+        const burgerBtn = document.getElementById("burgerBtn");
+        const mobileNav = document.getElementById("mobileNav");
 
-        reveals.forEach(el => {
-            const top = el.getBoundingClientRect().top;
-            if (top < windowHeight - 100) {
-                el.classList.add("active");
-            }
+        burgerBtn.addEventListener("click", () => {
+            const isOpen = !mobileNav.classList.contains("open");
+            mobileNav.classList.toggle("open", isOpen);
+            burgerBtn.classList.toggle("open", isOpen);
+            document.body.style.overflow = isOpen ? "hidden" : "";
+            burgerBtn.setAttribute("aria-label", isOpen ? "Menü schließen" : "Menü öffnen");
         });
-    };
 
-    window.addEventListener("scroll", revealOnScroll);
-    revealOnScroll();
-});
-</script>
+        mobileNav.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                mobileNav.classList.remove("open");
+                burgerBtn.classList.remove("open");
+                document.body.style.overflow = "";
+            });
+        });
+    });
+    </script>
 
 </body>
 </html>
