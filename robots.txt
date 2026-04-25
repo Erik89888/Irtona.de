@@ -1,4 +1,17 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# robots.txt für irtona.de
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 User-agent: *
 Allow: /
 
+# Login-Seite vom Index ausschließen
+Disallow: /login.html
+
+# Verzeichnisse ausschließen, die nicht öffentlich sein sollen
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+
+# Sitemap-Standort angeben
 Sitemap: https://irtona.de/sitemap.xml
