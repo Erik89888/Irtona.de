@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+  <script>
+  // Falls jemand /index.html direkt aufruft → auf / weiterleiten
+  if (window.location.pathname.endsWith('/index.html')) {
+    window.location.replace('/' + window.location.search + window.location.hash);
+  }
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Irtona.de – Maßgeschneiderte Webseiten für kleine Unternehmen. Festpreis. Alles inklusive." />
