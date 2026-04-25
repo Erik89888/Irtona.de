@@ -1,75 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- HAUPTSEITEN — höchste Priorität           -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <url>
+    <loc>https://irtona.de/</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/portfolio.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/preise.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/kontakt.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
-<url>
-<loc>https://irtona.de/</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>1.00</priority>
-</url>
-<url>
-<loc>https://irtona.de/portfolio.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/preise.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/kontakt.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/project-a-v2.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/restaurant.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/project-c.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/impressum.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/datenschutz.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/agb.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/login.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://irtona.de/project-b-philosophie.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.64</priority>
-</url>
-<url>
-<loc>https://irtona.de/speisekarte.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.64</priority>
-</url>
-<url>
-<loc>https://irtona.de/kontakt-project-c.html</loc>
-<lastmod>2026-04-17T22:47:13+00:00</lastmod>
-<priority>0.64</priority>
-</url>
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- PORTFOLIO-PROJEKTE (Hauptdemos)            -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <url>
+    <loc>https://irtona.de/project-a-v2.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/restaurant.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/project-c.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- PORTFOLIO-UNTERSEITEN                      -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <url>
+    <loc>https://irtona.de/project-b-philosophie.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/speisekarte.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/kontakt-project-c.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <!-- RECHTLICHES — niedrige Priorität           -->
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <url>
+    <loc>https://irtona.de/impressum.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/datenschutz.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://irtona.de/agb.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- HINWEIS: login.html ist absichtlich NICHT in der Sitemap -->
+  <!-- Login-Seiten sollen nicht indexiert werden                -->
+
 </urlset>
