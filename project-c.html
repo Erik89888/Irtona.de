@@ -436,12 +436,19 @@
             nav, header .btn-primary { display: none; }
             .hamburger { display: flex; }
 
-            /* ✅ FIX 1: Hero-Overlap auf Mobile.
+            /* ✅ FIX 1: Hero-Overlap (Stats-Bar) auf Mobile.
                Das .hero-stats ist position:absolute;bottom:0 und überlagerte
                den "Slot reservieren" Button. Mit padding-bottom auf .hero-content
                wird genug Platz nach unten erzeugt, damit der Button sichtbar bleibt.
-               Die Stats-Bar ist ca. 90px hoch (2× 1.5rem padding + Text) → 120px Sicherheitspuffer. */
+
+               ✅ FIX 3: Hero-Overlap (Top-Bar) auf Mobile.
+               Beim ersten Aufruf der Seite wurde die Headline "Schwerkraft ist nur ein Wort"
+               von der fixen Top-Bar (Logo) überlagert, weil .hero-content im Flex-Container
+               vertikal zentriert ist (align-items:center). Mit padding-top wird der Inhalt
+               nach unten geschoben, sodass die Headline nicht mehr unter dem Header sitzt.
+               Wert ~100px = Header-Höhe (~60–70px) + Atemraum. */
             .hero-content {
+                padding-top: 100px;
                 padding-bottom: 130px;
             }
 
@@ -471,6 +478,24 @@
 
             .why-us-floating { display: none; }
             .why-us-badge { right: 0.5rem; }
+
+            /* ✅ FIX 4: Newsletter "Abonnieren"-Button auf Mobile.
+               Das Form war auf Mobile noch flex-row. Bei schmalen Screens wurde der Button
+               durch flex-shrink (Default 1) zusammengedrückt, und der Text "ABONNIEREN"
+               (uppercase + letter-spacing) wurde durch das overflow:hidden auf .btn-primary
+               rechts abgeschnitten/halb verschluckt.
+               Lösung: Form stapelt sich auf Mobile (column), Button geht über volle Breite.
+               Damit ist der Text durch das Browser-Default-Center der <button>-Elemente
+               sauber zentriert und nichts wird mehr abgeschnitten. */
+            .newsletter-form {
+                flex-direction: column;
+                max-width: 360px;
+            }
+            .newsletter-form .btn-primary {
+                border-left: none;
+                border-top: 1px solid var(--border);
+                padding: 1rem 1.6rem;
+            }
         }
     </style>
 </head>
@@ -757,8 +782,5 @@
             });
         });
     </script>
-</body>
-</html>
-
 </body>
 </html>
