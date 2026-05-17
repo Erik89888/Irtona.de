@@ -542,38 +542,57 @@
             margin-bottom: 60px;
         }
 
-        .comparison-wrap {
+        .comparison-container {
             position: relative;
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
+            margin: 0 auto;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid var(--border);
-            user-select: none;
             box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-            max-width: 900px;
-            margin: 0 auto;
-            cursor: col-resize;
+            background-image: url('https://images.unsplash.com/photo-1627502208346-b835b72c0f05?q=80&w=1337&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            user-select: none;
         }
 
-        .comp-img {
-            width: 100%;
-            height: 480px;
-            object-fit: cover;
-            display: block;
+        .grayscale-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1627502208346-b835b72c0f05?q=80&w=1337&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover; background-position: center;
+            filter: grayscale(100%) brightness(0.75);
+            z-index: 1;
+            clip-path: inset(0 0 0 50%);
         }
 
-        .comp-after-wrap {
-            position: absolute;
-            top: 0; left: 0;
-            height: 100%;
-            overflow: hidden;
-            width: 50%;
+        .slider-input {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: ew-resize; z-index: 10;
+            margin: 0;
         }
 
-        .comp-after-wrap img {
-            width: 900px;
-            max-width: none;
-            height: 100%;
-            object-fit: cover;
+        .slider-visuals {
+            position: absolute; top: 0; left: 50%; width: 0; height: 100%;
+            z-index: 5; pointer-events: none; transform: translateX(-50%);
+        }
+
+        .slider-line {
+            position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+            background: var(--blue);
+            box-shadow: 0 0 20px var(--blue-glow);
+        }
+
+        .slider-button {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px; height: 44px;
+            background: var(--blue);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 24px rgba(59,107,255,0.5);
+            color: white; font-size: 1rem; font-weight: bold;
         }
 
         .comp-label {
@@ -589,36 +608,11 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--white-dim);
+            z-index: 6;
         }
 
         .comp-label-before { right: 20px; }
         .comp-label-after { left: 20px; color: var(--blue-bright); border-color: var(--border-active); }
-
-        .comp-handle {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: var(--blue);
-            box-shadow: 0 0 20px var(--blue-glow);
-        }
-
-        .comp-handle-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 44px; height: 44px;
-            background: var(--blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 24px rgba(59,107,255,0.5);
-            cursor: col-resize;
-        }
 
         /* ===== DESIGN PHILOSOPHY ===== */
         .philosophy-grid {
@@ -1124,8 +1118,6 @@
 
             .section { padding: 80px 0; }
             .comparison-section { padding: 80px 0; }
-            .comp-img, .comp-after-wrap img { height: 280px; }
-            .comp-after-wrap img { height: 280px; }
 
             .philosophy-grid { grid-template-columns: 1fr; gap: 48px; }
             .philosophy-image img { height: 280px; }
@@ -1255,8 +1247,6 @@
             .hero-title { font-size: 2.8rem; }
             .hero-stats { grid-template-columns: 1fr 1fr 1fr; }
 
-            .comp-img, .comp-after-wrap img { height: 220px; }
-
             .process-grid { grid-template-columns: 1fr; }
             .process-card { padding: 28px 24px; }
 
@@ -1355,20 +1345,17 @@
                 <span>Die Transformation</span>
             </div>
             <h2 class="section-title">Vorher. Nachher. <span style="color:var(--blue)">Der Unterschied.</span></h2>
-            <p class="section-subtitle" style="margin-top:12px;">Ziehe den Regler und erlebe den Wandel — dein innovatives Vorher-Nachher Design.</p>
+            <p class="section-subtitle" style="margin-top:12px;">Schiebe den Regler und entdecke den Unterschied zwischen grau und brillant.</p>
         </div>
-        <div class="comparison-wrap reveal reveal-delay-1" id="compWrap">
-            <img class="comp-img" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=900" alt="Vorher">
+        <div class="comparison-container reveal reveal-delay-1" id="slider-root">
+            <div class="grayscale-layer" id="grayscale-layer"></div>
+            <input type="range" min="0" max="100" value="50" class="slider-input" id="slider-input" aria-label="Graustufen Vergleich Regler">
+            <div class="slider-visuals" id="slider-visuals">
+                <div class="slider-line"></div>
+                <div class="slider-button">⟷</div>
+            </div>
+            <span class="comp-label comp-label-after">Nachher</span>
             <span class="comp-label comp-label-before">Vorher</span>
-            <div class="comp-after-wrap" id="compAfter">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=900" alt="Nachher">
-                <span class="comp-label comp-label-after">Nachher</span>
-            </div>
-            <div class="comp-handle" id="compHandle">
-                <div class="comp-handle-btn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H3M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -1658,25 +1645,15 @@
     }
 
     /* ===== COMPARISON SLIDER ===== */
-    const compWrap = document.getElementById('compWrap');
-    const compAfter = document.getElementById('compAfter');
-    const compHandle = document.getElementById('compHandle');
-    let isDragging = false;
+    const sliderInput = document.getElementById('slider-input');
+    const grayscaleLayer = document.getElementById('grayscale-layer');
+    const sliderVisuals = document.getElementById('slider-visuals');
 
-    function setSlider(x) {
-        const rect = compWrap.getBoundingClientRect();
-        let pct = (x - rect.left) / rect.width * 100;
-        pct = Math.max(2, Math.min(98, pct));
-        compAfter.style.width = pct + '%';
-        compHandle.style.left = pct + '%';
-    }
-
-    compWrap.addEventListener('mousedown', e => { isDragging = true; setSlider(e.clientX); });
-    compWrap.addEventListener('touchstart', e => { isDragging = true; setSlider(e.touches[0].clientX); }, {passive:true});
-    window.addEventListener('mousemove', e => { if (isDragging) setSlider(e.clientX); });
-    window.addEventListener('touchmove', e => { if (isDragging) setSlider(e.touches[0].clientX); }, {passive:true});
-    window.addEventListener('mouseup', () => { isDragging = false; });
-    window.addEventListener('touchend', () => { isDragging = false; });
+    sliderInput.addEventListener('input', function() {
+        const pct = this.value;
+        grayscaleLayer.style.clipPath = `inset(0 0 0 ${pct}%)`;
+        sliderVisuals.style.left = pct + '%';
+    });
 
     /* ===== FAQ ===== */
     function toggleFaq(btn) {
