@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Irtona Studio | Premium Webdesign</title>
-    <link rel="canonical" href="https://irtona.de/project-a-v2.html" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
     <style>
         :root {
             --bg: #080810;
@@ -1154,6 +1152,102 @@
             .cta-section { padding: 80px 0; }
         }
 
+        /* ===== SHADER HERO ===== */
+        .shader-hero-v2 {
+            position: relative;
+            width: 100%;
+            min-height: 100svh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+
+        #shader-canvas-v2 {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        #shader-canvas-v2 canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Neutral dark overlay for text readability */
+        .shader-hero-v2-tint {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.08) 0%,
+                rgba(0,0,0,0.18) 40%,
+                rgba(0,0,0,0.55) 100%
+            );
+            pointer-events: none;
+        }
+
+        .shader-hero-v2-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+            padding-bottom: 80px;
+        }
+
+        .shader-hero-v2-content .hero-tag { margin-bottom: 32px; }
+
+        .shader-hero-v2-content .hero-title {
+            font-size: clamp(3rem, 7vw, 6rem);
+            max-width: 780px;
+        }
+
+        .shader-hero-v2-content .hero-subtitle {
+            text-align: center;
+            margin: 24px auto 40px;
+            max-width: 500px;
+        }
+
+        .shader-hero-v2-content .hero-actions {
+            justify-content: center;
+        }
+
+        .shader-scroll-v2 {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(240,240,248,0.3);
+            font-size: 0.6rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .shader-scroll-v2::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 36px;
+            background: linear-gradient(to bottom, rgba(59,107,255,0.6), transparent);
+            animation: scrollBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollBlink {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
         @media (max-width: 600px) {
             nav { padding: 0 20px; }
             .container { padding: 0 20px; }
@@ -1208,54 +1302,31 @@
 </div>
 
 <!-- HERO -->
-<section class="hero" id="start">
-    <div class="hero-grid"></div>
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-    <div class="container">
-        <div class="hero-inner">
-            <div class="hero-content">
-                <div class="hero-tag">
-                    <div class="hero-tag-dot"></div>
-                    <span>Premium Webdesign · Steinheim an der Murr</span>
-                </div>
-                <h1 class="hero-title">
-                    Deine Vision.<br>
-                    <span class="accent">Digitales</span><br>
-                    Meisterwerk.
-                </h1>
-                <p class="hero-subtitle">Wir bauen Webseiten, die nicht nur funktionieren, sondern faszinieren. Ohne technisches Fachwissen deinerseits — wir übernehmen das komplette Setup.</p>
-                <div class="hero-actions">
-                    <a href="kontakt.html" class="btn-primary">
-                        Jetzt starten
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="portfolio.html" class="btn-ghost">
-                        Beispiele ansehen
-                    </a>
-                </div>
-            </div>
-            <div class="hero-visual reveal reveal-delay-2">
-                <div class="hero-image-frame">
-                    <img src="https://images.unsplash.com/photo-1649972046760-2517b8720e8e?q=80&w=998&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=900" alt="Premium Webdesign">
-                </div>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">100%</div>
-                        <div class="hero-stat-label">Festpreis</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">24/7</div>
-                        <div class="hero-stat-label">Support</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-num">∞</div>
-                        <div class="hero-stat-label">Kreativität</div>
-                    </div>
-                </div>
-            </div>
+<section class="shader-hero-v2" id="start" aria-labelledby="hero-title-v2">
+    <div id="shader-canvas-v2" aria-hidden="true"></div>
+    <div class="shader-hero-v2-tint" aria-hidden="true"></div>
+    <div class="container shader-hero-v2-content">
+        <div class="hero-tag">
+            <div class="hero-tag-dot"></div>
+            <span>Premium Webdesign · Steinheim an der Murr</span>
+        </div>
+        <h1 class="hero-title" id="hero-title-v2">
+            Deine Vision.<br>
+            <span class="accent">Digitales</span><br>
+            Meisterwerk.
+        </h1>
+        <p class="hero-subtitle">Wir bauen Webseiten, die nicht nur funktionieren, sondern faszinieren. Ohne technisches Fachwissen deinerseits — wir übernehmen das komplette Setup.</p>
+        <div class="hero-actions">
+            <a href="kontakt.html" class="btn-primary">
+                Jetzt starten
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="portfolio.html" class="btn-ghost">
+                Beispiele ansehen
+            </a>
         </div>
     </div>
+    <p class="shader-scroll-v2" aria-hidden="true">Scroll</p>
 </section>
 
 <!-- TICKER -->
@@ -1287,10 +1358,10 @@
             <p class="section-subtitle" style="margin-top:12px;">Ziehe den Regler und erlebe den Wandel — dein innovatives Vorher-Nachher Design.</p>
         </div>
         <div class="comparison-wrap reveal reveal-delay-1" id="compWrap">
-            <img class="comp-img" src="https://images.unsplash.com/photo-1659080165196-30ab2de19ac8?q=80&w=1905&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=900" alt="Vorher">
+            <img class="comp-img" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=900" alt="Vorher">
             <span class="comp-label comp-label-before">Vorher</span>
             <div class="comp-after-wrap" id="compAfter">
-                <img src="https://images.unsplash.com/photo-1531971589569-0d9370cbe1e5?q=80&w=2362&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=900" alt="Nachher">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=900" alt="Nachher">
                 <span class="comp-label comp-label-after">Nachher</span>
             </div>
             <div class="comp-handle" id="compHandle">
@@ -1409,7 +1480,7 @@
                     </div>
                 </button>
                 <div class="faq-answer">
-                    <p>Absolut nicht! Wir übernehmen vom Hosting bis zur Domain-Registrierung jeden einzelnen technischen Schritt für dich. Du musst dich um nichts kümmern. "Wir bauen dir dein Haus und am Schluss erhälts du die Schlüssel!"</p>
+                    <p>Absolut nicht! Wir übernehmen vom Hosting bis zur Domain-Registrierung jeden einzelnen technischen Schritt für dich. Du musst dich um nichts kümmern.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -1442,7 +1513,7 @@
                     </div>
                 </button>
                 <div class="faq-answer">
-                    <p>Ja! Auf Wunsch sind wir auch danach für dich bei kleinen Anpassungen verfügbar — ganz ohne aufwendige Kommunikation</p>
+                    <p>Ja! Auf Wunsch richten wir dir ein einfaches Content-Management-System ein, mit dem du Texte und Bilder selbst aktualisieren kannst — ganz ohne Programmierkenntnisse.</p>
                 </div>
             </div>
         </div>
@@ -1469,7 +1540,7 @@
                 <h3>Irtona Studio</h3>
                 <div class="contact-card-row">
                     <strong>Adresse</strong>
-                    <span>Hermann-Spaich-Str. 16<br>71711 Steinheim an der Murr</span>
+                    <span>Musterstraße 123<br>71711 Steinheim an der Murr</span>
                 </div>
                 <div class="contact-card-row">
                     <strong>E-Mail</strong>
@@ -1477,7 +1548,7 @@
                 </div>
                 <div class="contact-card-row">
                     <strong>Telefon</strong>
-                    <a href="tel:+491796676977">+49 179 6676977</a>
+                    <a href="tel:+49123456789">+49 123 456789</a>
                 </div>
                 <a href="mailto:info@irtona.de" class="btn-primary">
                     Nachricht senden
@@ -1513,7 +1584,7 @@
                 <a href="#" class="footer-logo">Irtona<span>.</span>de</a>
                 <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen. Wir bauen Webseiten, die nicht nur gut aussehen, sondern Kunden gewinnen.</p>
                 <div class="footer-socials">
-                    <a href="https://www.instagram.com/irtona.de" class="social-btn" aria-label="Instagram">
+                    <a href="#" class="social-btn" aria-label="Instagram">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                     </a>
                     <a href="#" class="social-btn" aria-label="LinkedIn">
@@ -1536,10 +1607,10 @@
             <div class="footer-col">
                 <h4>Pakete & Preise</h4>
                 <ul>
-                    <li><a href="preise.html">Start-Paket</a></li>
-                    <li><a href="preise.html">Wachstum</a></li>
-                    <li><a href="preise.html">Premium</a></li>
-                    <li><a href="preise.htmle">Individuell</a></li>
+                    <li><a href="preise">Start-Paket</a></li>
+                    <li><a href="#preise">Wachstum</a></li>
+                    <li><a href="#preise">Premium</a></li>
+                    <li><a href="#preise">Individuell</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -1628,15 +1699,104 @@
     revealEls.forEach(el => observer.observe(el));
 
     /* ===== HERO STAGGER ===== */
-    document.querySelectorAll('.hero-content > *').forEach((el, i) => {
+    document.querySelectorAll('.shader-hero-v2-content > *').forEach((el, i) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(24px)';
-        el.style.transition = `opacity 0.7s ease ${i * 0.12}s, transform 0.7s ease ${i * 0.12}s`;
+        el.style.transition = `opacity 0.7s ease ${i * 0.14}s, transform 0.7s ease ${i * 0.14}s`;
         requestAnimationFrame(() => requestAnimationFrame(() => {
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
         }));
     });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
+<script>
+    (function () {
+        var container = document.getElementById('shader-canvas-v2');
+        if (!container || typeof THREE === 'undefined') return;
+
+        var vertexShader = [
+            'void main() {',
+            '  gl_Position = vec4( position, 1.0 );',
+            '}'
+        ].join('\n');
+
+        // shader-lines fragment shader — grayscale output (no color tint)
+        var fragmentShader = [
+            '#define TWO_PI 6.2831853072',
+            '#define PI 3.14159265359',
+            'precision highp float;',
+            'uniform vec2 resolution;',
+            'uniform float time;',
+            'float random(in float x) { return fract(sin(x)*1e4); }',
+            'float random(vec2 st) {',
+            '  return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);',
+            '}',
+            'void main(void) {',
+            '  vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);',
+            '  vec2 fMosaicScal = vec2(4.0, 2.0);',
+            '  vec2 vScreenSize = vec2(256.0, 256.0);',
+            '  uv.x = floor(uv.x * vScreenSize.x / fMosaicScal.x) / (vScreenSize.x / fMosaicScal.x);',
+            '  uv.y = floor(uv.y * vScreenSize.y / fMosaicScal.y) / (vScreenSize.y / fMosaicScal.y);',
+            '  float t = time * 0.06 + random(uv.x) * 0.4;',
+            '  float lineWidth = 0.0008;',
+            '  vec3 color = vec3(0.0);',
+            '  for(int j = 0; j < 3; j++){',
+            '    for(int i = 0; i < 5; i++){',
+            '      color[j] += lineWidth * float(i*i) / abs(fract(t - 0.01*float(j) + float(i)*0.01)*1.0 - length(uv));',
+            '    }',
+            '  }',
+            '  /* Convert to grayscale — black & white output */',
+            '  float luma = color[0]*0.299 + color[1]*0.587 + color[2]*0.114;',
+            '  gl_FragColor = vec4(luma, luma, luma, 1.0);',
+            '}'
+        ].join('\n');
+
+        var camera = new THREE.Camera();
+        camera.position.z = 1;
+
+        var scene = new THREE.Scene();
+        var geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+        var uniforms = {
+            time:       { type: 'f',  value: 1.0 },
+            resolution: { type: 'v2', value: new THREE.Vector2() }
+        };
+
+        var material = new THREE.ShaderMaterial({
+            uniforms:       uniforms,
+            vertexShader:   vertexShader,
+            fragmentShader: fragmentShader
+        });
+
+        scene.add(new THREE.Mesh(geometry, material));
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        function resize() {
+            var rect = container.getBoundingClientRect();
+            renderer.setSize(rect.width, rect.height);
+            uniforms.resolution.value.x = renderer.domElement.width;
+            uniforms.resolution.value.y = renderer.domElement.height;
+        }
+
+        resize();
+        window.addEventListener('resize', resize, { passive: true });
+
+        var rafId;
+        function animate() {
+            rafId = requestAnimationFrame(animate);
+            uniforms.time.value += 0.05;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) { cancelAnimationFrame(rafId); } else { animate(); }
+        });
+    })();
 </script>
 </body>
 </html>
