@@ -1832,14 +1832,38 @@
       .spline-card {
         flex-direction: column;
         height: auto;
-        min-height: 720px;
       }
       .spline-left {
-        padding: 44px 28px 0;
+        padding: 44px 28px 32px;
       }
       .spline-right {
-        min-height: 380px;
+        height: 520px;
+        min-height: unset;
         width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      /* Mobile: vergrößere die Spline-Szene so, dass der Roboter
+         den Rahmen voll ausfüllt. Die Szene hat eine feste Kamera,
+         daher skalieren wir den Viewer und zentrieren ihn. */
+      .spline-right spline-viewer {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        width: 170% !important;
+        height: 170% !important;
+        transform: translate(-50%, -50%) !important;
+      }
+    }
+
+    /* ── Kleine Handys (≤ 430px) — noch stärker zoomen ── */
+    @media (max-width: 430px) {
+      .spline-right {
+        height: 480px;
+      }
+      .spline-right spline-viewer {
+        width: 200% !important;
+        height: 200% !important;
       }
     }
   </style>
@@ -1913,7 +1937,7 @@
       <p class="hero-sub">
         Wir bauen individuelle Webseiten für kleine Unternehmen,
         die professionell aussehen, Kunden gewinnen und einfach funktionieren —
-        zum Festpreis, alles inklusive.
+        zum Festpreis.
       </p>
       <div class="hero-actions">
         <a href="kontakt.html" class="btn btn-dark btn-lg">Jetzt Projekt anfragen →</a>
@@ -1970,7 +1994,7 @@
       </div>
       <div class="stat-item">
         <div class="stat-num">∞</div>
-        <div class="stat-label">Änderungswünsche<br>im Erstellungsprozess</div>
+        <div class="stat-label">Geringfügige Änderungswünsche<br>im Erstellungsprozess</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">3</div>
@@ -2018,10 +2042,10 @@
       <div class="feature-copy">
         <div class="feature-number">02</div>
         <h3>Festpreis-Garantie</h3>
-        <p>Besonders für Gründer wichtig: Ein klarer Festpreis für deine Website — ohne versteckte Kosten. Im ersten Jahr ist alles im Paket inklusive: Domain, Hosting, E-Mail, Impressum.</p>
+        <p>Besonders für Gründer wichtig: Ein klarer Festpreis für deine Website — ohne versteckte Kosten und ohne unangenehme Überraschungen am Monatsende.</p>
         <div class="feature-pills">
-          <span class="pill">Kein Überraschungen</span>
-          <span class="pill">1 Jahr alles inklusive</span>
+          <span class="pill">Klare Konditionen</span>
+          <span class="pill">Keine Überraschungen</span>
           <span class="pill">Transparent & fair</span>
         </div>
       </div>
@@ -2205,7 +2229,7 @@
           <li>Google Maps Anbindung</li>
           <li>WhatsApp-Anbindung für Kunden</li>
           <li>Rechtssicher (DSGVO-konform)</li>
-          <li>Domain & Hosting im 1. Jahr inklusive</li>
+          
         </ul>
         <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
@@ -2223,7 +2247,7 @@
           <li>Bildergalerie deiner Location</li>
           <li>Kontaktformular für Kundenanfragen</li>
           <li>Alles aus Start-Paket inklusive</li>
-          <li>Domain & Hosting im 1. Jahr inklusive</li>
+         
         </ul>
         <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
@@ -2240,7 +2264,7 @@
           <li>Digitales Bestellsystem</li>
           <li>Google-Optimierung (SEO)</li>
           <li>Volle Betreuung & Premium Design</li>
-          <li>Domain & Hosting im 1. Jahr inklusive</li>
+          
         </ul>
         <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
@@ -2248,8 +2272,8 @@
     </div>
 
     <div class="pricing-note reveal">
-      <p>Keine monatlichen Fixkosten im ersten Jahr. Keine versteckten Gebühren.<br>
-      Domain und Hosting sind im ersten Jahr inklusive — danach nur geringe Kosten des Anbieters.<br>
+      <p>Keine monatlichen Fixkosten an uns. Keine versteckten Gebühren.<br>
+      Domain und Hosting werden transparent und direkt mit dem Anbieter abgerechnet — die laufenden Kosten dafür sind sehr gering.<br>
       <em>* Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</em></p>
     </div>
   </div>
@@ -2273,7 +2297,7 @@
         </div>
         <p class="testi-text">"Irtona hat meine Website in rasender Geschwindigkeit modernisiert — seitdem haben mich viele Fotografen-Kollegen auf das neue Design angesprochen. Absolut empfehlenswert!"</p>
         <div class="testi-author">
-          <div class="testi-avatar">AK</div>
+          <div class="testi-avatar">AH</div>
           <div>
             <div class="testi-name">Anke H.</div>
             <div class="testi-role">Fotografin Steinheim an der Murr</div>
@@ -2287,10 +2311,10 @@
         </div>
         <p class="testi-text">„Klarer Preis, keine bösen Überraschungen, und das Ergebnis sieht aus wie eine Agenturseite für das Zehnfache. Ich kann Irtona nur weiterempfehlen."</p>
         <div class="testi-author">
-          <div class="testi-avatar">MR</div>
+          <div class="testi-avatar">MH</div>
           <div>
-            <div class="testi-name">Maria R.</div>
-            <div class="testi-role">Inhaberin, Friseursalon Bietigheim</div>
+            <div class="testi-name">Mark. H</div>
+            <div class="testi-role">Inhaber CONEMA <e class="K"></e></div>
           </div>
         </div>
       </div>
@@ -2339,7 +2363,7 @@
           </button>
           <div class="faq-body">
             <div class="faq-body-inner">
-              Im ersten Jahr sind Domain, Hosting und E-Mail-Adresse vollständig inklusive. Außerdem übernehmen wir das Impressum, die Datenschutzerklärung und alle technischen Einstellungen. Du zahlst einmalig und musst dich um nichts kümmern.
+              Du bekommst eine komplett fertige Website inklusive Design, Programmierung, Bildauswahl, Impressum, Datenschutzerklärung und allen technischen Einstellungen. Wir richten dir alles vollständig ein — Domain, Hosting und E-Mail-Adresse. Du zahlst einmalig und musst dich um nichts kümmern.
             </div>
           </div>
         </div>
@@ -2358,12 +2382,12 @@
 
         <div class="faq-item">
           <button class="faq-trigger" aria-expanded="false">
-            Was passiert nach dem ersten Jahr?
+            Fallen nach der Erstellung weitere Kosten an?
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-body">
             <div class="faq-body-inner">
-              Nach dem ersten Jahr fallen nur die laufenden Kosten des Hosting-Anbieters an — typischerweise zwischen 5 und 15 € pro Monat, je nach Paket. Wir zeigen dir alle Optionen transparent, bevor es losgeht. Es gibt keinen Vertrag mit uns — du bist frei.
+              Bei uns nicht — wir berechnen nichts monatlich. Für Domain und Hosting fallen kleine laufende Kosten beim jeweiligen Anbieter an (typischerweise zwischen 5 und 15 € pro Monat). Diese besprechen wir transparent mit dir, bevor es losgeht. Es gibt keinen Vertrag mit uns — du bist immer frei.
             </div>
           </div>
         </div>
@@ -2411,7 +2435,7 @@
           </button>
           <div class="faq-body">
             <div class="faq-body-inner">
-              Nein. Unser Angebot ist eine einmalige Zahlung — keine Abos, keine monatlichen Gebühren an uns. Lediglich die Infrastrukturkosten (Domain + Hosting beim Anbieter) laufen nach dem ersten Jahr auf dein Konto — und die sind günstig.
+              Nein. Unser Angebot ist eine einmalige Zahlung — keine Abos, keine monatlichen Gebühren an uns. Die kleinen Infrastrukturkosten für Domain und Hosting werden direkt vom jeweiligen Anbieter abgerechnet — transparent und überschaubar.
             </div>
           </div>
         </div>
@@ -2726,28 +2750,30 @@
 
   // ── PERFORMANCE: LAZY LOAD IFRAME (MAP) ─────────────────────────
   const mapIframe = document.getElementById('mapIframe');
-  const mapSrc = mapIframe.getAttribute('data-src');
+  if (mapIframe) {
+    const mapSrc = mapIframe.getAttribute('data-src');
 
-  const loadMap = () => {
-    mapIframe.setAttribute('src', mapSrc);
-    mapIframe.removeAttribute('data-src');
-    mapIframe.onload = null;
-  };
+    const loadMap = () => {
+      mapIframe.setAttribute('src', mapSrc);
+      mapIframe.removeAttribute('data-src');
+      mapIframe.onload = null;
+    };
 
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          loadMap();
-          observer.unobserve(entry.target);
-        }
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadMap();
+            observer.unobserve(entry.target);
+          }
+        });
       });
-    });
 
-    observer.observe(mapIframe);
-  } else {
-    // Fallback for browsers without IntersectionObserver
-    loadMap();
+      observer.observe(mapIframe);
+    } else {
+      // Fallback for browsers without IntersectionObserver
+      loadMap();
+    }
   }
 
   // ── SCROLL-MORPH ANIMATION ────────────────────────────────────
@@ -2963,3 +2989,5 @@
     }
   }());
 </script>
+</body>
+</html>
