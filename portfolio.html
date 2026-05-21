@@ -287,38 +287,23 @@
     /* ============================================================
        FOOTER
     ============================================================ */
-    .premium-footer {
-      background: #0f1115; color: #a0aab2;
-      padding: 4rem 0 2rem; font-family: 'Inter', sans-serif;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-    .premium-footer .footer-top {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 3rem; margin-bottom: 3rem;
-    }
-    .premium-footer .logo { font-size: 1.5rem; font-weight: 700; color: #fff; display: inline-block; margin-bottom: 1rem; }
-    .premium-footer .footer-brand p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
-    .premium-footer .footer-social { display: flex; gap: 1rem; }
-    .premium-footer .footer-social a {
-      display: flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px;
-      background: rgba(255,255,255,0.05); border-radius: 8px;
-      color: #fff; transition: all 0.3s ease;
-    }
-    .premium-footer .footer-social a:hover { background: #007aff; transform: translateY(-3px); }
-    .premium-footer .footer-social svg { width: 20px; height: 20px; }
-    .premium-footer .footer-col h4 { color: #fff; font-size: 1.1rem; font-weight: 600; margin-bottom: 1.2rem; }
-    .premium-footer .footer-col ul { padding: 0; }
-    .premium-footer .footer-col ul li { margin-bottom: 0.8rem; }
-    .premium-footer .footer-col ul li a { color: #a0aab2; font-size: 0.95rem; transition: color 0.3s ease; }
-    .premium-footer .footer-col ul li a:hover { color: #fff; }
-    .premium-footer .footer-bottom {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.85rem;
-    }
-    .premium-footer .footer-bottom-links a { color: #a0aab2; transition: color 0.3s ease; }
-    .premium-footer .footer-bottom-links a:hover { color: #fff; }
+    .site-footer { background: var(--black); color: rgba(255,255,255,.5); padding: 72px 0 32px; border-top: 1px solid rgba(255,255,255,.05); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px; }
+    .footer-brand .logo { color: var(--white); font-size: 1.4rem; display: block; margin-bottom: 1rem; }
+    .footer-brand p { font-size: .88rem; line-height: 1.7; max-width: 300px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .social-btn { width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.4); transition: var(--transition); }
+    .social-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); transform: translateY(-2px); }
+    .social-btn svg { width: 16px; height: 16px; }
+    .footer-col h5 { font-family: var(--font-display); font-size: .85rem; font-weight: 700; color: var(--white); margin-bottom: 1.2rem; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: .85rem; color: rgba(255,255,255,.4); transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.07); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: .8rem; }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: .8rem; color: rgba(255,255,255,.3); transition: color .2s; }
+    .footer-legal a:hover { color: var(--white); }
 
     /* ============================================================
        RESPONSIVE
@@ -326,7 +311,6 @@
     @media (max-width: 1024px) {
       .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
       .process-grid { grid-template-columns: repeat(2, 1fr); }
-      .premium-footer .footer-top { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 768px) {
@@ -348,9 +332,10 @@
       .process-grid { grid-template-columns: 1fr !important; }
 
       /* Footer */
-      .premium-footer .footer-top { grid-template-columns: 1fr !important; gap: 2rem; }
-      .premium-footer .footer-bottom { flex-direction: column; text-align: center; gap: 1rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
+
+    @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; gap: 28px; } .footer-bottom { flex-direction: column; text-align: center; } }
   </style>
 </head>
 <!-- ✅ FIX 2: Doppelter <body>-Tag entfernt. Original hatte <body> am Anfang
@@ -477,58 +462,26 @@
 </section>
 
 <!-- FOOTER -->
-<footer class="premium-footer">
-    <div class="container">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <a href="index.html" class="logo">Irtona.de</a>
-                <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen. Wir bauen Webseiten, die nicht nur gut aussehen, sondern Kunden gewinnen.</p>
-                <div class="footer-social">
-                    <a href="https://www.instagram.com/irtona.de" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                    </a>
-                    <a href="#" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    </a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Agentur</h4>
-                <ul>
-                    <li><a href="index.html#start">Startseite</a></li>
-                    <li><a href="index.html#leistungen">Leistungen</a></li>
-                    <li><a href="portfolio.html">Beispielseiten</a></li>
-                    <li><a href="kontakt.html">Projekt anfragen</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Pakete & Preise</h4>
-                <ul>
-                    <li><a href="preise.html">Start-Paket</a></li>
-                    <li><a href="preise.html">Wachstum</a></li>
-                    <li><a href="preise.html">Premium</a></li>
-                    <li><a href="preise.html">Individuell</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Rechtliches</h4>
-                <ul>
-                    <li><a href="impressum.html">Impressum</a></li>
-                    <li><a href="datenschutz.html">Datenschutz</a></li>
-                    <li><a href="agb.html">AGB</a></li>
-                    <li><a href="login.html">Kunden-Login</a></li>
-                </ul>
-            </div>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Irtona.de</a>
+        <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/irtona.de" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
         </div>
-        <div class="footer-bottom">
-            <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
-            <p class="footer-bottom-links">
-                <a href="impressum.html">Impressum</a> · 
-                <a href="datenschutz.html">Datenschutz</a> · 
-                <a href="agb.html">AGB</a>
-            </p>
-        </div>
+      </div>
+      <div class="footer-col"><h5>Agentur</h5><ul><li><a href="index.html">Startseite</a></li><li><a href="index.html#leistungen">Leistungen</a></li><li><a href="portfolio.html">Referenzen</a></li><li><a href="kontakt.html">Projekt anfragen</a></li></ul></div>
+      <div class="footer-col"><h5>Pakete</h5><ul><li><a href="index.html#preise">Start — 490 €</a></li><li><a href="index.html#preise">Wachstum — 890 €</a></li><li><a href="index.html#preise">Premium — 1.290 €</a></li><li><a href="kontakt.html">Individuell</a></li></ul></div>
+      <div class="footer-col"><h5>Rechtliches</h5><ul><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li><li><a href="agb.html">AGB</a></li><li><a href="login.html">Kunden-Login</a></li></ul></div>
     </div>
+    <div class="footer-bottom">
+      <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
+      <div class="footer-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></div>
+    </div>
+  </div>
 </footer>
 
 <script>
