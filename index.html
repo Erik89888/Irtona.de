@@ -18,8 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://unpkg.com" />
   <link rel="preconnect" href="https://prod.spline.design" crossorigin />
-  <link rel="modulepreload" href="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js" />
-  <link rel="preload" href="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" as="fetch" crossorigin />
+  <script>if(window.innerWidth>820){document.write('<link rel="modulepreload" href="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js">');document.write('<link rel="preload" href="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" as="fetch" crossorigin>');}</script>
   <!-- Outfit = closest SF Pro feel on Google Fonts; on Apple devices -apple-system renders real SF Pro -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
@@ -1833,41 +1832,8 @@
     .spline-right [class*="spline-watermark"] { display: none !important; }
 
     @media (max-width: 820px) {
-      .spline-card {
-        flex-direction: column;
-        height: auto;
-      }
-      .spline-left {
-        padding: 44px 28px 32px;
-      }
-      .spline-right {
-        height: 520px;
-        min-height: unset;
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-      }
-      /* Mobile: vergrößere die Spline-Szene so, dass der Roboter
-         den Rahmen voll ausfüllt. Die Szene hat eine feste Kamera,
-         daher skalieren wir den Viewer und zentrieren ihn. */
-      .spline-right spline-viewer {
-        position: absolute !important;
-        top: 50% !important;
-        left: 50% !important;
-        width: 170% !important;
-        height: 170% !important;
-        transform: translate(-50%, -50%) !important;
-      }
-    }
-
-    /* ── Kleine Handys (≤ 430px) — noch stärker zoomen ── */
-    @media (max-width: 430px) {
-      .spline-right {
-        height: 480px;
-      }
-      .spline-right spline-viewer {
-        width: 200% !important;
-        height: 200% !important;
+      .spline-section {
+        display: none !important;
       }
     }
   </style>
@@ -2106,9 +2072,14 @@
   </div>
 </section>
 
-<!-- Spline Web Component Runtime -->
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"></script>
+<!-- Spline Web Component Runtime — nur auf Desktop laden -->
 <script>
+  if (window.innerWidth > 820) {
+    var s = document.createElement('script');
+    s.type = 'module';
+    s.src = 'https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js';
+    document.head.appendChild(s);
+  }
   (function () {
     var viewer = document.getElementById('splineViewer');
     var loader = document.getElementById('splineLoader');
@@ -2116,7 +2087,6 @@
     var hide = function () { loader.style.display = 'none'; };
     viewer.addEventListener('load', hide);
     viewer.addEventListener('load-complete', hide);
-    // Fallback in case the load event never fires
     setTimeout(hide, 6000);
   })();
 </script>
