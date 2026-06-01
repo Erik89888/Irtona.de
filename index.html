@@ -1461,6 +1461,12 @@
       .hero-actions .btn { width: 100%; justify-content: center; }
       /* headline: full width, no overflow */
       .hero-headline { width: 100%; }
+      /* mobile: hero-headline füllt den Bildschirm */
+      .hero-line {
+        font-size: clamp(3rem, 13.5vw, 6rem);
+        line-height: 0.98;
+        letter-spacing: -0.045em;
+      }
       .hero-sub { max-width: 100%; font-size: 1rem; }
       /* tag pill wraps gracefully */
       .hero-tag { flex-wrap: wrap; max-width: 100%; }
@@ -1492,10 +1498,12 @@
 
       /* Hero: scale headline down further, line-height a touch looser */
       .hero { padding-top: 130px; padding-bottom: 60px; }
+      /* Hero-Headline füllt den Bildschirm auf kleinen Geräten */
+      .hero .container { padding: 0 12px; }
       .hero-line {
-        font-size: clamp(1.9rem, 10vw, 2.8rem);
-        line-height: 1.05;
-        letter-spacing: -0.03em;
+        font-size: clamp(3rem, 15.5vw, 5.5rem);
+        line-height: 0.96;
+        letter-spacing: -0.05em;
       }
       .hero-headline { margin-bottom: 2rem; }
 
