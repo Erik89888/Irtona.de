@@ -2,295 +2,15 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Unsere Geschichte | Trattoria Irtona</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsere Philosophie | Trattoria Irtona</title>
+
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="restaurant.css"> 
+    <link rel="stylesheet" href="restaurant.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
 
     <style>
-        /* Spezifisches Layout für die Philosophie-Seite */
-        .story-section {
-            padding-top: 100px;
-            padding-bottom: 60px;
-        }
-
-        .story-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-bottom: 6rem;
-        }
-
-        .story-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #fff;
-        }
-
-        .story-text p {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #ccc;
-            margin-bottom: 1.5rem;
-        }
-
-        .story-image img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-        }
-
-        /* Hero Image spezifisch für diese Seite */
-        .philosophie-hero {
-            background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1920');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            padding: 180px 0 120px;
-            text-align: center;
-        }
-
-       
-        /* ============================================================
-           DESKTOP STYLES (unverändert)
-           ============================================================ */
-
-        .hero-fullscreen {
-            height: 100vh;
-            background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1920');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .hero-fullscreen .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.4) 50%, rgba(18,18,18,0.9) 100%);
-        }
-
-        .scroll-down-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #d4af37;
-            font-size: 24px;
-            animation: bounce 2s infinite;
-            z-index: 10;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-            40% { transform: translateY(-20px) translateX(-50%); }
-            60% { transform: translateY(-10px) translateX(-50%); }
-        }
-
-        .premium-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-        }
-        .premium-split-img { position: relative; }
-        .premium-split-img img { width: 100%; height: 600px; object-fit: cover; border-radius: 4px; }
-        .premium-split-img::after {
-            content: '';
-            position: absolute;
-            top: 20px; left: -20px;
-            width: 100%; height: 100%;
-            border: 2px solid #d4af37;
-            z-index: -1;
-            border-radius: 4px;
-        }
-
-        .worlds-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .world-card {
-            position: relative;
-            height: 450px;
-            overflow: hidden;
-            border-radius: 4px;
-            cursor: pointer;
-            display: block;
-            text-decoration: none;
-        }
-        .world-card img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.7s ease, filter 0.7s ease;
-            filter: brightness(0.6) grayscale(30%);
-        }
-        .world-card:hover img { transform: scale(1.05); filter: brightness(0.8) grayscale(0%); }
-        .world-content { position: absolute; bottom: 30px; left: 30px; right: 30px; z-index: 2; }
-        .world-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem; }
-        .world-content span { color: #d4af37; font-family: 'Inter', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
-
-        .parallax-quote {
-            height: 60vh;
-            background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=1920');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            text-align: center;
-        }
-        .parallax-quote h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem; color: #fff; font-style: italic;
-            max-width: 800px; line-height: 1.4; z-index: 2; padding: 0 20px;
-        }
-
-        /* ============================================================
-           BURGER BUTTON – Desktop versteckt
-           ============================================================ */
-        .burger-btn {
-            display: none !important;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            flex-shrink: 0;
-        }
-        .burger-btn span {
-            display: block;
-            width: 100%;
-            height: 2px;
-            background-color: #f4ede4;
-            border-radius: 2px;
-            transition: transform 0.35s ease, opacity 0.35s ease;
-            transform-origin: center;
-        }
-        .burger-btn.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-        .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-        .burger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-
-        /* Mobile Overlay */
-        #mobileNav {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(14, 11, 9, 0.98);
-            z-index: 1050;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-        #mobileNav.open {
-            pointer-events: all;
-            opacity: 1;
-        }
-        #mobileNav a {
-            font-family: 'Playfair Display', serif !important;
-            font-size: 2.4rem !important;
-            color: #f4ede4 !important;
-            text-decoration: none !important;
-            padding: 0.8rem 0;
-            letter-spacing: 1px;
-            transition: color 0.2s ease;
-            display: block;
-        }
-        #mobileNav a:hover, #mobileNav a.active { color: #d4af37 !important; }
-        #mobileNav .mn-divider { width: 40px; height: 1px; background: rgba(212,175,55,0.35); margin: 0.3rem 0; }
-        #mobileNav .mn-contact { margin-top: 2.5rem; text-align: center; }
-        #mobileNav .mn-contact p { color: #b0a8a0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
-        #mobileNav .mn-contact a { font-family: 'Inter', sans-serif !important; font-size: 1.1rem !important; color: #d4af37 !important; }
-
-        /* ============================================================
-           MOBILE ≤ 768px
-           ============================================================ */
-        @media (max-width: 768px) {
-
-            /* Mobile-Navigation läuft jetzt über .nav-toggle / .nav-menu (siehe Nav-Block) */
-
-            /* Hero: iOS background-attachment:fixed Bug-Fix */
-            .hero-fullscreen {
-                background-attachment: scroll !important;
-                background-position: center center !important;
-                min-height: 100vh;
-            }
-
-            /* Hero Text skalieren */
-            .hero-fullscreen h1 {
-                font-size: 2.4rem !important;
-                margin-bottom: 1rem !important;
-            }
-            .hero-fullscreen p.rustic-subtitle {
-                font-size: 1rem !important;
-                margin-bottom: 1.5rem !important;
-            }
-
-            /* Parallax Quote iOS-Fix */
-            .parallax-quote {
-                background-attachment: scroll !important;
-                height: auto !important;
-                padding: 4rem 1.5rem !important;
-            }
-            .parallax-quote h2 { font-size: 1.5rem !important; }
-
-            /* Split Layout → 1 Spalte */
-            .premium-split { grid-template-columns: 1fr !important; gap: 2rem !important; }
-            .premium-split-img img { height: 280px !important; }
-            .premium-split-img::after { display: none !important; }
-
-            /* Worlds Grid: 3 Spalten behalten, kleiner */
-            .worlds-grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.4rem !important;
-                margin-top: 1.5rem !important;
-            }
-            .world-card { height: 160px !important; border-radius: 3px !important; }
-            .world-content { bottom: 8px !important; left: 8px !important; right: 8px !important; }
-            .world-content h3 { font-size: 0.85rem !important; margin-bottom: 0.15rem !important; }
-            .world-content span { font-size: 0.6rem !important; letter-spacing: 0.5px !important; }
-
-            /* Reviews: 3 Spalten behalten */
-            .grid-3 {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.5rem !important;
-            }
-            .review-card { padding: 0.75rem !important; border-radius: 5px !important; }
-            .stars { font-size: 0.55rem !important; margin-bottom: 0.4rem !important; }
-            .review-text { font-size: 0.6rem !important; line-height: 1.4 !important; margin-bottom: 0.5rem !important; }
-            .review-author { font-size: 0.6rem !important; }
-
-            /* Contact Grid → 1 Spalte */
-            .contact-grid { grid-template-columns: 1fr !important; }
-        }
-
-        /* Tablet */
-        @media (max-width: 992px) and (min-width: 769px) {
-            .premium-split { grid-template-columns: 1fr !important; }
-            .premium-split-img::after { display: none !important; }
-            .world-card { height: 300px !important; }
-        }
-
         /* ============================================================
            NAVIGATION — angeglichen an restaurant.html
            ============================================================ */
@@ -411,7 +131,222 @@
         }
 
         /* ============================================================
-           CTA "SCHILD" + VOLLWERTIGER FOOTER — wie restaurant.html
+           ABSCHNITTS-KOPF (wiederverwendbar)
+           ============================================================ */
+        .section-eyebrow {
+            display: inline-block; color: #d4af37;
+            font-size: .8rem; text-transform: uppercase; letter-spacing: 3px;
+            margin-bottom: 1.1rem;
+        }
+        .section-eyebrow::before, .section-eyebrow::after {
+            content: ''; display: inline-block; width: 30px; height: 1px;
+            background: #d4af37; vertical-align: middle; margin: 0 .9rem; opacity: .55;
+        }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .phil-hero {
+            position: relative;
+            padding: 200px 0 110px;
+            text-align: center;
+            background:
+                linear-gradient(to bottom, rgba(18,15,13,.74), rgba(20,17,15,.95)),
+                url('https://images.unsplash.com/photo-1498579150354-977475b7ea0b?auto=format&fit=crop&q=80&w=1920') center/cover fixed;
+        }
+        .phil-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 6vw, 4.2rem); color: #fff; margin: 0 0 1.2rem; line-height: 1.1; }
+        .phil-hero p { color: #cdc3b8; font-size: 1.18rem; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+
+        /* ============================================================
+           STORY-GRIDS (bestehende Geschichte)
+           ============================================================ */
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .story-grid + .story-grid { margin-top: 6rem; }
+        .story-grid.reverse .story-text { order: 2; }
+        .story-grid.reverse .story-img { order: 1; }
+        .story-text h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: #fff; margin: 1rem 0 1.4rem; line-height: 1.15; }
+        .story-text p { color: #cdc3b8; font-size: 1.08rem; line-height: 1.85; margin: 0 0 1.3rem; }
+        .story-text p:last-child { margin-bottom: 0; }
+        .story-it { display: block; color: #d4af37; font-style: italic; font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: .2rem; }
+        .story-img { position: relative; }
+        .story-img img { width: 100%; height: 540px; object-fit: cover; border-radius: 6px; }
+        .story-img::after {
+            content: ''; position: absolute; bottom: -18px; right: -18px;
+            width: 60%; height: 60%; border: 2px solid rgba(212,175,55,.55);
+            border-radius: 6px; z-index: -1;
+        }
+        .story-grid.reverse .story-img::after { right: auto; left: -18px; }
+
+        @media (max-width: 992px) {
+            .story-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .story-grid.reverse .story-text,
+            .story-grid.reverse .story-img { order: initial; }
+            .story-img { order: -1; }
+            .story-img img { height: 380px; }
+            .story-img::after { display: none; }
+            .story-text h2 { font-size: 2.1rem; }
+        }
+
+        /* ============================================================
+           WERTE-KARTEN
+           ============================================================ */
+        .values-head { text-align: center; max-width: 640px; margin: 0 auto 3.5rem; }
+        .values-head h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: #fff; margin: .4rem 0 1rem; }
+        .values-head p { color: #b0a8a0; line-height: 1.7; margin: 0; }
+        .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.8rem; }
+        .value-card {
+            position: relative; text-align: center;
+            background: linear-gradient(160deg, #221d1a 0%, #17130f 100%);
+            border: 1px solid rgba(212,175,55,.14); border-radius: 14px;
+            padding: 2.6rem 1.6rem 2.2rem;
+            opacity: 0; transform: translateY(34px);
+            transition: opacity .6s ease,
+                        transform .55s cubic-bezier(.22,1,.36,1),
+                        box-shadow .45s ease, border-color .4s ease;
+        }
+        .reveal.active .value-card { opacity: 1; transform: translateY(0); }
+        .reveal.active .value-card:nth-child(2) { transition-delay: .08s; }
+        .reveal.active .value-card:nth-child(3) { transition-delay: .16s; }
+        .reveal.active .value-card:nth-child(4) { transition-delay: .24s; }
+        .value-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212,175,55,.42);
+            box-shadow: 0 26px 52px rgba(0,0,0,.5);
+        }
+        .value-icon {
+            width: 58px; height: 58px; margin: 0 auto 1.4rem;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 14px;
+            background: rgba(212,175,55,.1); border: 1px solid rgba(212,175,55,.28);
+            color: #d4af37;
+        }
+        .value-icon svg { width: 26px; height: 26px; }
+        .value-card h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: #f4ede4; margin: 0 0 .7rem; }
+        .value-card p { color: #a79e94; font-size: .92rem; line-height: 1.65; margin: 0; }
+
+        @media (max-width: 992px) { .values-grid { grid-template-columns: 1fr 1fr; gap: 1.4rem; } }
+        @media (max-width: 540px) { .values-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; } }
+
+        /* ============================================================
+           ZEITLEISTE
+           ============================================================ */
+        .timeline-head { text-align: center; margin-bottom: 4rem; }
+        .timeline-head h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: #fff; margin: .4rem 0 0; }
+        .timeline { position: relative; max-width: 820px; margin: 0 auto; padding-left: 0; }
+        .timeline::before {
+            content: ''; position: absolute; left: 50%; top: 8px; bottom: 8px;
+            width: 1px; transform: translateX(-50%);
+            background: linear-gradient(180deg, transparent, rgba(212,175,55,.5) 12%, rgba(212,175,55,.5) 88%, transparent);
+        }
+        .tl-item {
+            position: relative; width: 50%; padding: 0 2.8rem 2.8rem;
+            opacity: 0; transform: translateY(28px);
+            transition: opacity .6s ease, transform .55s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal.active .tl-item { opacity: 1; transform: translateY(0); }
+        .reveal.active .tl-item:nth-child(2) { transition-delay: .08s; }
+        .reveal.active .tl-item:nth-child(3) { transition-delay: .16s; }
+        .reveal.active .tl-item:nth-child(4) { transition-delay: .24s; }
+        .reveal.active .tl-item:nth-child(5) { transition-delay: .32s; }
+        .tl-item:nth-child(odd) { left: 0; text-align: right; }
+        .tl-item:nth-child(even) { left: 50%; text-align: left; }
+        .tl-item::after {
+            content: ''; position: absolute; top: 4px;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: #14110f; border: 2px solid #d4af37;
+            box-shadow: 0 0 0 4px rgba(212,175,55,.12);
+        }
+        .tl-item:nth-child(odd)::after { right: -7px; }
+        .tl-item:nth-child(even)::after { left: -7px; }
+        .tl-year { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #d4af37; line-height: 1; margin-bottom: .5rem; }
+        .tl-item h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #f4ede4; margin: 0 0 .5rem; }
+        .tl-item p { color: #a79e94; font-size: .94rem; line-height: 1.65; margin: 0; }
+
+        @media (max-width: 760px) {
+            .timeline::before { left: 7px; transform: none; }
+            .tl-item { width: 100%; left: 0 !important; text-align: left !important; padding: 0 0 2.6rem 2.6rem; }
+            .tl-item::after { left: 0 !important; right: auto !important; }
+        }
+
+        /* ============================================================
+           KENNZAHLEN-LEISTE (animierte Counter)
+           ============================================================ */
+        .stats-strip {
+            background: linear-gradient(180deg, #17130f, #14110f);
+            border-top: 1px solid rgba(212,175,55,.12);
+            border-bottom: 1px solid rgba(212,175,55,.12);
+            padding: 4.5rem 0;
+        }
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+        .stat-item { position: relative; }
+        .stat-item:not(:last-child)::after {
+            content: ''; position: absolute; right: -1rem; top: 50%; transform: translateY(-50%);
+            width: 1px; height: 56px;
+            background: linear-gradient(180deg, transparent, rgba(212,175,55,.3), transparent);
+        }
+        .stat-num { font-family: 'Playfair Display', serif; font-size: 3.1rem; color: #d4af37; line-height: 1; }
+        .stat-label { color: #a79e94; font-size: .8rem; letter-spacing: 1.6px; text-transform: uppercase; margin-top: .8rem; }
+
+        @media (max-width: 992px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 3rem 2rem; }
+            .stat-item:nth-child(2)::after { display: none; }
+        }
+        @media (max-width: 600px) {
+            .stats-row { grid-template-columns: 1fr; gap: 2.5rem; }
+            .stat-item::after { display: none !important; }
+        }
+
+        /* ============================================================
+           PARALLAX-ZITAT
+           ============================================================ */
+        .parallax-quote {
+            height: 56vh; min-height: 380px;
+            background-image: url('https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; text-align: center;
+        }
+        .parallax-quote .pq-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.62); }
+        .parallax-quote .pq-inner { position: relative; z-index: 2; max-width: 820px; padding: 0 24px; }
+        .parallax-quote h2 {
+            font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3rem);
+            color: #fff; font-style: italic; line-height: 1.4; margin: 0 0 1.4rem;
+        }
+        .parallax-quote .pq-author { color: #d4af37; letter-spacing: 2px; text-transform: uppercase; font-size: .82rem; }
+
+        /* ============================================================
+           DAS TEAM
+           ============================================================ */
+        .team-head { text-align: center; max-width: 620px; margin: 0 auto 3.5rem; }
+        .team-head h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: #fff; margin: .4rem 0 1rem; }
+        .team-head p { color: #b0a8a0; line-height: 1.7; margin: 0; }
+        .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.2rem; }
+        .team-card {
+            text-align: center;
+            opacity: 0; transform: translateY(32px);
+            transition: opacity .6s ease, transform .55s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal.active .team-card { opacity: 1; transform: translateY(0); }
+        .reveal.active .team-card:nth-child(2) { transition-delay: .1s; }
+        .reveal.active .team-card:nth-child(3) { transition-delay: .2s; }
+        .team-photo {
+            position: relative; width: 190px; height: 190px; margin: 0 auto 1.6rem;
+            border-radius: 50%; overflow: hidden;
+            border: 2px solid rgba(212,175,55,.35);
+            box-shadow: 0 18px 40px rgba(0,0,0,.45);
+            transition: border-color .4s ease, transform .4s ease;
+        }
+        .team-card:hover .team-photo { border-color: #d4af37; transform: translateY(-4px); }
+        .team-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+        .team-card:hover .team-photo img { transform: scale(1.06); }
+        .team-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #f4ede4; margin: 0 0 .25rem; }
+        .team-role { color: #d4af37; font-size: .78rem; letter-spacing: 1.8px; text-transform: uppercase; }
+        .team-card p { color: #a79e94; font-size: .92rem; line-height: 1.65; margin: 1rem auto 0; max-width: 280px; }
+
+        @media (max-width: 860px) { .team-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; gap: 3rem; } }
+
+        /* ============================================================
+           CTA "SCHILD" + FOOTER — wie restaurant.html
            ============================================================ */
         .r-cta-section { text-align: center; border-top: 1px solid rgba(255,255,255,.05); }
         .r-cta-card {
@@ -484,6 +419,7 @@
         .r-footer-legal { display: flex; gap: 1.6rem; }
         .r-footer-legal a { color: #a79e94; text-decoration: none; transition: color .3s ease; }
         .r-footer-legal a:hover { color: #d4af37; }
+
         @media (max-width: 992px) {
             .r-footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
             .r-cta-card { padding: 4.5rem 2rem; }
@@ -495,9 +431,17 @@
             .r-cta-actions { flex-direction: column; }
             .r-cta-button, .r-cta-button-ghost { width: 100%; }
         }
+
+        /* Barrierefreiheit: Bewegung reduzieren */
+        @media (prefers-reduced-motion: reduce) {
+            .value-card, .tl-item, .team-card, .nav-menu, .nav-toggle span,
+            .restaurant-nav { transition: none !important; animation: none !important; }
+            .value-card, .tl-item, .team-card { opacity: 1; transform: none; }
+            .phil-hero, .parallax-quote { background-attachment: scroll; }
+        }
     </style>
-    
 </head>
+
 <body class="rustic-dark-theme">
 
     <header class="restaurant-nav" id="restaurantNav">
@@ -543,73 +487,268 @@
     </header>
     <div class="nav-backdrop" id="navBackdrop"></div>
 
-    <section class="philosophie-hero">
-        <div class="hero-overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(18,18,18,0.7);"></div>
-        <div class="container relative-z" style="position:relative; z-index:2;">
-            <h1 class="rustic-title">Aus Liebe zur Tradition.</h1>
-            <p class="rustic-subtitle">Erfahre mehr über die Wurzeln, die Leidenschaft und die Menschen hinter unserem Restaurant.</p>
-        </div>
-    </section>
-
-    <section class="story-section dark-bg">
+    <!-- ===== HERO ===== -->
+    <section class="phil-hero">
         <div class="container">
-            
-            <div class="story-grid reveal">
-                <div class="story-text">
-                    <h2 class="rustic-heading">Wie alles begann.</h2>
-                    <p>Es war im späten Sommer 1982, als Nonna Rosa mit nicht viel mehr als einem alten Koffer und einem handgeschriebenen Rezeptbuch aus Apulien nach Deutschland kam. In diesem Buch standen keine exakten Mengenangaben – dort stand "eine Handvoll", "ein Schuss" und "nach Gefühl".</p>
-                    <p>Genau dieses Gefühl ist es, das die Trattoria Irtona bis heute prägt. Wir haben aus Rosas kleiner Familienküche ein Zuhause für all jene gemacht, die sich nach dem echten, unverfälschten Geschmack Italiens sehnen. Kein Schnickschnack, keine Kompromisse.</p>
-                </div>
-                <div class="story-image">
-                    <img src="https://images.unsplash.com/photo-1600803907087-f56d462fd26b?auto=format&fit=crop&q=80&w=800" alt="Alte italienische Küche und Familie">
-                </div>
-            </div>
-
-            <div class="story-grid reveal">
-                <div class="story-image mobile-reverse">
-                    <img src="https://images.unsplash.com/photo-1771360873707-f435ef9732ea?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=800" alt="Handgemachte Pasta Zubereitung">
-                </div>
-                <div class="story-text">
-                    <h2 class="rustic-heading">Ehrliches Handwerk braucht Zeit.</h2>
-                    <p>In unserer schnelllebigen Welt ist Zeit der wahre Luxus. Wir nehmen sie uns. Unser Pizzateig ruht volle 72 Stunden, um sein volles Aroma zu entfalten und unvergleichlich bekömmlich zu werden.</p>
-                    <p>Unsere Pasta wird jeden Morgen von Hand gerollt, geschnitten und geformt. Die Tomatensauce köchelt Stunden auf kleiner Flamme, bis sie genau so schmeckt, wie sie schmecken soll: Nach süßen, sonnengereiften San Marzano Tomaten und einer Brise Meersalz. Wir glauben an ehrliche Zutaten von Bauern, die wir beim Vornamen kennen.</p>
-                </div>
-            </div>
-
-            <div class="story-grid reveal" style="margin-bottom: 0;">
-                <div class="story-text">
-                    <h2 class="rustic-heading">Unser Versprechen an dich.</h2>
-                    <p>Wenn du bei uns durch die Tür trittst, bist du kein Gast – du bist Familie. Wir möchten, dass du für ein paar Stunden den Alltag vergisst. Dass das Klingen der Weingläser, der Duft nach frisch gebackenem Brot und das Lachen an den Nebentischen dich einhüllen.</p>
-                    <p>Essen ist bei uns keine reine Nahrungsaufnahme. Es ist ein Fest des Lebens, der Gemeinschaft und der Erinnerungen, die wir am Tisch miteinander teilen. <em>Buon appetito.</em></p>
-                </div>
-                <div class="story-image">
-                    <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=800" alt="Holzofen Pizza">
-                </div>
-            </div>
-
+            <span class="section-eyebrow">La nostra storia</span>
+            <h1>Aus Liebe zur<br>Tradition.</h1>
+            <p>Eine Familie, ein Rezeptbuch und die Überzeugung, dass gutes Essen Zeit, Herz und ehrliche Zutaten braucht.</p>
         </div>
     </section>
 
+    <!-- ===== STORY 1: NONNA ROSA ===== -->
+    <section class="section-padding dark-bg">
+        <div class="container reveal">
+            <div class="story-grid">
+                <div class="story-text">
+                    <span class="story-it">Wie alles begann</span>
+                    <h2>Nonna Rosas Vermächtnis.</h2>
+                    <p>
+                        1982 verließ Rosa ihr kleines Dorf in Apulien und brachte nichts mit als
+                        ein abgegriffenes Rezeptbuch und das Versprechen, ihre Heimat auf den Teller
+                        zu bringen. Aus einer Handvoll Tische wurde ein Ort, an dem Fremde zu
+                        Stammgästen und Stammgäste zu Familie werden.
+                    </p>
+                    <p>
+                        Bis heute kochen wir nach ihren handgeschriebenen Notizen. Jede Sauce, jeder
+                        Teig, jedes Dolce trägt ein Stück Apulien in sich – und die Geduld einer
+                        Großmutter, die nichts überstürzte.
+                    </p>
+                </div>
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=1000" alt="Hände bei der Zubereitung frischer Pasta">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STORY 2: HANDWERK ===== -->
+    <section class="section-padding dark-bg-alt">
+        <div class="container reveal">
+            <div class="story-grid reverse">
+                <div class="story-text">
+                    <span class="story-it">Geduld als Zutat</span>
+                    <h2>72 Stunden für den<br>perfekten Teig.</h2>
+                    <p>
+                        Wir glauben nicht an Abkürzungen. Unser Pizzateig reift 72 Stunden, bevor er
+                        in den Holzofen kommt – das macht ihn leicht, bekömmlich und unverwechselbar
+                        im Geschmack.
+                    </p>
+                    <p>
+                        Die Pasta rollen wir täglich von Hand, das Gelato entsteht in eigener
+                        Produktion, und unsere Tomaten kommen aus San Marzano. Was nach Aufwand
+                        klingt, ist für uns schlicht Respekt vor dem Produkt.
+                    </p>
+                </div>
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=1000" alt="Frisch belegte Pizza aus dem Holzofen">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STORY 3: VERSPRECHEN ===== -->
+    <section class="section-padding dark-bg">
+        <div class="container reveal">
+            <div class="story-grid">
+                <div class="story-text">
+                    <span class="story-it">Unser Versprechen</span>
+                    <h2>Ehrlich. Saisonal.<br>Mit Herz.</h2>
+                    <p>
+                        Wir kaufen dort ein, wo Qualität noch zählt – bei Erzeugern, die wir mit
+                        Namen kennen. Was nicht in unsere Küche passt, kommt nicht auf den Teller.
+                    </p>
+                    <p>
+                        Und wenn du bei uns sitzt, sollst du dich nicht wie ein Gast fühlen, sondern
+                        wie zu Hause. Nur eben mit einem Glas Primitivo in der Hand und dem Duft von
+                        frischem Brot in der Luft.
+                    </p>
+                </div>
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=1000" alt="Gemütliche Atmosphäre im Restaurant">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WERTE-KARTEN ===== -->
+    <section class="section-padding dark-bg-alt">
+        <div class="container reveal">
+            <div class="values-head">
+                <span class="section-eyebrow">Wofür wir stehen</span>
+                <h2>Unsere Werte</h2>
+                <p>Vier Überzeugungen, die in jedem Gericht und jedem Abend bei uns spürbar sind.</p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-3.6 3.6a2 2 0 1 0 2.8 2.8L18 8a4 4 0 1 0-6-6L8.4 5.6"/><path d="m10 18 3.6-3.6a2 2 0 1 0-2.8-2.8L6 16a4 4 0 1 0 6 6l3.6-3.6"/></svg>
+                    </div>
+                    <h3>Handwerk</h3>
+                    <p>Teig, Pasta und Dolci entstehen täglich von Hand – ohne Fertigprodukte, ohne Abkürzungen.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a9 9 0 0 0-9 9c0 4 3 7 6 9 1 .7 2 1 3 1s2-.3 3-1c3-2 6-5 6-9a9 9 0 0 0-9-9Z"/><path d="M12 8a3 3 0 0 0-3 3"/></svg>
+                    </div>
+                    <h3>Zutaten</h3>
+                    <p>Regional, wo es geht, und italienisch, wo es sein muss – von San-Marzano-Tomaten bis Parmigiano.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2l2-7 4 14 3-9 2 5h7"/></svg>
+                    </div>
+                    <h3>Gastfreundschaft</h3>
+                    <p>Bei uns bist du kein Gast, sondern Familie. Herzlich, aufmerksam und ohne Eile.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>Familie</h3>
+                    <p>Drei Generationen, ein Rezeptbuch. Was Nonna Rosa begann, geben wir mit Stolz weiter.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ZEITLEISTE ===== -->
+    <section class="section-padding dark-bg">
+        <div class="container reveal">
+            <div class="timeline-head">
+                <span class="section-eyebrow">Unsere Reise</span>
+                <h2>Von 1982 bis heute</h2>
+            </div>
+
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-year">1982</div>
+                    <h3>Die Ankunft</h3>
+                    <p>Nonna Rosa kommt aus Apulien und eröffnet eine kleine Trattoria mit nur sechs Tischen.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">1995</div>
+                    <h3>Der Holzofen</h3>
+                    <p>Ein traditioneller Holzofen zieht ein – seitdem reift unser Teig 72 Stunden.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2008</div>
+                    <h3>Die nächste Generation</h3>
+                    <p>Die Familie übernimmt das Ruder und bringt frische Ideen, ohne die Wurzeln zu verlieren.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2019</div>
+                    <h3>Eigene Produktion</h3>
+                    <p>Gelato, Pasta und Brot entstehen ab jetzt vollständig im eigenen Haus.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">Heute</div>
+                    <h3>Ein Stück Apulien</h3>
+                    <p>Über 40 Jahre Tradition – und der Anspruch, jeden Abend ein kleines Fest zu sein.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== KENNZAHLEN-LEISTE ===== -->
+    <section class="stats-strip">
+        <div class="container reveal">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-num" data-target="40" data-suffix="+">0</div>
+                    <div class="stat-label">Jahre Tradition</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="3" data-suffix="">0</div>
+                    <div class="stat-label">Generationen</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="72" data-suffix=" h">0</div>
+                    <div class="stat-label">Teigreife</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="100" data-suffix=" %">0</div>
+                    <div class="stat-label">Hausgemacht</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PARALLAX-ZITAT ===== -->
+    <section class="parallax-quote">
+        <div class="pq-overlay"></div>
+        <div class="pq-inner">
+            <h2>"Wer mit Liebe kocht, schmeckt es in jedem Bissen."</h2>
+            <span class="pq-author">— Nonna Rosa</span>
+        </div>
+    </section>
+
+    <!-- ===== DAS TEAM ===== -->
+    <section class="section-padding dark-bg-alt">
+        <div class="container reveal">
+            <div class="team-head">
+                <span class="section-eyebrow">Le persone</span>
+                <h2>Das Team</h2>
+                <p>Die Menschen, die jeden Tag dafür sorgen, dass aus Zutaten Erinnerungen werden.</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-photo">
+                        <img src="https://images.unsplash.com/photo-1581349485608-9469926a8e5e?auto=format&fit=crop&q=80&w=600" alt="Porträt von Nonna Rosa">
+                    </div>
+                    <h3>Miguel</h3>
+                    <span class="team-role">Gründer &amp; Seele</span>
+                    <p>Hütet das Familienrezeptbuch und wacht über jede Sauce, als wäre es die erste.</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-photo">
+                        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&q=80&w=600" alt="Porträt des Chefkochs">
+                    </div>
+                    <h3>Marco</h3>
+                    <span class="team-role">Chefkoch</span>
+                    <p>Verbindet Nonnas Tradition mit eigener Handschrift – am Herd wie am Holzofen.</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-photo">
+                        <img src="https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?auto=format&fit=crop&q=80&w=600" alt="Porträt der Gastgeberin">
+                    </div>
+                    <h3>Giulio</h3>
+                    <span class="team-role">Gastgeber</span>
+                    <p>Sorgt dafür, dass sich jeder Gast vom ersten Moment an willkommen fühlt.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
     <section class="r-cta-section section-padding dark-bg">
         <div class="container reveal">
             <div class="r-cta-card">
-                <span class="r-cta-eyebrow">Buon Appetito</span>
+                <span class="r-cta-eyebrow">Benvenuti</span>
                 <div class="r-cta-ornament"><span></span>✦<span></span></div>
                 <h2 class="r-cta-title rustic-heading">
-                    Bereit für dein eigenes Meisterstück?
+                    Werde Teil unserer Geschichte.
                 </h2>
                 <p class="r-cta-text">
-                    Lass uns gemeinsam etwas Außergewöhnliches schaffen — von der ersten Idee
-                    bis zum letzten Gang. Reserviere deinen Tisch oder schreib uns.
+                    Reserviere einen Tisch und erlebe selbst, was über 40 Jahre Leidenschaft
+                    auf dem Teller bedeuten.
                 </p>
                 <div class="r-cta-actions">
-                    <a href="kontakt.html" class="r-cta-button">Jetzt Projekt anfangen</a>
+                    <a href="kontakt.html" class="r-cta-button">Tisch reservieren</a>
                     <a href="speisekarte.html" class="r-cta-button-ghost">Speisekarte ansehen</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer class="r-footer">
         <div class="container">
             <div class="r-footer-grid">
@@ -715,7 +854,39 @@
         backdrop.addEventListener("click", closeMenu);
         menu.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
         document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+
+        /* --- Animierte Kennzahlen --- */
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const fmt = (val, dec) => dec ? val.toFixed(1).replace(".", ",") : Math.round(val).toString();
+        const animateCount = (el) => {
+            const target = parseFloat(el.dataset.target);
+            const dec = el.dataset.dec === "1";
+            const suffix = el.dataset.suffix || "";
+            const prefix = el.dataset.prefix || "";
+            if (prefersReduced) { el.textContent = prefix + fmt(target, dec) + suffix; return; }
+            const dur = 1600; let start = null;
+            const step = (ts) => {
+                if (!start) start = ts;
+                const p = Math.min((ts - start) / dur, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = prefix + fmt(target * eased, dec) + suffix;
+                if (p < 1) requestAnimationFrame(step);
+                else el.textContent = prefix + fmt(target, dec) + suffix;
+            };
+            requestAnimationFrame(step);
+        };
+        if ("IntersectionObserver" in window) {
+            const statObs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { animateCount(e.target); statObs.unobserve(e.target); }
+                });
+            }, { threshold: .5 });
+            document.querySelectorAll(".stat-num[data-target]").forEach(el => statObs.observe(el));
+        } else {
+            document.querySelectorAll(".stat-num[data-target]").forEach(animateCount);
+        }
     });
     </script>
+
 </body>
 </html>
