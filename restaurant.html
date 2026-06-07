@@ -2,25 +2,21 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trattoria Irtona | Echtes italienisches Erlebnis</title>
-    <link rel="canonical" href="https://irtona.de/restaurant.html" />
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="restaurant.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
 
     <style>
-        /* ============================================================
-           DESKTOP STYLES (unverändert)
-           ============================================================ */
-
+        /* Premium Upgrades für die Startseite */
+        
+        /* Vollbild Hero mit Scroll-Indikator */
         .hero-fullscreen {
             height: 100vh;
             background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1920');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            background-attachment: fixed; /* Parallax Effekt */
             position: relative;
             display: flex;
             align-items: center;
@@ -39,7 +35,7 @@
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            color: #d4af37;
+            color: #d4af37; /* Goldton */
             font-size: 24px;
             animation: bounce 2s infinite;
             z-index: 10;
@@ -51,49 +47,91 @@
             60% { transform: translateY(-10px) translateX(-50%); }
         }
 
+        /* Elegantes Split-Layout (Text / Bild) */
         .premium-split {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 5rem;
             align-items: center;
         }
-        .premium-split-img { position: relative; }
-        .premium-split-img img { width: 100%; height: 600px; object-fit: cover; border-radius: 4px; }
+
+        .premium-split-img {
+            position: relative;
+        }
+
+        .premium-split-img img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        /* Goldener Akzent-Rahmen hinter dem Bild */
         .premium-split-img::after {
             content: '';
             position: absolute;
-            top: 20px; left: -20px;
-            width: 100%; height: 100%;
+            top: 20px;
+            left: -20px;
+            width: 100%;
+            height: 100%;
             border: 2px solid #d4af37;
             z-index: -1;
             border-radius: 4px;
         }
 
+        /* Asymmetrisches Grid für die "Welten" */
         .worlds-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-top: 3rem;
         }
+
         .world-card {
             position: relative;
             height: 450px;
             overflow: hidden;
             border-radius: 4px;
             cursor: pointer;
-            display: block;
-            text-decoration: none;
         }
+
         .world-card img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.7s ease, filter 0.7s ease;
             filter: brightness(0.6) grayscale(30%);
         }
-        .world-card:hover img { transform: scale(1.05); filter: brightness(0.8) grayscale(0%); }
-        .world-content { position: absolute; bottom: 30px; left: 30px; right: 30px; z-index: 2; }
-        .world-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem; }
-        .world-content span { color: #d4af37; font-family: 'Inter', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
 
+        .world-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(0.8) grayscale(0%);
+        }
+
+        .world-content {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            z-index: 2;
+        }
+
+        .world-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .world-content span {
+            color: #d4af37;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Parallax Separator */
         .parallax-quote {
             height: 60vh;
             background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=1920');
@@ -106,197 +144,585 @@
             position: relative;
             text-align: center;
         }
+
         .parallax-quote h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem; color: #fff; font-style: italic;
-            max-width: 800px; line-height: 1.4; z-index: 2; padding: 0 20px;
+            font-size: 3rem;
+            color: #fff;
+            font-style: italic;
+            max-width: 800px;
+            line-height: 1.4;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .premium-split, .worlds-grid {
+                grid-template-columns: 1fr;
+            }
+            .premium-split-img { margin-top: 3rem; }
+            .premium-split-img::after { display: none; }
         }
 
         /* ============================================================
-           BURGER BUTTON – Desktop versteckt
+           PREMIUM REFINEMENTS — Navigation · Rezensionen · Kontakt
+           (überschreibt restaurant.css, nur für diese Seite)
            ============================================================ */
-        .burger-btn {
-            display: none !important;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            flex-shrink: 0;
-        }
-        .burger-btn span {
-            display: block;
-            width: 100%;
-            height: 2px;
-            background-color: #f4ede4;
-            border-radius: 2px;
-            transition: transform 0.35s ease, opacity 0.35s ease;
-            transform-origin: center;
-        }
-        .burger-btn.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-        .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-        .burger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-        /* Mobile Overlay */
-        #mobileNav {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(14, 11, 9, 0.98);
-            z-index: 1050;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        /* ---------- NAVIGATION ---------- */
+        .restaurant-nav {
+            z-index: 1300; /* über dem mobilen Menü-Panel + Backdrop */
+            transition: padding .4s ease, background .4s ease,
+                        box-shadow .4s ease, border-color .4s ease;
+        }
+        .restaurant-nav.scrolled {
+            padding: 12px 0;
+            background: rgba(20,17,15,.95);
+            box-shadow: 0 14px 34px rgba(0,0,0,.45);
+            border-bottom-color: rgba(212,175,55,.20);
+        }
+        .restaurant-nav .nav-container { gap: 2rem; }
+        .restaurant-logo {
+            font-size: 1.55rem; letter-spacing: .5px; line-height: 1;
+        }
+
+        .nav-menu { display: flex; align-items: center; }
+        .restaurant-nav .nav-links {
+            display: flex; align-items: center; gap: 2.4rem;
+            list-style: none; margin: 0; padding: 0;
+        }
+        .restaurant-nav .nav-links a {
+            position: relative; display: inline-block; padding: 6px 2px;
+            color: #f4ede4; text-decoration: none;
+            font-size: .78rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 1.8px;
+            transition: color .3s ease;
+        }
+        .restaurant-nav .nav-links a::after {
+            content: ''; position: absolute; left: 0; bottom: 0;
+            height: 1.5px; width: 100%;
+            background: linear-gradient(90deg, #d4af37, #f0d77b);
+            transform: scaleX(0); transform-origin: left center;
+            transition: transform .4s cubic-bezier(.22,1,.36,1);
+        }
+        .restaurant-nav .nav-links a:hover { color: #fff; }
+        .restaurant-nav .nav-links a:hover::after,
+        .restaurant-nav .nav-links a.active::after { transform: scaleX(1); }
+        .restaurant-nav .nav-links a.active { color: #d4af37; }
+
+        .nav-actions { gap: 1.4rem; }
+        .phone-link {
+            display: inline-flex; align-items: center; gap: .5rem;
+            font-size: .85rem; letter-spacing: .3px; transition: color .3s ease;
+        }
+        .phone-link:hover { color: #d4af37; }
+
+        .nav-reserve {
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .62rem 1.45rem; border: 1px solid rgba(212,175,55,.6);
+            border-radius: 2px; color: #d4af37; text-decoration: none;
+            font-size: .74rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1.6px;
+            white-space: nowrap; transition: all .35s ease;
+        }
+        .nav-reserve:hover {
+            background: #d4af37; color: #1a1715; border-color: #d4af37;
+            box-shadow: 0 10px 24px rgba(212,175,55,.28);
+        }
+        .cart-icon { display: inline-flex; align-items: center; transition: color .3s ease; }
+        .cart-icon:hover { color: #d4af37; }
+
+        /* Hamburger */
+        .nav-toggle {
+            display: none; flex-direction: column; justify-content: center; gap: 5px;
+            width: 42px; height: 42px; padding: 9px;
+            background: transparent; border: 0; cursor: pointer;
+        }
+        .nav-toggle span {
+            display: block; height: 1.5px; width: 100%;
+            background: #f4ede4; border-radius: 2px;
+            transition: transform .35s ease, opacity .25s ease;
+        }
+        .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+        .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+        .nav-menu-extra { display: none; }
+
+        @media (max-width: 860px) {
+            .nav-toggle { display: flex; }
+            .nav-reserve-desktop, .nav-phone-desktop { display: none; }
+            .nav-menu {
+                position: fixed; top: 0; right: 0;
+                width: min(82vw, 360px); height: 100dvh;
+                background: rgba(18,15,13,.98);
+                backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+                border-left: 1px solid rgba(212,175,55,.18);
+                flex-direction: column; align-items: flex-start; justify-content: flex-start;
+                gap: 0; padding: 7rem 2.2rem 2.2rem;
+                transform: translateX(100%);
+                transition: transform .45s cubic-bezier(.22,1,.36,1);
+                z-index: 1200;
+            }
+            .nav-menu.open { transform: translateX(0); }
+            .restaurant-nav .nav-links {
+                flex-direction: column; align-items: flex-start; gap: 0; width: 100%;
+            }
+            .restaurant-nav .nav-links li {
+                width: 100%; border-bottom: 1px solid rgba(255,255,255,.06);
+            }
+            .restaurant-nav .nav-links a {
+                display: block; width: 100%; padding: 1.1rem 0;
+                font-size: .95rem; letter-spacing: 2px;
+            }
+            .restaurant-nav .nav-links a::after { display: none; }
+            .nav-menu-extra {
+                display: flex; flex-direction: column; gap: 1.3rem;
+                width: 100%; margin-top: 2.2rem;
+            }
+            .nav-menu-extra .nav-reserve { justify-content: center; padding: .9rem; }
+            .nav-menu-extra .phone-link { font-size: .95rem; }
+            .nav-backdrop {
+                position: fixed; inset: 0; background: rgba(0,0,0,.55);
+                opacity: 0; visibility: hidden;
+                transition: opacity .4s ease, visibility .4s ease; z-index: 1100;
+            }
+            .nav-backdrop.open { opacity: 1; visibility: visible; }
+            body.nav-open { overflow: hidden; }
+        }
+
+        /* ---------- REZENSIONEN ---------- */
+        .reviews-head { text-align: center; max-width: 660px; margin: 0 auto 3.5rem; }
+        .section-eyebrow {
+            display: inline-block; color: #d4af37;
+            font-size: .8rem; text-transform: uppercase; letter-spacing: 3px;
+            margin-bottom: 1.1rem;
+        }
+        .section-eyebrow::before, .section-eyebrow::after {
+            content: ''; display: inline-block; width: 30px; height: 1px;
+            background: #d4af37; vertical-align: middle; margin: 0 .9rem; opacity: .55;
+        }
+        .reviews-head .section-title { margin: 0; }
+
+        .rating-summary {
+            display: inline-flex; align-items: center; gap: 1.4rem;
+            flex-wrap: wrap; justify-content: center;
+            margin-top: 2rem; padding: 1rem 1.9rem;
+            background: linear-gradient(145deg, rgba(212,175,55,.09), rgba(212,175,55,.02));
+            border: 1px solid rgba(212,175,55,.22); border-radius: 8px;
+        }
+        .rating-score {
+            font-family: 'Playfair Display', serif; font-size: 2.7rem;
+            color: #fff; line-height: 1;
+        }
+        .rating-divider { width: 1px; height: 42px; background: rgba(212,175,55,.3); }
+        .rating-meta { text-align: left; }
+        .rating-stars { display: flex; gap: 3px; margin-bottom: .35rem; }
+        .rating-stars svg { width: 18px; height: 18px; }
+        .rating-count { color: #b0a8a0; font-size: .82rem; letter-spacing: .3px; }
+        .star-fill { fill: #d4af37; }
+        .star-empty { fill: rgba(212,175,55,.22); }
+
+        .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .review-card {
+            position: relative; overflow: hidden;
+            background: linear-gradient(160deg, #221d1a 0%, #1a1614 100%);
+            border: 1px solid rgba(212,175,55,.14); border-radius: 12px;
+            padding: 3.2rem 2rem 2rem;
+            opacity: 0; transform: translateY(34px);
+            transition: opacity .6s ease,
+                        transform .5s cubic-bezier(.22,1,.36,1),
+                        box-shadow .4s ease, border-color .4s ease;
+        }
+        .reveal.active .review-card { opacity: 1; transform: translateY(0); }
+        .reveal.active .review-card:nth-child(2) { transition-delay: .12s; }
+        .reveal.active .review-card:nth-child(3) { transition-delay: .24s; }
+        .review-card::before {
+            content: '\201C';
+            position: absolute; top: .2rem; left: 1.4rem;
+            font-family: 'Playfair Display', serif; font-size: 6rem; line-height: 1;
+            color: rgba(212,175,55,.16); pointer-events: none;
+        }
+        .review-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            opacity: 0; transition: opacity .4s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212,175,55,.4);
+            box-shadow: 0 26px 52px rgba(0,0,0,.5);
+        }
+        .review-card:hover::after { opacity: 1; }
+
+        .review-stars { display: flex; gap: 3px; margin-bottom: 1.3rem; position: relative; z-index: 1; }
+        .review-stars svg { width: 17px; height: 17px; }
+        .review-text {
+            font-family: 'Playfair Display', serif; font-style: italic;
+            font-size: 1.18rem; line-height: 1.7; color: #ece3d8;
+            margin-bottom: 1.8rem; position: relative; z-index: 1;
+        }
+        .review-footer {
+            display: flex; align-items: center; gap: .9rem;
+            padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.07);
+        }
+        .review-avatar {
+            width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700;
+            color: #1a1715; background: linear-gradient(135deg, #f0d77b, #d4af37);
+        }
+        .review-author { font-weight: 600; color: #f4ede4; font-size: .98rem; margin: 0; }
+        .review-meta {
+            display: flex; align-items: center; gap: .35rem;
+            color: #948a7e; font-size: .78rem; margin-top: .15rem;
+        }
+        .review-meta svg { width: 13px; height: 13px; color: #d4af37; }
+
+        /* ---------- KONTAKT & KARTE ---------- */
+        .contact-map-section .section-title { margin-bottom: 3.5rem; }
+        .rustic-map-wrapper {
+            position: relative; border-radius: 16px; overflow: hidden;
+            border: 1px solid rgba(212,175,55,.16);
+            box-shadow: 0 30px 70px rgba(0,0,0,.5);
+        }
+        .rustic-map-wrapper iframe {
+            display: block;
+            filter: grayscale(1) invert(.92) contrast(.92) brightness(.95);
+        }
+        .rustic-contact-card {
+            position: absolute; top: 50%; left: 48px; transform: translateY(-50%);
+            width: 390px; max-width: calc(100% - 96px);
+            background: rgba(24,20,18,.84);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(212,175,55,.28); border-radius: 14px;
+            padding: 2.5rem;
+            box-shadow: 0 24px 50px rgba(0,0,0,.55);
+        }
+        .cc-eyebrow {
+            display: block; color: #d4af37; font-size: .72rem;
+            text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: .4rem;
+        }
+        .rustic-contact-card h3 {
+            font-family: 'Playfair Display', serif; color: #fff;
+            font-size: 1.95rem; margin: 0; padding: 0; border: 0;
+        }
+        .cc-status {
+            display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.2rem;
+            padding: .4rem .9rem; border-radius: 30px;
+            background: rgba(70,160,90,.14); border: 1px solid rgba(90,190,110,.35);
+            color: #8fd7a0; font-size: .78rem; letter-spacing: .3px;
+        }
+        .cc-status .dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #6fd989;
+            animation: ccPulse 2.4s infinite;
+        }
+        @keyframes ccPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(111,217,137,.5); }
+            70%  { box-shadow: 0 0 0 8px rgba(111,217,137,0); }
+            100% { box-shadow: 0 0 0 0 rgba(111,217,137,0); }
+        }
+        .cc-divider {
+            height: 1px; margin: 1.6rem 0;
+            background: linear-gradient(90deg, rgba(212,175,55,.45), transparent);
+        }
+        .cc-row { display: flex; gap: .9rem; margin-bottom: 1.4rem; }
+        .cc-row:last-of-type { margin-bottom: 0; }
+        .cc-icon {
+            flex-shrink: 0; width: 38px; height: 38px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(212,175,55,.12); border: 1px solid rgba(212,175,55,.25);
+            color: #d4af37;
+        }
+        .cc-icon svg { width: 18px; height: 18px; }
+        .cc-row h4 {
+            color: #d4af37; font-size: .72rem; text-transform: uppercase;
+            letter-spacing: 1.4px; margin: 0 0 .35rem;
+        }
+        .cc-row p { color: #cdc3b8; margin: 0; font-size: .92rem; line-height: 1.55; }
+        .cc-row a { color: #cdc3b8; text-decoration: none; transition: color .3s ease; }
+        .cc-row a:hover { color: #fff; }
+        .cc-hours { display: flex; flex-direction: column; gap: .4rem; flex: 1; }
+        .cc-hours-line {
+            display: flex; justify-content: space-between; gap: 1rem;
+            font-size: .9rem; color: #cdc3b8;
+        }
+        .cc-hours-line.today .cc-day { color: #d4af37; font-weight: 600; }
+        .cc-hours-line.today .cc-time { color: #fff; }
+        .cc-time { font-variant-numeric: tabular-nums; }
+        .cc-actions { display: flex; gap: .8rem; margin-top: 1.9rem; }
+        .cc-btn {
+            flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+            padding: .85rem 1rem; border-radius: 4px; text-decoration: none;
+            font-size: .76rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.1px;
+            transition: all .35s ease;
+        }
+        .cc-btn svg { width: 16px; height: 16px; }
+        .cc-btn-gold { background: #d4af37; color: #1a1715; }
+        .cc-btn-gold:hover { background: #f0d77b; box-shadow: 0 12px 26px rgba(212,175,55,.3); transform: translateY(-2px); }
+        .cc-btn-ghost { border: 1px solid rgba(212,175,55,.5); color: #d4af37; }
+        .cc-btn-ghost:hover { background: rgba(212,175,55,.12); transform: translateY(-2px); }
+
+        @media (max-width: 992px) {
+            .reviews-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+        }
+        @media (max-width: 860px) {
+            .rustic-map-wrapper { display: flex; flex-direction: column; }
+            .rustic-map-wrapper iframe { height: 340px; }
+            .rustic-contact-card {
+                position: relative; top: auto; left: auto; transform: none;
+                width: 100%; max-width: none;
+                border-radius: 0 0 16px 16px; border-top: 0;
+            }
+            .cc-actions { flex-direction: column; }
+        }
+
+        /* ============================================================
+           CTA "SCHILD" — größer & anschaulicher (nur diese Seite)
+           ============================================================ */
+        .r-cta-section {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,.05);
+        }
+        .r-cta-card {
+            position: relative;
+            max-width: 940px;
+            margin: 0 auto;
+            padding: 5.5rem 3rem;
+            background:
+                radial-gradient(130% 150% at 50% 0%, rgba(212,175,55,.12) 0%, rgba(212,175,55,0) 55%),
+                linear-gradient(160deg, #201c19 0%, #14110f 100%);
+            border: 1px solid rgba(212,175,55,.30);
+            border-radius: 12px;
+            box-shadow: 0 34px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.04);
+            overflow: hidden;
+        }
+        /* L-förmige Gold-Eckwinkel für den "Schild"-Look */
+        .r-cta-card::before,
+        .r-cta-card::after {
+            content: ''; position: absolute;
+            width: 48px; height: 48px;
+            border: 1.5px solid rgba(212,175,55,.5);
             pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.35s ease;
         }
-        #mobileNav.open {
-            pointer-events: all;
-            opacity: 1;
-        }
-        #mobileNav a {
-            font-family: 'Playfair Display', serif !important;
-            font-size: 2.4rem !important;
-            color: #f4ede4 !important;
-            text-decoration: none !important;
-            padding: 0.8rem 0;
-            letter-spacing: 1px;
-            transition: color 0.2s ease;
+        .r-cta-card::before { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+        .r-cta-card::after  { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+
+        .r-cta-eyebrow {
             display: block;
+            color: #d4af37;
+            font-size: .9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
-        #mobileNav a:hover, #mobileNav a.active { color: #d4af37 !important; }
-        #mobileNav .mn-divider { width: 40px; height: 1px; background: rgba(212,175,55,0.35); margin: 0.3rem 0; }
-        #mobileNav .mn-contact { margin-top: 2.5rem; text-align: center; }
-        #mobileNav .mn-contact p { color: #b0a8a0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
-        #mobileNav .mn-contact a { font-family: 'Inter', sans-serif !important; font-size: 1.1rem !important; color: #d4af37 !important; }
+        .r-cta-ornament {
+            display: flex; align-items: center; justify-content: center;
+            gap: 14px; margin: 1.1rem auto 1.4rem; color: #d4af37; font-size: .85rem;
+        }
+        .r-cta-ornament span {
+            display: block; width: 48px; height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37);
+        }
+        .r-cta-ornament span:last-child {
+            background: linear-gradient(90deg, #d4af37, transparent);
+        }
+        .r-cta-title {
+            font-size: clamp(2.5rem, 5.2vw, 3.8rem);
+            line-height: 1.1;
+            margin: 0 0 1.3rem;
+        }
+        .r-cta-text {
+            color: #cdc3b8;
+            font-size: 1.18rem;
+            line-height: 1.7;
+            max-width: 580px;
+            margin: 0 auto 2.6rem;
+        }
+        .r-cta-actions {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+        }
+        .r-cta-button {
+            display: inline-block;
+            padding: 1.05rem 2.8rem;
+            background: #d4af37;
+            color: #1a1715;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            transition: all .3s ease;
+        }
+        .r-cta-button:hover {
+            background: #f0d77b;
+            box-shadow: 0 14px 30px rgba(212,175,55,.32);
+            transform: translateY(-2px);
+        }
+        .r-cta-button-ghost {
+            display: inline-block;
+            padding: 1.05rem 2.8rem;
+            border: 1px solid rgba(212,175,55,.55);
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            transition: all .3s ease;
+        }
+        .r-cta-button-ghost:hover {
+            background: rgba(212,175,55,.12);
+            transform: translateY(-2px);
+        }
 
         /* ============================================================
-           MOBILE ≤ 768px
+           VOLLWERTIGER FOOTER — Homepage-Struktur, Restaurant-Stil
            ============================================================ */
-        @media (max-width: 768px) {
+        .r-footer {
+            background: #14110f;
+            border-top: 1px solid rgba(212,175,55,.18);
+            padding: 5rem 0 2.2rem;
+            color: #b0a8a0;
+        }
+        .r-footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.2fr;
+            gap: 3rem;
+            padding-bottom: 3.5rem;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+        .r-footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            color: #f4ede4;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+        }
+        .r-footer-tagline {
+            font-size: .95rem;
+            line-height: 1.75;
+            max-width: 340px;
+            color: #a79e94;
+            margin: 0;
+        }
+        .r-footer-social {
+            display: flex; gap: .7rem; margin-top: 1.7rem;
+        }
+        .r-footer-social a {
+            width: 42px; height: 42px;
+            border: 1px solid rgba(212,175,55,.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #d4af37;
+            transition: all .3s ease;
+        }
+        .r-footer-social a:hover {
+            background: #d4af37; color: #14110f;
+            border-color: #d4af37; transform: translateY(-3px);
+        }
+        .r-footer-social svg { width: 18px; height: 18px; }
 
-            /* Burger einblenden */
-            .burger-btn { display: flex !important; }
+        .r-footer-col h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f4ede4;
+            margin: 0 0 1.3rem;
+        }
+        .r-footer-col ul {
+            list-style: none; margin: 0; padding: 0;
+            display: flex; flex-direction: column; gap: .75rem;
+        }
+        .r-footer-col ul li a {
+            color: #a79e94; text-decoration: none;
+            font-size: .92rem; transition: color .3s ease;
+        }
+        .r-footer-col ul li a:hover { color: #d4af37; }
+        .r-footer-hours li {
+            display: flex; justify-content: space-between; gap: 1rem;
+            font-size: .92rem; color: #a79e94;
+        }
+        .r-footer-hours li span:last-child {
+            color: #cdc3b8; font-variant-numeric: tabular-nums;
+        }
+        .r-footer-hours li.today span:first-child { color: #d4af37; font-weight: 600; }
+        .r-footer-hours li.today span:last-child { color: #fff; }
 
-            /* Desktop-Nav verstecken */
-            .restaurant-nav .nav-links { display: none !important; }
-            .restaurant-nav .phone-link { display: none !important; }
+        .r-footer-bottom {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 1rem; flex-wrap: wrap;
+            padding-top: 1.9rem;
+            font-size: .85rem; color: #7c746b;
+        }
+        .r-footer-legal { display: flex; gap: 1.6rem; }
+        .r-footer-legal a {
+            color: #a79e94; text-decoration: none; transition: color .3s ease;
+        }
+        .r-footer-legal a:hover { color: #d4af37; }
 
-            /* Hero: iOS background-attachment:fixed Bug-Fix */
-            .hero-fullscreen {
-                background-attachment: scroll !important;
-                background-position: center center !important;
-                min-height: 100vh;
-            }
-
-            /* Hero Text skalieren */
-            .hero-fullscreen h1 {
-                font-size: 2.4rem !important;
-                margin-bottom: 1rem !important;
-            }
-            .hero-fullscreen p.rustic-subtitle {
-                font-size: 1rem !important;
-                margin-bottom: 1.5rem !important;
-            }
-
-            /* Parallax Quote iOS-Fix */
-            .parallax-quote {
-                background-attachment: scroll !important;
-                height: auto !important;
-                padding: 4rem 1.5rem !important;
-            }
-            .parallax-quote h2 { font-size: 1.5rem !important; }
-
-            /* Split Layout → 1 Spalte */
-            .premium-split { grid-template-columns: 1fr !important; gap: 2rem !important; }
-            .premium-split-img img { height: 280px !important; }
-            .premium-split-img::after { display: none !important; }
-
-            /* Worlds Grid: 3 Spalten behalten, kleiner */
-            .worlds-grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.4rem !important;
-                margin-top: 1.5rem !important;
-            }
-            .world-card { height: 160px !important; border-radius: 3px !important; }
-            .world-content { bottom: 8px !important; left: 8px !important; right: 8px !important; }
-            .world-content h3 { font-size: 0.85rem !important; margin-bottom: 0.15rem !important; }
-            .world-content span { font-size: 0.6rem !important; letter-spacing: 0.5px !important; }
-
-            /* Reviews: 3 Spalten behalten */
-            .grid-3 {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.5rem !important;
-            }
-            .review-card { padding: 0.75rem !important; border-radius: 5px !important; }
-            .stars { font-size: 0.55rem !important; margin-bottom: 0.4rem !important; }
-            .review-text { font-size: 0.6rem !important; line-height: 1.4 !important; margin-bottom: 0.5rem !important; }
-            .review-author { font-size: 0.6rem !important; }
-
-            /* Contact Grid → 1 Spalte */
-            .contact-grid { grid-template-columns: 1fr !important; }
+        @media (max-width: 992px) {
+            .r-footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+            .r-cta-card { padding: 4.5rem 2rem; }
+        }
+        @media (max-width: 600px) {
+            .r-footer-grid { grid-template-columns: 1fr; gap: 2.2rem; }
+            .r-footer-bottom { flex-direction: column; text-align: center; }
+            .r-cta-card { padding: 3.5rem 1.4rem; }
+            .r-cta-actions { flex-direction: column; }
+            .r-cta-button, .r-cta-button-ghost { width: 100%; }
         }
 
-        /* Tablet */
-        @media (max-width: 992px) and (min-width: 769px) {
-            .premium-split { grid-template-columns: 1fr !important; }
-            .premium-split-img::after { display: none !important; }
-            .world-card { height: 300px !important; }
+        /* Barrierefreiheit: Bewegung reduzieren */
+        @media (prefers-reduced-motion: reduce) {
+            .review-card, .nav-menu, .nav-toggle span,
+            .cc-status .dot, .restaurant-nav { transition: none !important; animation: none !important; }
+            .review-card { opacity: 1; transform: none; }
         }
     </style>
 </head>
 <body class="rustic-dark-theme">
 
-    <header class="restaurant-nav">
+    <header class="restaurant-nav" id="restaurantNav">
         <div class="nav-container">
             <a href="restaurant.html" class="restaurant-logo">Trattoria Irtona</a>
-            <nav>
+
+            <nav class="nav-menu" id="navMenu">
                 <ul class="nav-links">
-                    <li><a href="index.html" class="active">Start</a></li>
+                    <li><a href="restaurant.html" class="active">Start</a></li>
                     <li><a href="project-b-philosophie.html">Philosophie</a></li>
                     <li><a href="speisekarte.html">Speisekarte</a></li>
                 </ul>
+                <div class="nav-menu-extra">
+                    <a href="tel:+49123456789" class="phone-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.6 10.8a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 011-.24c1.1.37 2.3.57 3.6.57a1 1 0 011 1V21a1 1 0 01-1 1C10.3 22 2 13.7 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.3.2 2.5.6 3.6a1 1 0 01-.25 1l-2.25 2.2z"/>
+                        </svg>
+                        +49 123 456 789
+                    </a>
+                    <a href="kontakt.html" class="nav-reserve">Tisch reservieren</a>
+                </div>
             </nav>
+
             <div class="nav-actions">
-                <a href="tel:+49123456789" class="phone-link">
+                <a href="tel:+49123456789" class="phone-link nav-phone-desktop">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M6.6 10.8a15.05 15.05 0 006.6 6.6l2.2-2.2a1 1 0 011-.24c1.1.37 2.3.57 3.6.57a1 1 0 011 1V21a1 1 0 01-1 1C10.3 22 2 13.7 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.3.2 2.5.6 3.6a1 1 0 01-.25 1l-2.25 2.2z"/>
                     </svg>
                     +49 123 456
                 </a>
-                <a href="#" class="cart-icon">
+                <a href="kontakt.html" class="nav-reserve nav-reserve-desktop">Reservieren</a>
+                <a href="#" class="cart-icon" aria-label="Warenkorb">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M7 4h-2l-1 2h2l3.6 7.6-1.35 2.45A1 1 0 009 18h10v-2H9.42a.25.25 0 01-.22-.37L10 14h7a1 1 0 00.92-.62l3-7A1 1 0 0020 4H7zm0 16a2 2 0 102 2 2 2 0 00-2-2zm10 0a2 2 0 102 2 2 2 0 00-2-2z"/>
                     </svg>
                     <span class="cart-count">0</span>
                 </a>
-                <button class="burger-btn" id="burgerBtn" aria-label="Menü öffnen">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navMenu">
+                    <span></span><span></span><span></span>
                 </button>
             </div>
         </div>
     </header>
-
-    <!-- Mobile Overlay -->
-    <div id="mobileNav">
-        <a href="index.html" class="active">Start</a>
-        <div class="mn-divider"></div>
-        <a href="project-b-philosophie.html">Philosophie</a>
-        <div class="mn-divider"></div>
-        <a href="speisekarte.html">Speisekarte</a>
-        <div class="mn-contact">
-            <p>Reservierung</p>
-            <a href="tel:+491796676977">+49 179 667 6977</a>
-        </div>
-    </div>
+    <div class="nav-backdrop" id="navBackdrop"></div>
 
     <section class="hero-fullscreen">
         <div class="hero-overlay"></div>
@@ -337,45 +763,122 @@
                 <span style="color: #d4af37; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Entdecke</span>
                 <h2 class="rustic-heading" style="font-size: 3rem; margin-top: 0.5rem;">Unsere Welten</h2>
             </div>
+            
             <div class="worlds-grid">
                 <a href="speisekarte.html" class="world-card">
-                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=987&auto=format&fit=crop" alt="Restaurant">
-                    <div class="world-content"><span>Kulinarik</span><h3>Das Restaurant</h3></div>
+                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=800" alt="Restaurant">
+                    <div class="world-content">
+                        <span>Kulinarik</span>
+                        <h3>Das Restaurant</h3>
+                    </div>
                 </a>
                 <a href="#" class="world-card">
                     <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800" alt="Weinbar">
-                    <div class="world-content"><span>Genuss</span><h3>Die Weinbar</h3></div>
+                    <div class="world-content">
+                        <span>Genuss</span>
+                        <h3>Die Weinbar</h3>
+                    </div>
                 </a>
                 <a href="#" class="world-card">
                     <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Events">
-                    <div class="world-content"><span>Erinnerungen</span><h3>Feiern & Events</h3></div>
+                    <div class="world-content">
+                        <span>Erinnerungen</span>
+                        <h3>Feiern & Events</h3>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <section class="section-padding dark-bg-alt">
+    <section class="section-padding dark-bg reviews-section">
         <div class="container reveal">
-            <h2 class="section-title rustic-heading">Was unsere Gäste sagen.</h2>
-            <div class="grid-3">
-                <div class="review-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">"Die beste Trüffel-Pasta, die ich je außerhalb von Rom gegessen habe. Ein absolutes Erlebnis!"</p>
-                    <p class="review-author">- Julia M.</p>
+            <div class="reviews-head">
+                <span class="section-eyebrow">Stimmen unserer Gäste</span>
+                <h2 class="section-title rustic-heading">Was unsere Gäste sagen.</h2>
+
+                <div class="rating-summary">
+                    <div class="rating-score">4,9</div>
+                    <div class="rating-divider"></div>
+                    <div class="rating-meta">
+                        <div class="rating-stars" aria-label="4,9 von 5 Sternen">
+                            <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </div>
+                        <div class="rating-count">Ausgezeichnet · 248 Bewertungen</div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="reviews-grid">
                 <div class="review-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">"Wunderschönes, dunkles Ambiente. Perfekt für ein Date. Der Service war erstklassig und unaufdringlich."</p>
-                    <p class="review-author">- Thomas B.</p>
+                    <div class="review-stars" aria-label="5 von 5 Sternen">
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <p class="review-text">Die beste Trüffel-Pasta, die ich je außerhalb von Rom gegessen habe. Ein absolutes Erlebnis!</p>
+                    <div class="review-footer">
+                        <div class="review-avatar">JM</div>
+                        <div>
+                            <p class="review-author">Julia M.</p>
+                            <span class="review-meta">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                Verifizierter Gast
+                            </span>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="review-card">
-                    <div class="stars">⭐⭐⭐⭐</div>
-                    <p class="review-text">"Sehr authentische Pizza. Der Teig ist ein Traum. Man sollte am Wochenende definitiv reservieren!"</p>
-                    <p class="review-author">- Sarah K.</p>
+                    <div class="review-stars" aria-label="5 von 5 Sternen">
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <p class="review-text">Wunderschönes, dunkles Ambiente. Perfekt für ein Date. Der Service war erstklassig und unaufdringlich.</p>
+                    <div class="review-footer">
+                        <div class="review-avatar">TB</div>
+                        <div>
+                            <p class="review-author">Thomas B.</p>
+                            <span class="review-meta">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                Verifizierter Gast
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars" aria-label="4 von 5 Sternen">
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-fill" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg viewBox="0 0 24 24"><path class="star-empty" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <p class="review-text">Sehr authentische Pizza. Der Teig ist ein Traum. Man sollte am Wochenende definitiv reservieren!</p>
+                    <div class="review-footer">
+                        <div class="review-avatar">SK</div>
+                        <div>
+                            <p class="review-author">Sarah K.</p>
+                            <span class="review-meta">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                Verifizierter Gast
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
 
     <section class="parallax-quote reveal">
         <div style="position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);"></div>
@@ -385,82 +888,201 @@
     <section class="contact-map-section section-padding dark-bg">
         <div class="container reveal">
             <h2 class="section-title rustic-heading" style="text-align: center; margin-bottom: 4rem;">Wir freuen uns auf dich.</h2>
+            
             <div class="map-wrapper rustic-map-wrapper">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.308898950005!2d9.278913315647087!3d48.96678507929828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4799d5cf1564cdb1%3A0x41ffd3c8d091a10!2sSteinheim%20an%20der%20Murr!5e0!3m2!1sde!2sde!4v1679000000000!5m2!1sde!2sde" 
-                    width="100%" height="600" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.308898950005!2d9.278913315647087!3d48.96678507929828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4799d5cf1564cdb1%3A0x41ffd3c8d091a10!2sSteinheim%20an%20der%20Murr!5e0!3m2!1sde!2sde!4v1679000000000!5m2!1sde!2sde"
+                    width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" title="Standort der Trattoria Irtona auf Google Maps">
                 </iframe>
+
                 <div class="floating-contact-card rustic-contact-card">
-                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1.5rem;">Trattoria Irtona</h3>
-                    <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                        <div>
-                            <h4 style="color: #d4af37; margin-bottom: 0.5rem;"> Adresse</h4>
-                            <p style="color: #ccc; margin-bottom: 1.5rem;">Mustergasse 14<br>71711 Steinheim</p>
-                            <h4 style="color: #d4af37; margin-bottom: 0.5rem;"> Kontakt</h4>
-                            <p style="color: #ccc;">0123 / 456 789<br>info@irtona.de</p>
+                    <span class="cc-eyebrow">Besuch uns</span>
+                    <h3>Trattoria Irtona</h3>
+
+                    <div class="cc-status">
+                        <span class="dot"></span> Heute geöffnet · ab 17:00 Uhr
+                    </div>
+
+                    <div class="cc-divider"></div>
+
+                    <div class="cc-row">
+                        <div class="cc-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                         </div>
                         <div>
-                            <h4 style="color: #d4af37; margin-bottom: 0.5rem;"> Öffnungszeiten</h4>
-                            <p style="color: #ccc; margin-bottom: 0.5rem;"><strong>Mo - Do:</strong> 17:00 - 23:00</p>
-                            <p style="color: #ccc; margin-bottom: 0.5rem;"><strong>Fr - Sa:</strong> 17:00 - 00:00</p>
-                            <p style="color: #ccc;"><strong>Sonntag:</strong> 12:00 - 22:00</p>
+                            <h4>Adresse</h4>
+                            <p>Mustergasse 14<br>71711 Steinheim a. d. Murr</p>
                         </div>
+                    </div>
+
+                    <div class="cc-row">
+                        <div class="cc-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+                        </div>
+                        <div>
+                            <h4>Kontakt</h4>
+                            <p><a href="tel:+49123456789">0123 / 456 789</a><br><a href="mailto:info@irtona.de">info@irtona.de</a></p>
+                        </div>
+                    </div>
+
+                    <div class="cc-row">
+                        <div class="cc-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                        </div>
+                        <div class="cc-hours">
+                            <h4>Öffnungszeiten</h4>
+                            <div class="cc-hours-line"><span class="cc-day">Mo – Do</span><span class="cc-time">17:00 – 23:00</span></div>
+                            <div class="cc-hours-line today"><span class="cc-day">Fr – Sa</span><span class="cc-time">17:00 – 00:00</span></div>
+                            <div class="cc-hours-line"><span class="cc-day">Sonntag</span><span class="cc-time">12:00 – 22:00</span></div>
+                        </div>
+                    </div>
+
+                    <div class="cc-actions">
+                        <a href="kontakt.html" class="cc-btn cc-btn-gold">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                            Reservieren
+                        </a>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Steinheim+an+der+Murr" target="_blank" rel="noopener" class="cc-btn cc-btn-ghost">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8-8-2Z"/></svg>
+                            Route
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="bella-cta-section section-padding dark-bg">
-        <div class="bella-cta-container container reveal">
-            <h2 class="bella-cta-title rustic-heading">Bereit für dein eigenes Meisterstück?</h2>
-            <p class="bella-cta-text">Lass uns gemeinsam etwas Außergewöhnliches schaffen.<br><br><br></p>
-            <a href="kontakt.html" class="bella-cta-button">Jetzt Projekt anfangen</a>
+    <section class="r-cta-section section-padding dark-bg">
+        <div class="container reveal">
+            <div class="r-cta-card">
+                <span class="r-cta-eyebrow">Buon Appetito</span>
+                <div class="r-cta-ornament"><span></span>✦<span></span></div>
+                <h2 class="r-cta-title rustic-heading">
+                    Bereit für dein eigenes Meisterstück?
+                </h2>
+                <p class="r-cta-text">
+                    Lass uns gemeinsam etwas Außergewöhnliches schaffen — von der ersten Idee
+                    bis zum letzten Gang.
+                </p>
+                <div class="r-cta-actions">
+                    <a href="kontakt.html" class="r-cta-button">Jetzt Projekt anfangen</a>
+                    <a href="speisekarte.html" class="r-cta-button-ghost">Speisekarte ansehen</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer class="bella-footer">
-        <div class="bella-footer-container container">
-            <p>© 2026 Irtona.de</p>
-            <a href="impressum.html" class="bella-footer-link">Impressum</a>
-            <a href="datenschutz.html" class="bella-footer-link">Datenschutzrichtlinien</a>
+    <footer class="r-footer">
+        <div class="container">
+            <div class="r-footer-grid">
+
+                <div class="r-footer-brand">
+                    <a href="restaurant.html" class="r-footer-logo">Trattoria Irtona</a>
+                    <p class="r-footer-tagline">
+                        Authentische italienische Küche im Herzen von Steinheim.
+                        Ehrliches Handwerk, ausgewählte Zutaten und Abende, die in Erinnerung bleiben.
+                    </p>
+                    <div class="r-footer-social">
+                        <a href="https://www.instagram.com/irtona.de" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="r-footer-col">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li><a href="restaurant.html">Start</a></li>
+                        <li><a href="project-b-philosophie.html">Philosophie</a></li>
+                        <li><a href="speisekarte.html">Speisekarte</a></li>
+                        <li><a href="kontakt.html">Tisch reservieren</a></li>
+                    </ul>
+                </div>
+
+                <div class="r-footer-col">
+                    <h5>Öffnungszeiten</h5>
+                    <ul class="r-footer-hours">
+                        <li><span>Mo – Do</span><span>17 – 23 Uhr</span></li>
+                        <li class="today"><span>Fr – Sa</span><span>17 – 00 Uhr</span></li>
+                        <li><span>Sonntag</span><span>12 – 22 Uhr</span></li>
+                    </ul>
+                </div>
+
+                <div class="r-footer-col">
+                    <h5>Kontakt</h5>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/dir/?api=1&destination=Steinheim+an+der+Murr" target="_blank" rel="noopener">Mustergasse 14<br>71711 Steinheim a. d. Murr</a></li>
+                        <li><a href="tel:+49123456789">0123 / 456 789</a></li>
+                        <li><a href="mailto:info@irtona.de">info@irtona.de</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="r-footer-bottom">
+                <p>© 2026 Trattoria Irtona · Irtona.de</p>
+                <div class="r-footer-legal">
+                    <a href="impressum.html">Impressum</a>
+                    <a href="datenschutz.html">Datenschutz</a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // Scroll Reveal
         const reveals = document.querySelectorAll(".reveal");
+
         const revealOnScroll = () => {
-            const wh = window.innerHeight;
+            const windowHeight = window.innerHeight;
+
             reveals.forEach(el => {
-                if (el.getBoundingClientRect().top < wh - 100) el.classList.add("active");
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add("active");
+                }
             });
         };
+
         window.addEventListener("scroll", revealOnScroll);
-        revealOnScroll();
+        revealOnScroll(); // Direkt beim Laden prüfen
 
-        // Burger Menü
-        const burgerBtn = document.getElementById("burgerBtn");
-        const mobileNav = document.getElementById("mobileNav");
+        /* --- Navigation: kompakter Zustand beim Scrollen --- */
+        const nav = document.getElementById("restaurantNav");
+        const onNavScroll = () => nav.classList.toggle("scrolled", window.scrollY > 40);
+        window.addEventListener("scroll", onNavScroll);
+        onNavScroll();
 
-        burgerBtn.addEventListener("click", () => {
-            const isOpen = !mobileNav.classList.contains("open");
-            mobileNav.classList.toggle("open", isOpen);
-            burgerBtn.classList.toggle("open", isOpen);
-            document.body.style.overflow = isOpen ? "hidden" : "";
-            burgerBtn.setAttribute("aria-label", isOpen ? "Menü schließen" : "Menü öffnen");
+        /* --- Mobiles Menü --- */
+        const toggle = document.getElementById("navToggle");
+        const menu = document.getElementById("navMenu");
+        const backdrop = document.getElementById("navBackdrop");
+
+        const closeMenu = () => {
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Menü öffnen");
+            menu.classList.remove("open");
+            backdrop.classList.remove("open");
+            document.body.classList.remove("nav-open");
+        };
+        const openMenu = () => {
+            toggle.setAttribute("aria-expanded", "true");
+            toggle.setAttribute("aria-label", "Menü schließen");
+            menu.classList.add("open");
+            backdrop.classList.add("open");
+            document.body.classList.add("nav-open");
+        };
+
+        toggle.addEventListener("click", () => {
+            toggle.getAttribute("aria-expanded") === "true" ? closeMenu() : openMenu();
         });
-
-        mobileNav.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", () => {
-                mobileNav.classList.remove("open");
-                burgerBtn.classList.remove("open");
-                document.body.style.overflow = "";
-            });
-        });
+        backdrop.addEventListener("click", closeMenu);
+        menu.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+        document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
     });
     </script>
-</body>
-</html>
 </body>
 </html>
