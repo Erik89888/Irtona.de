@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speisekarte | Trattoria Irtona</title>
 
     <link rel="stylesheet" href="style.css">
@@ -10,240 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* ============================================================
-           DESKTOP STYLES (unverändert)
-           ============================================================ */
-
-        .hero-fullscreen {
-            height: 100vh;
-            background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1920');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .hero-fullscreen .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.4) 50%, rgba(18,18,18,0.9) 100%);
-        }
-
-        .scroll-down-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #d4af37;
-            font-size: 24px;
-            animation: bounce 2s infinite;
-            z-index: 10;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-            40% { transform: translateY(-20px) translateX(-50%); }
-            60% { transform: translateY(-10px) translateX(-50%); }
-        }
-
-        .premium-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-        }
-        .premium-split-img { position: relative; }
-        .premium-split-img img { width: 100%; height: 600px; object-fit: cover; border-radius: 4px; }
-        .premium-split-img::after {
-            content: '';
-            position: absolute;
-            top: 20px; left: -20px;
-            width: 100%; height: 100%;
-            border: 2px solid #d4af37;
-            z-index: -1;
-            border-radius: 4px;
-        }
-
-        .worlds-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .world-card {
-            position: relative;
-            height: 450px;
-            overflow: hidden;
-            border-radius: 4px;
-            cursor: pointer;
-            display: block;
-            text-decoration: none;
-        }
-        .world-card img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.7s ease, filter 0.7s ease;
-            filter: brightness(0.6) grayscale(30%);
-        }
-        .world-card:hover img { transform: scale(1.05); filter: brightness(0.8) grayscale(0%); }
-        .world-content { position: absolute; bottom: 30px; left: 30px; right: 30px; z-index: 2; }
-        .world-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem; }
-        .world-content span { color: #d4af37; font-family: 'Inter', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
-
-        .parallax-quote {
-            height: 60vh;
-            background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=1920');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            text-align: center;
-        }
-        .parallax-quote h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem; color: #fff; font-style: italic;
-            max-width: 800px; line-height: 1.4; z-index: 2; padding: 0 20px;
-        }
-
-        /* ============================================================
-           BURGER BUTTON – Desktop versteckt
-           ============================================================ */
-        .burger-btn {
-            display: none !important;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            flex-shrink: 0;
-        }
-        .burger-btn span {
-            display: block;
-            width: 100%;
-            height: 2px;
-            background-color: #f4ede4;
-            border-radius: 2px;
-            transition: transform 0.35s ease, opacity 0.35s ease;
-            transform-origin: center;
-        }
-        .burger-btn.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-        .burger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-        .burger-btn.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-
-        /* Mobile Overlay */
-        #mobileNav {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(14, 11, 9, 0.98);
-            z-index: 1050;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-        #mobileNav.open {
-            pointer-events: all;
-            opacity: 1;
-        }
-        #mobileNav a {
-            font-family: 'Playfair Display', serif !important;
-            font-size: 2.4rem !important;
-            color: #f4ede4 !important;
-            text-decoration: none !important;
-            padding: 0.8rem 0;
-            letter-spacing: 1px;
-            transition: color 0.2s ease;
-            display: block;
-        }
-        #mobileNav a:hover, #mobileNav a.active { color: #d4af37 !important; }
-        #mobileNav .mn-divider { width: 40px; height: 1px; background: rgba(212,175,55,0.35); margin: 0.3rem 0; }
-        #mobileNav .mn-contact { margin-top: 2.5rem; text-align: center; }
-        #mobileNav .mn-contact p { color: #b0a8a0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
-        #mobileNav .mn-contact a { font-family: 'Inter', sans-serif !important; font-size: 1.1rem !important; color: #d4af37 !important; }
-
-        /* ============================================================
-           MOBILE ≤ 768px
-           ============================================================ */
-        @media (max-width: 768px) {
-
-            /* Mobile-Navigation läuft jetzt über .nav-toggle / .nav-menu (siehe Nav-Block) */
-
-            /* Hero: iOS background-attachment:fixed Bug-Fix */
-            .hero-fullscreen {
-                background-attachment: scroll !important;
-                background-position: center center !important;
-                min-height: 100vh;
-            }
-
-            /* Hero Text skalieren */
-            .hero-fullscreen h1 {
-                font-size: 2.4rem !important;
-                margin-bottom: 1rem !important;
-            }
-            .hero-fullscreen p.rustic-subtitle {
-                font-size: 1rem !important;
-                margin-bottom: 1.5rem !important;
-            }
-
-            /* Parallax Quote iOS-Fix */
-            .parallax-quote {
-                background-attachment: scroll !important;
-                height: auto !important;
-                padding: 4rem 1.5rem !important;
-            }
-            .parallax-quote h2 { font-size: 1.5rem !important; }
-
-            /* Split Layout → 1 Spalte */
-            .premium-split { grid-template-columns: 1fr !important; gap: 2rem !important; }
-            .premium-split-img img { height: 280px !important; }
-            .premium-split-img::after { display: none !important; }
-
-            /* Worlds Grid: 3 Spalten behalten, kleiner */
-            .worlds-grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.4rem !important;
-                margin-top: 1.5rem !important;
-            }
-            .world-card { height: 160px !important; border-radius: 3px !important; }
-            .world-content { bottom: 8px !important; left: 8px !important; right: 8px !important; }
-            .world-content h3 { font-size: 0.85rem !important; margin-bottom: 0.15rem !important; }
-            .world-content span { font-size: 0.6rem !important; letter-spacing: 0.5px !important; }
-
-            /* Reviews: 3 Spalten behalten */
-            .grid-3 {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.5rem !important;
-            }
-            .review-card { padding: 0.75rem !important; border-radius: 5px !important; }
-            .stars { font-size: 0.55rem !important; margin-bottom: 0.4rem !important; }
-            .review-text { font-size: 0.6rem !important; line-height: 1.4 !important; margin-bottom: 0.5rem !important; }
-            .review-author { font-size: 0.6rem !important; }
-
-            /* Contact Grid → 1 Spalte */
-            .contact-grid { grid-template-columns: 1fr !important; }
-        }
-
-        /* Tablet */
-        @media (max-width: 992px) and (min-width: 769px) {
-            .premium-split { grid-template-columns: 1fr !important; }
-            .premium-split-img::after { display: none !important; }
-            .world-card { height: 300px !important; }
-        }
-
         /* ============================================================
            NAVIGATION — angeglichen an restaurant.html
            ============================================================ */
@@ -364,7 +131,167 @@
         }
 
         /* ============================================================
-           CTA "SCHILD" + VOLLWERTIGER FOOTER — wie restaurant.html
+           SPEISEKARTE — KOPFBEREICH
+           ============================================================ */
+        .menu-hero {
+            position: relative;
+            padding: 190px 0 90px;
+            text-align: center;
+            background:
+                linear-gradient(to bottom, rgba(18,15,13,.78), rgba(20,17,15,.94)),
+                url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=1920') center/cover fixed;
+        }
+        .menu-hero .section-eyebrow {
+            display: inline-block; color: #d4af37;
+            font-size: .8rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.1rem;
+        }
+        .menu-hero .section-eyebrow::before, .menu-hero .section-eyebrow::after {
+            content: ''; display: inline-block; width: 30px; height: 1px;
+            background: #d4af37; vertical-align: middle; margin: 0 .9rem; opacity: .55;
+        }
+        .menu-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 6vw, 4rem); color: #fff; margin: 0 0 1rem; }
+        .menu-hero p { color: #cdc3b8; font-size: 1.15rem; max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+        /* ============================================================
+           EMPFEHLUNG DES HAUSES (Featured)
+           ============================================================ */
+        .feat-wrap {
+            display: grid; grid-template-columns: 1.05fr .95fr; gap: 0;
+            border: 1px solid rgba(212,175,55,.22); border-radius: 16px; overflow: hidden;
+            background: linear-gradient(160deg, #201c19, #14110f);
+            box-shadow: 0 34px 80px rgba(0,0,0,.5);
+        }
+        .feat-img { position: relative; min-height: 420px; }
+        .feat-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .feat-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(20,17,15,.7)); }
+        .feat-body { padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+        .feat-pill {
+            align-self: flex-start; display: inline-flex; align-items: center; gap: .5rem;
+            color: #d4af37; font-size: .72rem; text-transform: uppercase; letter-spacing: 2px;
+            padding: .4rem .9rem; border: 1px solid rgba(212,175,55,.4); border-radius: 30px; margin-bottom: 1.5rem;
+        }
+        .feat-pill svg { width: 14px; height: 14px; }
+        .feat-body h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; margin: 0 0 1rem; }
+        .feat-body p { color: #cdc3b8; font-size: 1.08rem; line-height: 1.75; margin: 0 0 2rem; }
+        .feat-foot { display: flex; align-items: center; gap: 1.5rem; }
+        .feat-price { font-family: 'Playfair Display', serif; font-size: 2rem; color: #d4af37; }
+        .feat-btn {
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .85rem 1.8rem; background: #d4af37; color: #1a1715; border: 0;
+            border-radius: 4px; font-weight: 600; letter-spacing: .3px; cursor: pointer;
+            font-family: 'Inter', sans-serif; transition: all .3s ease;
+        }
+        .feat-btn:hover { background: #f0d77b; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(212,175,55,.3); }
+
+        /* ============================================================
+           KATEGORIE-TABS (sticky)
+           ============================================================ */
+        .menu-tabs-bar {
+            position: sticky; top: 0; z-index: 900;
+            background: rgba(18,15,13,.94);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(212,175,55,.12);
+            border-bottom: 1px solid rgba(212,175,55,.12);
+        }
+        .menu-tabs {
+            display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap;
+            padding: 1rem 1rem; max-width: 1100px; margin: 0 auto;
+        }
+        .menu-tab {
+            background: none; border: 1px solid transparent; cursor: pointer;
+            color: #b0a8a0; font-family: 'Inter', sans-serif; font-size: .8rem;
+            text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500;
+            padding: .55rem 1.2rem; border-radius: 30px; transition: all .3s ease;
+        }
+        .menu-tab:hover { color: #f4ede4; }
+        .menu-tab.active { color: #d4af37; border-color: rgba(212,175,55,.4); background: rgba(212,175,55,.08); }
+
+        @media (max-width: 700px) {
+            .menu-tabs { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding: .9rem 1rem; -webkit-overflow-scrolling: touch; }
+            .menu-tabs::-webkit-scrollbar { display: none; }
+            .menu-tab { white-space: nowrap; flex-shrink: 0; }
+        }
+
+        /* ============================================================
+           MENÜ-KATEGORIEN
+           ============================================================ */
+        .menu-cat { scroll-margin-top: 90px; padding-top: 1rem; }
+        .menu-cat + .menu-cat { margin-top: 4.5rem; }
+        .cat-head { text-align: center; margin-bottom: 3rem; }
+        .cat-head .cat-it {
+            display: block; color: #d4af37; font-style: italic;
+            font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: .3rem;
+        }
+        .cat-head h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #f4ede4; margin: 0; }
+        .cat-ornament {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            margin-top: 1rem; color: #d4af37; font-size: .8rem;
+        }
+        .cat-ornament span { display: block; width: 50px; height: 1px; background: linear-gradient(90deg, transparent, #d4af37); }
+        .cat-ornament span:last-child { background: linear-gradient(90deg, #d4af37, transparent); }
+
+        .menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 3.5rem; max-width: 1000px; margin: 0 auto; }
+        .menu-item {
+            display: grid; grid-template-columns: 1fr auto; align-items: baseline;
+            column-gap: .8rem; padding-bottom: 1.4rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .mi-name-row { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+        .mi-name { font-family: 'Playfair Display', serif; font-size: 1.18rem; color: #f4ede4; }
+        .mi-leader { flex: 1; min-width: 18px; border-bottom: 1px dotted rgba(212,175,55,.4); transform: translateY(-4px); }
+        .mi-price { font-family: 'Playfair Display', serif; font-size: 1.18rem; color: #d4af37; white-space: nowrap; }
+        .mi-desc { grid-column: 1 / -1; color: #a79e94; font-size: .92rem; line-height: 1.55; margin-top: .45rem; }
+        .mi-badges { grid-column: 1 / -1; display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .6rem; }
+        .mi-badge {
+            font-size: .64rem; letter-spacing: .8px; text-transform: uppercase;
+            padding: .22rem .6rem; border-radius: 4px; border: 1px solid;
+        }
+        .badge-veg { color: #8fd7a0; border-color: rgba(143,215,160,.35); background: rgba(70,160,90,.1); }
+        .badge-hot { color: #e8a06a; border-color: rgba(232,160,106,.35); background: rgba(200,110,50,.1); }
+        .badge-pop { color: #d4af37; border-color: rgba(212,175,55,.4); background: rgba(212,175,55,.08); }
+        .badge-house { color: #cdc3b8; border-color: rgba(255,255,255,.14); background: rgba(255,255,255,.03); }
+
+        @media (max-width: 760px) {
+            .menu-list { grid-template-columns: 1fr; gap: 1.4rem; }
+        }
+
+        /* ============================================================
+           VINI / GETRÄNKE
+           ============================================================ */
+        .vini-section {
+            background: linear-gradient(180deg, #17130f, #14110f);
+            border-top: 1px solid rgba(212,175,55,.12);
+            border-bottom: 1px solid rgba(212,175,55,.12);
+        }
+        .vini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; max-width: 1000px; margin: 0 auto; }
+        .vini-col h4 {
+            font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #d4af37;
+            margin: 0 0 1.6rem; padding-bottom: .8rem; border-bottom: 1px solid rgba(212,175,55,.2);
+            display: flex; align-items: center; gap: .6rem;
+        }
+        .vini-col h4 svg { width: 20px; height: 20px; }
+        .vini-item { display: flex; align-items: baseline; gap: .8rem; margin-bottom: 1.2rem; }
+        .vini-info { flex: 1; }
+        .vini-name { color: #f4ede4; font-size: 1.02rem; }
+        .vini-region { color: #8a8178; font-size: .82rem; font-style: italic; margin-top: .15rem; }
+        .vini-dots { flex: 0 0 auto; align-self: flex-end; min-width: 20px; border-bottom: 1px dotted rgba(212,175,55,.35); transform: translateY(-5px); flex: 1; }
+        .vini-price { color: #d4af37; font-family: 'Playfair Display', serif; font-size: 1.05rem; white-space: nowrap; }
+
+        @media (max-width: 760px) {
+            .vini-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+        }
+
+        /* ============================================================
+           ALLERGEN-/HINWEIS-LEISTE
+           ============================================================ */
+        .menu-note {
+            max-width: 760px; margin: 4rem auto 0; text-align: center;
+            color: #8a8178; font-size: .85rem; line-height: 1.7;
+            padding: 1.6rem; border: 1px dashed rgba(212,175,55,.2); border-radius: 10px;
+        }
+
+        /* ============================================================
+           CTA "SCHILD" + FOOTER — wie restaurant.html
            ============================================================ */
         .r-cta-section { text-align: center; border-top: 1px solid rgba(255,255,255,.05); }
         .r-cta-card {
@@ -437,6 +364,15 @@
         .r-footer-legal { display: flex; gap: 1.6rem; }
         .r-footer-legal a { color: #a79e94; text-decoration: none; transition: color .3s ease; }
         .r-footer-legal a:hover { color: #d4af37; }
+
+        /* Featured responsive */
+        @media (max-width: 860px) {
+            .feat-wrap { grid-template-columns: 1fr; }
+            .feat-img { min-height: 280px; }
+            .feat-img::after { background: linear-gradient(0deg, transparent 60%, rgba(20,17,15,.4)); }
+            .feat-body { padding: 2.5rem 1.8rem; }
+            .feat-body h2 { font-size: 2rem; }
+        }
         @media (max-width: 992px) {
             .r-footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
             .r-cta-card { padding: 4.5rem 2rem; }
@@ -447,13 +383,18 @@
             .r-cta-card { padding: 3.5rem 1.4rem; }
             .r-cta-actions { flex-direction: column; }
             .r-cta-button, .r-cta-button-ghost { width: 100%; }
+            .feat-foot { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .restaurant-nav, .nav-menu, .nav-toggle span { transition: none !important; }
         }
     </style>
 </head>
 
 <body class="rustic-dark-theme">
 
-<header class="restaurant-nav" id="restaurantNav">
+    <header class="restaurant-nav" id="restaurantNav">
         <div class="nav-container">
             <a href="restaurant.html" class="restaurant-logo">Trattoria Irtona</a>
 
@@ -496,115 +437,285 @@
     </header>
     <div class="nav-backdrop" id="navBackdrop"></div>
 
-<section class="section-padding dark-bg" style="padding-top: 150px;">
-    <div class="container reveal">
-
-        <h1 class="rustic-title" style="text-align:center; font-size:3rem;">
-            Unsere Klassiker.
-        </h1>
-
-        <p class="rustic-subtitle tb-centered-subtitle" style="margin-bottom:4rem; text-align:center;">
-            Mit Liebe zubereitet. Nach Rezepten von Nonna.
-        </p>
-
-        <div class="tb-menu-wrapper">
-
-            <div class="dish-card tb-dish-item">
-                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=80&w=800">
-                <div class="dish-info tb-dish-body">
-                    <div class="dish-header">
-                        <h3>Pizza Margherita</h3>
-                        <span class="price">12,50 €</span>
-                    </div>
-                    <p class="tb-dish-description">San Marzano Tomaten, Büffelmozzarella, Basilikum.</p>
-                    <button class="btn-add-cart tb-btn-fixed-bottom">+ Hinzufügen</button>
-                </div>
-            </div>
-
-            <div class="dish-card tb-dish-item">
-                <img src="https://images.unsplash.com/photo-1771508558380-92ccad26e977?q=80&w=1364&auto=format&fit=crop&q=80&w=800">
-                <div class="dish-info tb-dish-body">
-                    <div class="dish-header">
-                        <h3>Tagliatelle Tartufo</h3>
-                        <span class="price">18,90 €</span>
-                    </div>
-                    <p class="tb-dish-description">Handgemachte Pasta, schwarzer Trüffel.</p>
-                    <button class="btn-add-cart tb-btn-fixed-bottom">+ Hinzufügen</button>
-                </div>
-            </div>
-
-            <div class="dish-card tb-dish-item">
-                <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=800">
-                <div class="dish-info tb-dish-body">
-                    <div class="dish-header">
-                        <h3>Tiramisu Classico</h3>
-                        <span class="price">7,50 €</span>
-                    </div>
-                    <p class="tb-dish-description">Mascarpone, Espresso, Amaretto.</p>
-                    <button class="btn-add-cart tb-btn-fixed-bottom">+ Hinzufügen</button>
-                </div>
-            </div>
-
-            <div class="dish-card tb-dish-item">
-                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1381&auto=format&fit=crop&q=80&w=800">
-                <div class="dish-info tb-dish-body">
-                    <div class="dish-header">
-                        <h3>Pizza Tonno</h3>
-                        <span class="price">12,50 €</span>
-                    </div>
-                    <p class="tb-dish-description">San Marzano Tomaten, Büffelmozzarella, Basilikum, Thunfisch.</p>
-                    <button class="btn-add-cart tb-btn-fixed-bottom">+ Hinzufügen</button>
-                </div>
-            </div>
-
-            <div class="dish-card tb-dish-item">
-                <img src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?q=80&w=987&auto=format&fit=crop&q=80&w=800">
-                <div class="dish-info tb-dish-body">
-                    <div class="dish-header">
-                        <h3>Pasta Carbonara </h3>
-                        <span class="price">12,90 €</span>
-                    </div>
-                    <p class="tb-dish-description">Aus eigenem Haus mit volllmundigem Geschmack, Speck optional.</p>
-                    <button class="btn-add-cart tb-btn-fixed-bottom">+ Hinzufügen</button>
-                </div>
-            </div>
-
-            <div class="dish-card tb-dish-item">
-                <img src="https://images.unsplash.com/photo-1718985344972-d0eaf1ba5d72?q=80&w=987&auto=format&fit=crop&q=80&w=800">
-                <div class="dish-info tb-dish-body">
-                    <div class="dish-header">
-                        <h3>Gelato</h3>
-                        <span class="price">1,50 €</span>
-                    </div>
-                    <p class="tb-dish-description">Aus eigener Produktion. Das klassische Dessert für Jeden.</p>
-                    <button class="btn-add-cart tb-btn-fixed-bottom">+ Hinzufügen</button>
-                </div>
-            </div>
-
+    <!-- ===== KOPF ===== -->
+    <section class="menu-hero">
+        <div class="container">
+            <span class="section-eyebrow">La Carta</span>
+            <h1>Unsere Speisekarte</h1>
+            <p>Mit Liebe zubereitet, nach Rezepten von Nonna. Frische Zutaten, ehrliches Handwerk – und ein bisschen Sonne aus Apulien.</p>
         </div>
-    </div>
     </section>
 
-<section class="r-cta-section section-padding dark-bg">
+    <!-- ===== EMPFEHLUNG DES HAUSES ===== -->
+    <section class="section-padding dark-bg">
+        <div class="container reveal">
+            <div class="feat-wrap">
+                <div class="feat-img">
+                    <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=1000" alt="Tagliatelle Tartufo">
+                </div>
+                <div class="feat-body">
+                    <span class="feat-pill">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9.2 8.6 2 9.2l5.5 4.7L5.8 21 12 17.3 18.2 21l-1.7-7.1L22 9.2l-7.2-.6z"/></svg>
+                        Empfehlung des Hauses
+                    </span>
+                    <h2>Tagliatelle al Tartufo</h2>
+                    <p>
+                        Unsere handgerollte Bandnudel trifft auf frisch gehobelten schwarzen
+                        Trüffel, braune Butter und 24 Monate gereiften Parmigiano Reggiano.
+                        Ein Gericht, für das unsere Gäste wiederkommen.
+                    </p>
+                    <div class="feat-foot">
+                        <span class="feat-price">18,90 €</span>
+                        <button class="feat-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2h2l3.6 7.6-1.35 2.45A1 1 0 009 18h10v-2H9.42a.25.25 0 01-.22-.37L10 14h7a1 1 0 00.92-.62l3-7A1 1 0 0020 4H7z"/></svg>
+                            Hinzufügen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== KATEGORIE-TABS ===== -->
+    <div class="menu-tabs-bar">
+        <div class="menu-tabs" id="menuTabs">
+            <button class="menu-tab active" data-target="antipasti">Antipasti</button>
+            <button class="menu-tab" data-target="pizza">Pizza</button>
+            <button class="menu-tab" data-target="pasta">Pasta</button>
+            <button class="menu-tab" data-target="dolci">Dolci</button>
+            <button class="menu-tab" data-target="vini">Vini &amp; Getränke</button>
+        </div>
+    </div>
+
+    <!-- ===== KARTE ===== -->
+    <section class="section-padding dark-bg">
+        <div class="container">
+
+            <!-- ANTIPASTI -->
+            <div class="menu-cat reveal" id="antipasti">
+                <div class="cat-head">
+                    <span class="cat-it">Per cominciare</span>
+                    <h3>Antipasti</h3>
+                    <div class="cat-ornament"><span></span>✦<span></span></div>
+                </div>
+                <div class="menu-list">
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Bruschetta al Pomodoro</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">7,90 €</span>
+                        <p class="mi-desc">Geröstetes Landbrot, San-Marzano-Tomaten, Knoblauch, Basilikum, Olivenöl.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-veg">Vegetarisch</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Burrata Pugliese</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">11,50 €</span>
+                        <p class="mi-desc">Cremige Burrata aus Apulien, eingelegte Tomaten, Rucola, Basilikumöl.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-veg">Vegetarisch</span><span class="mi-badge badge-pop">Beliebt</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Vitello Tonnato</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">12,90 €</span>
+                        <p class="mi-desc">Zart rosa gegartes Kalb, Thunfisch-Kapern-Creme, Zitrone.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Antipasti Misti</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">14,90 €</span>
+                        <p class="mi-desc">Auswahl mediterraner Spezialitäten – ideal zum Teilen.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-house">Zum Teilen</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PIZZA -->
+            <div class="menu-cat reveal" id="pizza">
+                <div class="cat-head">
+                    <span class="cat-it">Dal forno a legna</span>
+                    <h3>Pizza</h3>
+                    <div class="cat-ornament"><span></span>✦<span></span></div>
+                </div>
+                <div class="menu-list">
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Margherita</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">12,50 €</span>
+                        <p class="mi-desc">San-Marzano-Tomaten, Büffelmozzarella, frisches Basilikum.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-veg">Vegetarisch</span><span class="mi-badge badge-house">72 h Teig</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Tonno</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">12,50 €</span>
+                        <p class="mi-desc">San-Marzano-Tomaten, Büffelmozzarella, Thunfisch, rote Zwiebeln.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Diavola</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">13,90 €</span>
+                        <p class="mi-desc">Scharfe Salami, Tomaten, Mozzarella, Peperoncino.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-hot">Scharf</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Quattro Formaggi</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">14,50 €</span>
+                        <p class="mi-desc">Mozzarella, Gorgonzola, Pecorino, Taleggio, Honig.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-veg">Vegetarisch</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASTA -->
+            <div class="menu-cat reveal" id="pasta">
+                <div class="cat-head">
+                    <span class="cat-it">Fatto a mano</span>
+                    <h3>Pasta</h3>
+                    <div class="cat-ornament"><span></span>✦<span></span></div>
+                </div>
+                <div class="menu-list">
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Tagliatelle al Tartufo</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">18,90 €</span>
+                        <p class="mi-desc">Handgemachte Pasta, schwarzer Trüffel, braune Butter, Parmigiano.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-pop">Beliebt</span><span class="mi-badge badge-house">Hausgemacht</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Spaghetti Carbonara</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">12,90 €</span>
+                        <p class="mi-desc">Guanciale, Eigelb, Pecorino Romano, schwarzer Pfeffer.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-house">Hausgemacht</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Lasagne della Nonna</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">14,50 €</span>
+                        <p class="mi-desc">Geschichtet mit Ragù alla Bolognese, Béchamel und Parmigiano.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-pop">Beliebt</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Spaghetti alle Vongole</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">16,90 €</span>
+                        <p class="mi-desc">Venusmuscheln, Weißwein, Knoblauch, Petersilie, Olivenöl.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOLCI -->
+            <div class="menu-cat reveal" id="dolci">
+                <div class="cat-head">
+                    <span class="cat-it">Per finire in dolcezza</span>
+                    <h3>Dolci</h3>
+                    <div class="cat-ornament"><span></span>✦<span></span></div>
+                </div>
+                <div class="menu-list">
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Tiramisù Classico</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">7,50 €</span>
+                        <p class="mi-desc">Mascarpone, Espresso, Amaretto, Kakao – nach Nonnas Rezept.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-pop">Beliebt</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Panna Cotta</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">6,90 €</span>
+                        <p class="mi-desc">Vanille-Sahnecreme mit Waldbeerenspiegel.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-veg">Vegetarisch</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Gelato</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">1,50 € / Kugel</span>
+                        <p class="mi-desc">Aus eigener Produktion – Vanille, Pistazie, Stracciatella, Zitrone.</p>
+                        <div class="mi-badges"><span class="mi-badge badge-house">Hausgemacht</span></div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="mi-name-row"><span class="mi-name">Cantuccini &amp; Vin Santo</span><span class="mi-leader"></span></div>
+                        <span class="mi-price">8,50 €</span>
+                        <p class="mi-desc">Toskanisches Mandelgebäck mit süßem Dessertwein.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VINI & GETRÄNKE ===== -->
+    <section class="vini-section section-padding" id="vini">
+        <div class="container reveal">
+            <div class="cat-head">
+                <span class="cat-it">Salute</span>
+                <h3>Vini &amp; Getränke</h3>
+                <div class="cat-ornament"><span></span>✦<span></span></div>
+            </div>
+
+            <div class="vini-grid">
+                <div class="vini-col">
+                    <h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8M12 15v7M5 3h14l-1.5 7a5.5 5.5 0 0 1-11 0z"/></svg>
+                        Rotwein &amp; Weißwein
+                    </h4>
+                    <div class="vini-item">
+                        <div class="vini-info"><div class="vini-name">Chianti Classico DOCG</div><div class="vini-region">Toskana · 0,2 l</div></div>
+                        <span class="vini-dots"></span><span class="vini-price">6,90 €</span>
+                    </div>
+                    <div class="vini-item">
+                        <div class="vini-info"><div class="vini-name">Primitivo di Manduria</div><div class="vini-region">Apulien · 0,2 l</div></div>
+                        <span class="vini-dots"></span><span class="vini-price">7,50 €</span>
+                    </div>
+                    <div class="vini-item">
+                        <div class="vini-info"><div class="vini-name">Pinot Grigio</div><div class="vini-region">Venetien · 0,2 l</div></div>
+                        <span class="vini-dots"></span><span class="vini-price">6,50 €</span>
+                    </div>
+                    <div class="vini-item">
+                        <div class="vini-info"><div class="vini-name">Prosecco Frizzante</div><div class="vini-region">Treviso · 0,1 l</div></div>
+                        <span class="vini-dots"></span><span class="vini-price">5,90 €</span>
+                    </div>
+                </div>
+
+                <div class="vini-col">
+                    <h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+                        Aperitivo &amp; Caffè
+                    </h4>
+                    <div class="vini-item">
+                        <div class="vini-info"><div class="vini-name">Aperol Spritz</div><div class="vini-region">Aperol, Prosecco, Soda</div></div>
+                        <span class="vini-dots"></span><span class="vini-price">7,50 €</span>
+                    </div>
+                    <div class="vini-item">
+                        <div class="vini-info"><div class="vini-name">Negroni</div><div class="vini-region">Gin, Campari, Wermut</div></div>
+                        <span class="vini-dots"></span><span class="vini-price">8,90 €</span>
+                    </div>
+                    <div class="vini-item">
+                        <div class="vini-info"><div class="vini-name">Espresso</div><div class="vini-region">Hausröstung</div></div>
+                        <span class="vini-dots"></span><span class="vini-price">2,40 €</span>
+                    </div>
+                    <div class="vini-item">
+                        <div class="vini-info"><div class="vini-name">Cappuccino</div><div class="vini-region">mit Milchschaum</div></div>
+                        <span class="vini-dots"></span><span class="vini-price">3,20 €</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="menu-note">
+                Alle Preise inkl. MwSt. Für Informationen zu Allergenen und Zusatzstoffen
+                wende dich bitte an unser Servicepersonal. Wir verwenden, wo immer möglich,
+                regionale und saisonale Zutaten.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="r-cta-section section-padding dark-bg">
         <div class="container reveal">
             <div class="r-cta-card">
                 <span class="r-cta-eyebrow">Buon Appetito</span>
                 <div class="r-cta-ornament"><span></span>✦<span></span></div>
                 <h2 class="r-cta-title rustic-heading">
-                    Bereit für dein eigenes Meisterstück?
+                    Schmeckt am besten in unserem Haus.
                 </h2>
                 <p class="r-cta-text">
-                    Lass uns gemeinsam etwas Außergewöhnliches schaffen — von der ersten Idee
-                    bis zum letzten Gang. Reserviere deinen Tisch oder schreib uns.
+                    Reserviere deinen Tisch und lass dich von Antipasti bis Dolci durch
+                    den Abend begleiten.
                 </p>
                 <div class="r-cta-actions">
-                    <a href="kontakt.html" class="r-cta-button">Jetzt Projekt anfangen</a>
+                    <a href="kontakt.html" class="r-cta-button">Tisch reservieren</a>
                     <a href="project-b-philosophie.html" class="r-cta-button-ghost">Unsere Geschichte</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer class="r-footer">
         <div class="container">
             <div class="r-footer-grid">
@@ -665,8 +776,7 @@
         </div>
     </footer>
 
-<!-- ✅ Reveal Script -->
-<script>
+    <script>
     document.addEventListener("DOMContentLoaded", () => {
         // Scroll Reveal
         const reveals = document.querySelectorAll(".reveal");
@@ -711,6 +821,41 @@
         backdrop.addEventListener("click", closeMenu);
         menu.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
         document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+
+        /* --- Kategorie-Tabs: Smooth-Scroll + aktiver Zustand --- */
+        const tabs = Array.from(document.querySelectorAll(".menu-tab"));
+        const sections = tabs.map(t => document.getElementById(t.dataset.target)).filter(Boolean);
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                const target = document.getElementById(tab.dataset.target);
+                if (!target) return;
+                const y = target.getBoundingClientRect().top + window.scrollY - 80;
+                window.scrollTo({ top: y, behavior: "smooth" });
+            });
+        });
+
+        const setActiveTab = () => {
+            const offset = window.scrollY + 140;
+            let current = sections[0];
+            sections.forEach(s => { if (s.offsetTop <= offset) current = s; });
+            tabs.forEach(t => t.classList.toggle("active", current && t.dataset.target === current.id));
+        };
+        window.addEventListener("scroll", setActiveTab);
+        setActiveTab();
+
+        /* --- Demo: Warenkorb-Zähler --- */
+        const cartCount = document.querySelector(".cart-count");
+        document.querySelectorAll(".feat-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                if (!cartCount) return;
+                cartCount.textContent = (parseInt(cartCount.textContent, 10) || 0) + 1;
+                btn.textContent = "✓ Hinzugefügt";
+                setTimeout(() => {
+                    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2h2l3.6 7.6-1.35 2.45A1 1 0 009 18h10v-2H9.42a.25.25 0 01-.22-.37L10 14h7a1 1 0 00.92-.62l3-7A1 1 0 0020 4H7z"/></svg> Hinzufügen';
+                }, 1400);
+            });
+        });
     });
     </script>
 
