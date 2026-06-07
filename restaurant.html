@@ -2,14 +2,15 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trattoria Irtona | Echtes italienisches Erlebnis</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="restaurant.css"> 
+    <link rel="stylesheet" href="restaurant.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
         /* Premium Upgrades für die Startseite */
-        
+
         /* Vollbild Hero mit Scroll-Indikator */
         .hero-fullscreen {
             height: 100vh;
@@ -55,9 +56,7 @@
             align-items: center;
         }
 
-        .premium-split-img {
-            position: relative;
-        }
+        .premium-split-img { position: relative; }
 
         .premium-split-img img {
             width: 100%;
@@ -93,6 +92,8 @@
             overflow: hidden;
             border-radius: 4px;
             cursor: pointer;
+            display: block;
+            text-decoration: none;
         }
 
         .world-card img {
@@ -163,6 +164,164 @@
             }
             .premium-split-img { margin-top: 3rem; }
             .premium-split-img::after { display: none; }
+        }
+
+        /* ============================================================
+           DEZENTER ABSCHNITTS-KOPF (wiederverwendbar)
+           ============================================================ */
+        .section-eyebrow {
+            display: inline-block; color: #d4af37;
+            font-size: .8rem; text-transform: uppercase; letter-spacing: 3px;
+            margin-bottom: 1.1rem;
+        }
+        .section-eyebrow::before, .section-eyebrow::after {
+            content: ''; display: inline-block; width: 30px; height: 1px;
+            background: #d4af37; vertical-align: middle; margin: 0 .9rem; opacity: .55;
+        }
+
+        /* ============================================================
+           NEU · SIGNATURE-GERICHTE ("Empfehlungen des Hauses")
+           ============================================================ */
+        .sig-head { text-align: center; max-width: 640px; margin: 0 auto 3.5rem; }
+        .sig-head .section-title { margin: 0; }
+        .sig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .sig-card {
+            position: relative; overflow: hidden;
+            background: linear-gradient(160deg, #221d1a 0%, #17130f 100%);
+            border: 1px solid rgba(212,175,55,.14); border-radius: 14px;
+            opacity: 0; transform: translateY(34px);
+            transition: opacity .6s ease,
+                        transform .55s cubic-bezier(.22,1,.36,1),
+                        box-shadow .45s ease, border-color .4s ease;
+        }
+        .reveal.active .sig-card { opacity: 1; transform: translateY(0); }
+        .reveal.active .sig-card:nth-child(2) { transition-delay: .1s; }
+        .reveal.active .sig-card:nth-child(3) { transition-delay: .2s; }
+        .sig-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212,175,55,.42);
+            box-shadow: 0 30px 60px rgba(0,0,0,.55);
+        }
+        .sig-imgwrap { position: relative; height: 240px; overflow: hidden; }
+        .sig-imgwrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
+        .sig-card:hover .sig-imgwrap img { transform: scale(1.07); }
+        .sig-imgwrap::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(20,17,15,.9), transparent 55%);
+        }
+        .sig-tag {
+            position: absolute; top: 14px; left: 14px; z-index: 2;
+            background: rgba(20,17,15,.72); border: 1px solid rgba(212,175,55,.45);
+            color: #d4af37; font-size: .64rem; letter-spacing: 1.6px; text-transform: uppercase;
+            padding: .35rem .75rem; border-radius: 30px;
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        }
+        .sig-body { padding: 1.6rem 1.8rem 2rem; }
+        .sig-title-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .6rem; }
+        .sig-body h3 { font-family: 'Playfair Display', serif; font-size: 1.45rem; color: #f4ede4; margin: 0; }
+        .sig-price { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #d4af37; white-space: nowrap; }
+        .sig-desc { color: #b0a8a0; font-size: .95rem; line-height: 1.65; margin: 0; }
+        .sig-cta { text-align: center; margin-top: 3.2rem; }
+        .sig-link {
+            display: inline-flex; align-items: center; gap: .6rem;
+            color: #d4af37; text-decoration: none; font-size: .9rem;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            border-bottom: 1px solid rgba(212,175,55,.4); padding-bottom: 5px;
+            transition: gap .3s ease, color .3s ease;
+        }
+        .sig-link:hover { gap: 1rem; color: #f0d77b; }
+
+        /* ============================================================
+           NEU · KENNZAHLEN-LEISTE (animierte Counter)
+           ============================================================ */
+        .stats-strip {
+            background: linear-gradient(180deg, #17130f, #14110f);
+            border-top: 1px solid rgba(212,175,55,.12);
+            border-bottom: 1px solid rgba(212,175,55,.12);
+            padding: 4.5rem 0;
+        }
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+        .stat-item { position: relative; }
+        .stat-item:not(:last-child)::after {
+            content: ''; position: absolute; right: -1rem; top: 50%; transform: translateY(-50%);
+            width: 1px; height: 56px;
+            background: linear-gradient(180deg, transparent, rgba(212,175,55,.3), transparent);
+        }
+        .stat-num { font-family: 'Playfair Display', serif; font-size: 3.1rem; color: #d4af37; line-height: 1; }
+        .stat-label { color: #a79e94; font-size: .8rem; letter-spacing: 1.6px; text-transform: uppercase; margin-top: .8rem; }
+
+        /* ============================================================
+           NEU · EVENTS & PRIVATE DINING
+           ============================================================ */
+        .events-split { display: grid; grid-template-columns: 1.05fr .95fr; gap: 4.5rem; align-items: center; }
+        .events-img { position: relative; }
+        .events-img img { width: 100%; height: 560px; object-fit: cover; border-radius: 6px; }
+        .events-img::after {
+            content: ''; position: absolute; bottom: -18px; right: -18px;
+            width: 62%; height: 62%; border: 2px solid rgba(212,175,55,.55);
+            border-radius: 6px; z-index: -1;
+        }
+        .events-text h2 { font-family: 'Playfair Display', serif; font-size: 2.7rem; color: #fff; margin: 1rem 0 1.4rem; }
+        .events-text p { color: #cdc3b8; font-size: 1.08rem; line-height: 1.8; margin: 0; }
+        .events-chips { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.9rem 0 2.4rem; }
+        .events-chip {
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .6rem 1.1rem; border: 1px solid rgba(212,175,55,.3); border-radius: 30px;
+            color: #cdc3b8; font-size: .85rem; transition: all .3s ease;
+        }
+        .events-chip:hover { border-color: #d4af37; color: #fff; background: rgba(212,175,55,.08); transform: translateY(-2px); }
+        .events-chip svg { width: 16px; height: 16px; color: #d4af37; }
+        .events-btn {
+            display: inline-block; padding: 1rem 2.4rem; background: #d4af37; color: #1a1715;
+            text-decoration: none; border-radius: 4px; font-weight: 600; letter-spacing: .3px;
+            transition: all .3s ease;
+        }
+        .events-btn:hover { background: #f0d77b; transform: translateY(-2px); box-shadow: 0 14px 30px rgba(212,175,55,.3); }
+
+        /* ============================================================
+           NEU · CLUB IRTONA (Newsletter)
+           ============================================================ */
+        .club-card {
+            position: relative; max-width: 880px; margin: 0 auto; text-align: center;
+            padding: 4rem 3rem; border-radius: 16px; overflow: hidden;
+            background:
+                radial-gradient(120% 140% at 50% 0%, rgba(212,175,55,.12), transparent 60%),
+                linear-gradient(160deg, #201c19, #14110f);
+            border: 1px solid rgba(212,175,55,.22);
+            box-shadow: 0 30px 70px rgba(0,0,0,.45);
+        }
+        .club-card h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #fff; margin: .6rem 0 1rem; }
+        .club-card > p { color: #cdc3b8; font-size: 1.05rem; line-height: 1.7; max-width: 520px; margin: 0 auto; }
+        .club-form { display: flex; gap: .8rem; max-width: 480px; margin: 2rem auto 0; }
+        .club-form input {
+            flex: 1; background: rgba(255,255,255,.04); border: 1px solid rgba(212,175,55,.3);
+            border-radius: 4px; padding: .95rem 1.1rem; color: #f4ede4;
+            font-family: 'Inter', sans-serif; font-size: .95rem;
+        }
+        .club-form input:focus { outline: none; border-color: #d4af37; background: rgba(255,255,255,.06); }
+        .club-form input::placeholder { color: #8a8178; }
+        .club-btn {
+            background: #d4af37; color: #1a1715; border: 0; border-radius: 4px;
+            padding: .95rem 1.8rem; font-weight: 600; letter-spacing: .5px; cursor: pointer;
+            transition: all .3s ease; white-space: nowrap; font-family: 'Inter', sans-serif;
+        }
+        .club-btn:hover { background: #f0d77b; transform: translateY(-2px); }
+        .club-note { color: #8a8178; font-size: .78rem; margin-top: 1rem; }
+
+        @media (max-width: 992px) {
+            .events-split { grid-template-columns: 1fr; gap: 3rem; }
+            .events-img { order: -1; }
+            .events-img img { height: 380px; }
+            .events-img::after { display: none; }
+            .sig-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 3rem 2rem; }
+            .stat-item:nth-child(2)::after { display: none; }
+        }
+        @media (max-width: 600px) {
+            .stats-row { grid-template-columns: 1fr; gap: 2.5rem; }
+            .stat-item::after { display: none !important; }
+            .club-form { flex-direction: column; }
+            .club-card { padding: 3rem 1.5rem; }
         }
 
         /* ============================================================
@@ -293,15 +452,6 @@
 
         /* ---------- REZENSIONEN ---------- */
         .reviews-head { text-align: center; max-width: 660px; margin: 0 auto 3.5rem; }
-        .section-eyebrow {
-            display: inline-block; color: #d4af37;
-            font-size: .8rem; text-transform: uppercase; letter-spacing: 3px;
-            margin-bottom: 1.1rem;
-        }
-        .section-eyebrow::before, .section-eyebrow::after {
-            content: ''; display: inline-block; width: 30px; height: 1px;
-            background: #d4af37; vertical-align: middle; margin: 0 .9rem; opacity: .55;
-        }
         .reviews-head .section-title { margin: 0; }
 
         .rating-summary {
@@ -662,6 +812,7 @@
         @media (max-width: 992px) {
             .r-footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
             .r-cta-card { padding: 4.5rem 2rem; }
+            .events-text h2 { font-size: 2.2rem; }
         }
         @media (max-width: 600px) {
             .r-footer-grid { grid-template-columns: 1fr; gap: 2.2rem; }
@@ -673,9 +824,39 @@
 
         /* Barrierefreiheit: Bewegung reduzieren */
         @media (prefers-reduced-motion: reduce) {
-            .review-card, .nav-menu, .nav-toggle span,
+            .review-card, .sig-card, .nav-menu, .nav-toggle span,
             .cc-status .dot, .restaurant-nav { transition: none !important; animation: none !important; }
-            .review-card { opacity: 1; transform: none; }
+            .review-card, .sig-card { opacity: 1; transform: none; }
+        }
+        
+        /* ============================================================
+           STORY-GRIDS (bestehende Geschichte)
+           ============================================================ */
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .story-grid + .story-grid { margin-top: 6rem; }
+        .story-grid.reverse .story-text { order: 2; }
+        .story-grid.reverse .story-img { order: 1; }
+        .story-text h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: #fff; margin: 1rem 0 1.4rem; line-height: 1.15; }
+        .story-text p { color: #cdc3b8; font-size: 1.08rem; line-height: 1.85; margin: 0 0 1.3rem; }
+        .story-text p:last-child { margin-bottom: 0; }
+        .story-it { display: block; color: #d4af37; font-style: italic; font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: .2rem; }
+        .story-img { position: relative; }
+        .story-img img { width: 100%; height: 540px; object-fit: cover; border-radius: 6px; }
+        .story-img::after {
+            content: ''; position: absolute; bottom: -18px; right: -18px;
+            width: 60%; height: 60%; border: 2px solid rgba(212,175,55,.55);
+            border-radius: 6px; z-index: -1;
+        }
+        .story-grid.reverse .story-img::after { right: auto; left: -18px; }
+
+        @media (max-width: 992px) {
+            .story-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .story-grid.reverse .story-text,
+            .story-grid.reverse .story-img { order: initial; }
+            .story-img { order: -1; }
+            .story-img img { height: 380px; }
+            .story-img::after { display: none; }
+            .story-text h2 { font-size: 2.1rem; }
         }
     </style>
 </head>
@@ -724,6 +905,7 @@
     </header>
     <div class="nav-backdrop" id="navBackdrop"></div>
 
+    <!-- ===== HERO (unverändert) ===== -->
     <section class="hero-fullscreen">
         <div class="hero-overlay"></div>
         <div class="container relative-z">
@@ -737,6 +919,7 @@
         <div class="scroll-down-indicator">↓</div>
     </section>
 
+    <!-- ===== WILLKOMMEN ===== -->
     <section class="section-padding dark-bg">
         <div class="container reveal">
             <div class="premium-split">
@@ -757,40 +940,125 @@
         </div>
     </section>
 
-    <section class="section-padding dark-bg-alt">
+    <!-- ===== NEU · SIGNATURE-GERICHTE ===== -->
+    <section class="section-padding dark-bg-alt sig-section">
+        <div class="container reveal">
+            <div class="sig-head">
+                <span class="section-eyebrow">Cucina della Casa</span>
+                <h2 class="section-title rustic-heading">Empfehlungen des Hauses</h2>
+                <p style="color:#b0a8a0; line-height:1.7; margin-top:1rem;">Drei Klassiker, die seit Jahren das Herz unserer Gäste erobern – nach Originalrezepten zubereitet.</p>
+            </div>
+
+            <div class="sig-grid">
+                <article class="sig-card">
+                    <div class="sig-imgwrap">
+                        <span class="sig-tag">Signature</span>
+                        <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=800" alt="Tagliatelle Tartufo">
+                    </div>
+                    <div class="sig-body">
+                        <div class="sig-title-row">
+                            <h3>Tagliatelle Tartufo</h3>
+                            <span class="sig-price">18,90 €</span>
+                        </div>
+                        <p class="sig-desc">Handgerollte Pasta, frisch geriebener schwarzer Trüffel und gereifter Parmigiano.</p>
+                    </div>
+                </article>
+
+                <article class="sig-card">
+                    <div class="sig-imgwrap">
+                        <span class="sig-tag">Holzofen</span>
+                        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&q=80&w=800" alt="Pizza Margherita">
+                    </div>
+                    <div class="sig-body">
+                        <div class="sig-title-row">
+                            <h3>Pizza Margherita</h3>
+                            <span class="sig-price">12,50 €</span>
+                        </div>
+                        <p class="sig-desc">72 Stunden gereifter Teig, San-Marzano-Tomaten und Büffelmozzarella.</p>
+                    </div>
+                </article>
+
+                <article class="sig-card">
+                    <div class="sig-imgwrap">
+                        <span class="sig-tag">Dolce</span>
+                        <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80&w=800" alt="Tiramisu Classico">
+                    </div>
+                    <div class="sig-body">
+                        <div class="sig-title-row">
+                            <h3>Tiramisù Classico</h3>
+                            <span class="sig-price">7,50 €</span>
+                        </div>
+                        <p class="sig-desc">Mascarpone, kräftiger Espresso und ein Hauch Amaretto – wie bei Nonna.</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="sig-cta">
+                <a href="speisekarte.html" class="sig-link">Gesamte Speisekarte ansehen →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEU · KENNZAHLEN-LEISTE ===== -->
+    <section class="stats-strip">
+        <div class="container reveal">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-num" data-target="40" data-suffix="+">0</div>
+                    <div class="stat-label">Jahre Tradition</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="72" data-suffix=" h">0</div>
+                    <div class="stat-label">Teigreife</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="100" data-suffix=" %">0</div>
+                    <div class="stat-label">Hausgemacht</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="4.9" data-dec="1">0</div>
+                    <div class="stat-label">Gästebewertung</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== UNSERE WELTEN ===== -->
+    <section class="section-padding dark-bg">
         <div class="container reveal">
             <div style="text-align: center; margin-bottom: 4rem;">
-                <span style="color: #d4af37; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Entdecke</span>
+                <span class="section-eyebrow">Entdecke</span>
                 <h2 class="rustic-heading" style="font-size: 3rem; margin-top: 0.5rem;">Unsere Welten</h2>
             </div>
-            
+
             <div class="worlds-grid">
                 <a href="speisekarte.html" class="world-card">
-                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=800" alt="Restaurant">
+                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=987&auto=format&fit=crop" alt="Das Restaurant">
                     <div class="world-content">
                         <span>Kulinarik</span>
                         <h3>Das Restaurant</h3>
                     </div>
                 </a>
                 <a href="#" class="world-card">
-                    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800" alt="Weinbar">
+                    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800" alt="Die Weinbar">
                     <div class="world-content">
                         <span>Genuss</span>
                         <h3>Die Weinbar</h3>
                     </div>
                 </a>
-                <a href="#" class="world-card">
-                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Events">
+                <a href="#events" class="world-card">
+                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Feiern & Events">
                     <div class="world-content">
                         <span>Erinnerungen</span>
-                        <h3>Feiern & Events</h3>
+                        <h3>Feiern &amp; Events</h3>
                     </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <section class="section-padding dark-bg reviews-section">
+    <!-- ===== REZENSIONEN ===== -->
+    <section class="section-padding dark-bg-alt reviews-section">
         <div class="container reveal">
             <div class="reviews-head">
                 <span class="section-eyebrow">Stimmen unserer Gäste</span>
@@ -879,16 +1147,94 @@
         </div>
     </section>
 
+    <!-- ===== NEU · EVENTS & PRIVATE DINING ===== -->
+    <section id="events" class="section-padding dark-bg">
+        <div class="container reveal">
+            <div class="events-split">
+                <div class="events-text">
+                    <span class="section-eyebrow">Feiern bei uns</span>
+                    <h2>Ihre Feier in <br>festlichem Ambiente.</h2>
+                    <p>
+                        Ob Geburtstag, Hochzeit, Firmenfeier oder ein intimes Dinner im Gewölbe –
+                        wir machen Ihren Anlass zu einem unvergesslichen Abend. Auf Wunsch stellen
+                        wir Ihnen ein individuelles Menü zusammen und begleiten Sie mit passender
+                        Weinauswahl durch den Abend.
+                    </p>
+                    <div class="events-chips">
+                        <span class="events-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-9M14 17H5M17 4v6M7 14v6"/><circle cx="17" cy="7" r="3"/><circle cx="7" cy="17" r="3"/></svg>Geburtstage</span>
+                        <span class="events-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>Hochzeiten</span>
+                        <span class="events-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Firmenevents</span>
+                        <span class="events-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Private Dining</span>
+                    </div>
+                    <a href="kontakt.html" class="events-btn">Anfrage senden</a>
+                </div>
+                <div class="events-img">
+                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&q=80&w=1000" alt="Festlich gedeckte Tafel">
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- ===== PARALLAX ZITAT ===== -->
     <section class="parallax-quote reveal">
         <div style="position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);"></div>
         <h2>"Das Geheimnis der guten Küche ist die Liebe zu dem, was man tut."</h2>
     </section>
 
-    <section class="contact-map-section section-padding dark-bg">
+    <!-- ===== STORY 2: HANDWERK ===== -->
+    <section class="section-padding dark-bg-alt">
+        <div class="container reveal">
+            <div class="story-grid reverse">
+                <div class="story-text">
+                    <span class="story-it">Geduld als Zutat</span>
+                    <h2>72 Stunden für den<br>perfekten Teig.</h2>
+                    <p>
+                        Wir glauben nicht an Abkürzungen. Unser Pizzateig reift 72 Stunden, bevor er
+                        in den Holzofen kommt – das macht ihn leicht, bekömmlich und unverwechselbar
+                        im Geschmack.
+                    </p>
+                    <p>
+                        Die Pasta rollen wir täglich von Hand, das Gelato entsteht in eigener
+                        Produktion, und unsere Tomaten kommen aus San Marzano. Was nach Aufwand
+                        klingt, ist für uns schlicht Respekt vor dem Produkt.
+                    </p>
+                </div>
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=1000" alt="Frisch belegte Pizza aus dem Holzofen">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STORY 3: VERSPRECHEN ===== -->
+    <section class="section-padding dark-bg">
+        <div class="container reveal">
+            <div class="story-grid">
+                <div class="story-text">
+                    <span class="story-it">Unser Versprechen</span>
+                    <h2>Ehrlich. Saisonal.<br>Mit Herz.</h2>
+                    <p>
+                        Wir kaufen dort ein, wo Qualität noch zählt – bei Erzeugern, die wir mit
+                        Namen kennen. Was nicht in unsere Küche passt, kommt nicht auf den Teller.
+                    </p>
+                    <p>
+                        Und wenn du bei uns sitzt, sollst du dich nicht wie ein Gast fühlen, sondern
+                        wie zu Hause. Nur eben mit einem Glas Primitivo in der Hand und dem Duft von
+                        frischem Brot in der Luft.
+                    </p>
+                </div>
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=1000" alt="Gemütliche Atmosphäre im Restaurant">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== KONTAKT & KARTE ===== -->
+    <section class="contact-map-section section-padding dark-bg-alt">
         <div class="container reveal">
             <h2 class="section-title rustic-heading" style="text-align: center; margin-bottom: 4rem;">Wir freuen uns auf dich.</h2>
-            
+
             <div class="map-wrapper rustic-map-wrapper">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2662.308898950005!2d9.278913315647087!3d48.96678507929828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4799d5cf1564cdb1%3A0x41ffd3c8d091a10!2sSteinheim%20an%20der%20Murr!5e0!3m2!1sde!2sde!4v1679000000000!5m2!1sde!2sde"
@@ -952,26 +1298,46 @@
         </div>
     </section>
 
-    <section class="r-cta-section section-padding dark-bg">
+    <!-- ===== NEU · CLUB IRTONA (Newsletter) ===== -->
+    <section class="section-padding dark-bg">
+        <div class="container reveal">
+            <div class="club-card">
+                <span class="section-eyebrow">Trattoria Irtona</span>
+                <h2>Bleib über Alles informiert.</h2>
+                <p>Saisonale Menüs, Weinabende und kleine Aufmerksamkeiten zum Geburtstag – exklusiv für unsere Stammgäste. Kein Spam, nur Genuss.</p>
+                <form class="club-form" id="clubForm">
+                    <input type="email" id="clubEmail" placeholder="Deine E-Mail-Adresse" aria-label="E-Mail-Adresse" required>
+                    <button type="submit" class="club-btn">Anmelden</button>
+                </form>
+                <p class="club-note" id="clubNote" style="font-size: 0.875rem; color: #cdc3b8;">
+                   <br><br> Mit der Anmeldung stimmst du dem Erhalt unseres Newsletters zu. Abmeldung jederzeit möglich.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="r-cta-section section-padding dark-bg-alt">
         <div class="container reveal">
             <div class="r-cta-card">
                 <span class="r-cta-eyebrow">Buon Appetito</span>
                 <div class="r-cta-ornament"><span></span>✦<span></span></div>
                 <h2 class="r-cta-title rustic-heading">
-                    Bereit für dein eigenes Meisterstück?
+                    Ein Tisch wartet auf dich.
                 </h2>
                 <p class="r-cta-text">
-                    Lass uns gemeinsam etwas Außergewöhnliches schaffen — von der ersten Idee
-                    bis zum letzten Gang.
+                    Reserviere noch heute und erlebe einen Abend, der nach mehr schmeckt –
+                    von der ersten Antipasti bis zum letzten Espresso.
                 </p>
                 <div class="r-cta-actions">
-                    <a href="kontakt.html" class="r-cta-button">Jetzt Projekt anfangen</a>
+                    <a href="kontakt.html" class="r-cta-button">Tisch reservieren</a>
                     <a href="speisekarte.html" class="r-cta-button-ghost">Speisekarte ansehen</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer class="r-footer">
         <div class="container">
             <div class="r-footer-grid">
@@ -1038,17 +1404,14 @@
 
         const revealOnScroll = () => {
             const windowHeight = window.innerHeight;
-
             reveals.forEach(el => {
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
+                if (el.getBoundingClientRect().top < windowHeight - 100) {
                     el.classList.add("active");
                 }
             });
         };
-
         window.addEventListener("scroll", revealOnScroll);
-        revealOnScroll(); // Direkt beim Laden prüfen
+        revealOnScroll();
 
         /* --- Navigation: kompakter Zustand beim Scrollen --- */
         const nav = document.getElementById("restaurantNav");
@@ -1082,6 +1445,49 @@
         backdrop.addEventListener("click", closeMenu);
         menu.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
         document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+
+        /* --- Animierte Kennzahlen --- */
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const fmt = (val, dec) => dec ? val.toFixed(1).replace(".", ",") : Math.round(val).toString();
+        const animateCount = (el) => {
+            const target = parseFloat(el.dataset.target);
+            const dec = el.dataset.dec === "1";
+            const suffix = el.dataset.suffix || "";
+            const prefix = el.dataset.prefix || "";
+            if (prefersReduced) { el.textContent = prefix + fmt(target, dec) + suffix; return; }
+            const dur = 1600; let start = null;
+            const step = (ts) => {
+                if (!start) start = ts;
+                const p = Math.min((ts - start) / dur, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = prefix + fmt(target * eased, dec) + suffix;
+                if (p < 1) requestAnimationFrame(step);
+                else el.textContent = prefix + fmt(target, dec) + suffix;
+            };
+            requestAnimationFrame(step);
+        };
+        if ("IntersectionObserver" in window) {
+            const statObs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { animateCount(e.target); statObs.unobserve(e.target); }
+                });
+            }, { threshold: .5 });
+            document.querySelectorAll(".stat-num[data-target]").forEach(el => statObs.observe(el));
+        } else {
+            document.querySelectorAll(".stat-num[data-target]").forEach(animateCount);
+        }
+
+        /* --- Newsletter (Demo) --- */
+        const clubForm = document.getElementById("clubForm");
+        if (clubForm) {
+            clubForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const note = document.getElementById("clubNote");
+                clubForm.querySelector("input").value = "";
+                note.textContent = "Grazie! Du bist im Club Irtona angemeldet. 🍷";
+                note.style.color = "#8fd7a0";
+            });
+        }
     });
     </script>
 </body>
