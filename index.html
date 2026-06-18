@@ -395,17 +395,12 @@
     }
 
     .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: var(--gray-50);
-      border: 1px solid var(--gray-100);
-      border-radius: 100px;
-      font-size: 0.82rem;
+      display: block;
+      font-size: 0.9rem;
       font-weight: 500;
-      color: var(--gray-600);
-      margin-bottom: 2.5rem;
+      letter-spacing: 0.01em;
+      color: var(--gray-400);
+      margin-bottom: 1.4rem;
       opacity: 0;
       animation: fadeUp .7s .1s cubic-bezier(.22,1,.36,1) forwards;
     }
@@ -429,17 +424,21 @@
     .hero-line {
       display: block;
       font-family: var(--font-display);
-      /* clamp: min 2rem so long German words never overflow even on 320px screens */
-      font-size: clamp(2rem, 8.5vw, 7rem);
+      /* Fallback size if JS is off. The fitHeroLines() script measures each
+         line and sets the exact font-size so the title fills the container
+         edge-to-edge and never breaks mid-word — at every screen width. */
+      font-size: clamp(2rem, 11vw, 8rem);
       font-weight: 800;
       line-height: 0.96;
       letter-spacing: -0.04em;
       opacity: 0;
       animation: fadeUp .8s cubic-bezier(.22,1,.36,1) forwards;
-      /* prevent any word from breaking outside the viewport */
+      /* No auto-hyphenation (the old hyphen breaks looked bad). Mid-word break
+         is only a last-resort fallback for the (rare) JS-off case. */
+      white-space: nowrap;
       overflow-wrap: break-word;
-      word-break: break-word;
-      hyphens: auto;
+      hyphens: none;
+      -webkit-hyphens: none;
       max-width: 100%;
     }
 
@@ -1462,9 +1461,8 @@
       .hero-actions .btn { width: 100%; justify-content: center; }
       /* headline: full width, no overflow */
       .hero-headline { width: 100%; }
-      /* mobile: hero-headline füllt den Bildschirm */
+      /* mobile: hero-headline füllt den Bildschirm (Größe via fitHeroLines) */
       .hero-line {
-        font-size: clamp(3rem, 13.5vw, 6rem);
         line-height: 0.98;
         letter-spacing: -0.045em;
       }
@@ -1499,10 +1497,9 @@
 
       /* Hero: scale headline down further, line-height a touch looser */
       .hero { padding-top: 130px; padding-bottom: 60px; }
-      /* Hero-Headline füllt den Bildschirm auf kleinen Geräten */
+      /* Hero-Headline füllt den Bildschirm auf kleinen Geräten (Größe via fitHeroLines) */
       .hero .container { padding: 0 12px; }
       .hero-line {
-        font-size: clamp(3rem, 15.5vw, 5.5rem);
         line-height: 0.96;
         letter-spacing: -0.05em;
       }
@@ -1865,7 +1862,7 @@
     </nav>
 
     <div class="header-right">
-      <a href="kontakt.html" class="btn btn-dark" style="padding:10px 22px; font-size:.88rem;">Projekt starten →</a>
+      <a href="kontakt.html" class="btn btn-dark" style="padding:10px 22px; font-size:.88rem; justify-content:center; text-align:center;">Projekt starten</a>
       <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
         <span></span>
         <span></span>
@@ -1902,7 +1899,6 @@
 
   <div class="container hero-content">
     <div class="hero-tag">
-      <span class="hero-tag-dot"></span>
       Webdesign-Agentur · Steinheim an der Murr
     </div>
 
@@ -1923,11 +1919,6 @@
         <a href="portfolio.html" class="btn btn-outline btn-lg">Beispiele ansehen</a>
       </div>
     </div>
-  </div>
-
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
   </div>
 </section>
 
@@ -2975,6 +2966,56 @@
       document.addEventListener('DOMContentLoaded', init);
     } else {
       init();
+    }
+  }());
+
+  // ── HERO HEADLINE: FIT-TO-WIDTH ───────────────────────────────
+  // Skaliert jede Titelzeile so, dass die *längste* Zeile exakt die
+  // verfügbare Containerbreite ausfüllt. Alle Zeilen behalten dieselbe
+  // Schriftgröße, nichts bricht um (white-space:nowrap), und es passt
+  // sich live an die Geräte-/Fensterbreite an.
+  (function () {
+    'use strict';
+    var headline = document.querySelector('.hero-headline');
+    if (!headline) return;
+    var lines = Array.prototype.slice.call(headline.querySelectorAll('.hero-line'));
+    if (!lines.length) return;
+
+    var MEASURE = 100; // px – Messgröße; Breite skaliert linear mit der Schriftgröße
+
+    function fit() {
+      var avail = headline.clientWidth;
+      if (!avail) return;
+
+      // Breitestes Verhältnis Textbreite/Schriftgröße über alle Zeilen finden.
+      // Wichtig: die Zeile zum Messen kurz auf inline-block + maxWidth:none
+      // setzen, sonst liefert scrollWidth bei einem Block die volle
+      // Containerbreite (statt der echten Textbreite) zurück.
+      var maxRatio = 0;
+      lines.forEach(function (line) {
+        line.style.fontSize = MEASURE + 'px';
+        line.style.display = 'inline-block';
+        line.style.maxWidth = 'none';
+        var r = line.scrollWidth / MEASURE;
+        line.style.display = '';
+        line.style.maxWidth = '';
+        if (r > maxRatio) maxRatio = r;
+      });
+      if (!maxRatio) return;
+
+      // Schriftgröße, bei der die längste Zeile die Breite genau füllt
+      // (0.99 = winzige Marge gegen Pixel-Rundung, damit nichts abgeschnitten wird)
+      var size = (avail / maxRatio) * 0.99;
+      lines.forEach(function (line) { line.style.fontSize = size + 'px'; });
+    }
+
+    fit();
+    window.addEventListener('resize', fit, { passive: true });
+    window.addEventListener('orientationchange', fit);
+    window.addEventListener('load', fit);
+    // Web-Font (Outfit) ändert die Textbreite – nach dem Laden neu messen
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fit);
     }
   }());
 </script>
