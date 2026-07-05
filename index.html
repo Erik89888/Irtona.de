@@ -14,7 +14,6 @@
   <title>Irtona.de | Maßgeschneiderte Webseiten zu günstigen Preisen</title>
   <link rel="canonical" href="https://irtona.de/" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
-   <link rel="canonical" href="https://irtona.de/">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://unpkg.com" />
@@ -426,7 +425,9 @@
       font-family: var(--font-display);
       /* Fallback size if JS is off. The fitHeroLines() script measures each
          line and sets the exact font-size so the title fills the container
-         edge-to-edge and never breaks mid-word — at every screen width. */
+         edge-to-edge and never breaks mid-word — on desktop.
+         On mobile (≤768px) the size is set purely via CSS (see media queries)
+         for a crisp, tidy layout. */
       font-size: clamp(2rem, 11vw, 8rem);
       font-weight: 800;
       line-height: 0.96;
@@ -1456,19 +1457,55 @@
       .header-nav, .header-right .btn { display: none; }
       .hamburger { display: flex; }
 
+      /* ── HERO (Mobile) — ruhiges, festes Layout wie die Referenz ──
+         Kein JS-Fitting mehr auf Mobile: die Größe kommt rein aus CSS
+         (feste clamp-Werte) → gestochen scharf, konsistent skaliert
+         und ordentlich untereinander. */
+      .hero {
+        justify-content: center;
+        padding-top: 110px;
+        padding-bottom: 56px;
+      }
+
+      /* Tag im Referenz-Stil: kurzer Strich + Uppercase-Label */
+      .hero-tag {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: .78rem;
+        font-weight: 600;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        color: var(--gray-600);
+        margin-bottom: 1.6rem;
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+      .hero-tag::before {
+        content: '';
+        width: 34px;
+        height: 2px;
+        background: var(--black);
+        flex-shrink: 0;
+      }
+
+      /* Headline: alle drei Zeilen in EINER Größe, kein Umbruch.
+         Die exakte Größe setzt fitHeroLines() — auf Mobile mit
+         Sicherheitsmarge (nicht ganz randvoll) und auf halbe Pixel
+         gerundet, damit nichts unscharf gerendert wird. */
+      .hero-headline { width: 100%; margin-bottom: 1.8rem; }
+      .hero-line {
+        font-size: clamp(1.9rem, 9.5vw, 3.4rem); /* Fallback ohne JS */
+        line-height: 1.06;
+        letter-spacing: -0.04em;
+      }
+      /* Outline-Zeile: dünnerer Stroke wirkt auf kleinen Screens schärfer */
+      .hero-line-2 { -webkit-text-stroke-width: 1.5px; }
+
       .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
       .hero-actions { flex-direction: column; width: 100%; }
       .hero-actions .btn { width: 100%; justify-content: center; }
-      /* headline: full width, no overflow */
-      .hero-headline { width: 100%; }
-      /* mobile: hero-headline füllt den Bildschirm (Größe via fitHeroLines) */
-      .hero-line {
-        line-height: 0.98;
-        letter-spacing: -0.045em;
-      }
-      .hero-sub { max-width: 100%; font-size: 1rem; }
-      /* tag pill wraps gracefully */
-      .hero-tag { flex-wrap: wrap; max-width: 100%; }
+      .hero-sub { max-width: 100%; font-size: 1rem; line-height: 1.7; }
 
       .features-layout { grid-template-columns: 1fr; gap: 40px; }
       .features-layout.reverse { direction: ltr; }
@@ -1495,15 +1532,15 @@
       /* Tighter container so nothing bleeds to the edge */
       .container { padding: 0 18px; }
 
-      /* Hero: scale headline down further, line-height a touch looser */
-      .hero { padding-top: 130px; padding-bottom: 60px; }
-      /* Hero-Headline füllt den Bildschirm auf kleinen Geräten (Größe via fitHeroLines) */
-      .hero .container { padding: 0 12px; }
+      /* Hero: vertikal zentriert, Größe kommt von fitHeroLines() */
+      .hero { padding-top: 104px; padding-bottom: 48px; }
+      .hero .container { padding: 0 18px; }
       .hero-line {
-        line-height: 0.96;
-        letter-spacing: -0.05em;
+        font-size: clamp(1.7rem, 9vw, 2.6rem); /* Fallback ohne JS */
+        line-height: 1.06;
+        letter-spacing: -0.04em;
       }
-      .hero-headline { margin-bottom: 2rem; }
+      .hero-headline { margin-bottom: 1.6rem; }
 
       /* Sub-text smaller */
       .hero-sub { font-size: .95rem; }
@@ -1518,7 +1555,7 @@
       }
 
       /* Tag pill: smaller text, never wider than screen */
-      .hero-tag { font-size: .75rem; padding: 6px 12px; }
+      .hero-tag { font-size: .72rem; }
 
       /* Scroll indicator can hide on tiny screens */
       .hero-scroll { display: none; }
@@ -1915,13 +1952,12 @@
         zum Festpreis.
       </p>
       <div class="hero-actions">
-        <a href="kontakt.html" class="btn btn-dark btn-lg">Jetzt Projekt anfragen →</a>
+        <a href="kontakt.html" class="btn btn-dark btn-lg">Jetzt Projekt anfragen</a>
         <a href="portfolio.html" class="btn btn-outline btn-lg">Beispiele ansehen</a>
       </div>
     </div>
   </div>
 </section>
-
 
 
 <!-- ============================================================
@@ -2207,7 +2243,6 @@
           <li>WhatsApp-Anbindung für Kunden</li>
           <li>Rechtssicher (DSGVO-konform)</li>
           <li>Persönliche Betreuung im Projekt</li>
-          
         </ul>
         <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
@@ -2226,7 +2261,6 @@
           <li>Kontaktformular für Kundenanfragen</li>
           <li>Alles aus Start-Paket inklusive</li>
           <li>Persönliche Betreuung im Projekt</li>
-         
         </ul>
         <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
@@ -2244,7 +2278,6 @@
           <li>Google-Optimierung (SEO)</li>
           <li>Volle Betreuung & Premium Design</li>
           <li>Persönliche Betreuung im Projekt</li>
-          
         </ul>
         <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
@@ -2482,7 +2515,7 @@
           </div>
           <div>
             <h4>E-Mail</h4>
-            <a href=E-Mail: <a href="mailto:info@irtona.de"><span class="__cf_email__" data-cfemail="48202924242708213a3c272629662c2d">info@irtona.de</span></a>
+            <a href="mailto:info@irtona.de">info@irtona.de</a>
           </div>
         </div>
 
@@ -2600,7 +2633,6 @@
           <li><a href="impressum.html">Impressum</a></li>
           <li><a href="datenschutz.html">Datenschutz</a></li>
           <li><a href="agb.html">AGB</a></li>
-         
         </ul>
       </div>
     </div>
@@ -2620,7 +2652,7 @@
 <!-- ============================================================
      JAVASCRIPT
 ============================================================ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // ── HEADER SCROLL ──────────────────────────────────────────
   const header = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
@@ -2970,10 +3002,10 @@
   }());
 
   // ── HERO HEADLINE: FIT-TO-WIDTH ───────────────────────────────
-  // Skaliert jede Titelzeile so, dass die *längste* Zeile exakt die
-  // verfügbare Containerbreite ausfüllt. Alle Zeilen behalten dieselbe
-  // Schriftgröße, nichts bricht um (white-space:nowrap), und es passt
-  // sich live an die Geräte-/Fensterbreite an.
+  // Skaliert jede Titelzeile so, dass die *längste* Zeile die verfügbare
+  // Containerbreite ausfüllt. Auf Mobile (≤768px) mit bewusster Marge
+  // (nicht ganz randvoll → ruhiger, ordentlicher) und auf halbe Pixel
+  // gerundet, damit der Text gestochen scharf gerendert wird.
   (function () {
     'use strict';
     var headline = document.querySelector('.hero-headline');
@@ -2982,6 +3014,7 @@
     if (!lines.length) return;
 
     var MEASURE = 100; // px – Messgröße; Breite skaliert linear mit der Schriftgröße
+    var MOBILE_BREAKPOINT = 768;
 
     function fit() {
       var avail = headline.clientWidth;
@@ -3003,9 +3036,15 @@
       });
       if (!maxRatio) return;
 
-      // Schriftgröße, bei der die längste Zeile die Breite genau füllt
-      // (0.99 = winzige Marge gegen Pixel-Rundung, damit nichts abgeschnitten wird)
-      var size = (avail / maxRatio) * 0.99;
+      // Schriftgröße, bei der die längste Zeile die Breite genau füllt.
+      // Desktop: 0.99 (nahezu randvoll, winzige Marge gegen Pixel-Rundung).
+      // Mobile: 0.94 — bewusst etwas kleiner mit Luft zum Rand, plus
+      // Obergrenze, damit der Titel nie erschlagend groß wird.
+      var isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+      var size = (avail / maxRatio) * (isMobile ? 0.94 : 0.99);
+      if (isMobile) size = Math.min(size, 54);
+      // Auf halbe Pixel runden → schärferes Rendering (keine Subpixel-Unschärfe)
+      size = Math.floor(size * 2) / 2;
       lines.forEach(function (line) { line.style.fontSize = size + 'px'; });
     }
 
