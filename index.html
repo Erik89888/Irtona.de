@@ -1879,9 +1879,228 @@
         display: none !important;
       }
     }
+
+    /* ============================================================
+       INTRO LOADER — Logo klappt auf; hinter dem Overlay wärmt sich
+       (nur Desktop) der 3D-Roboter auf, damit er beim Scrollen nicht
+       mehr den Bildschirm einfriert.
+    ============================================================ */
+    .intro-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Failsafe ohne JS: sollte kein Script laufen, blendet sich der
+         Loader nach 6 s selbst aus — die Seite bleibt nie verdeckt. */
+      animation: introFailsafe 1ms linear 6s forwards;
+    }
+    @keyframes introFailsafe {
+      to { opacity: 0; visibility: hidden; pointer-events: none; }
+    }
+
+    /* Phase 3: der ganze Screen (mit Logo) verblasst */
+    .intro-loader.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .45s ease;
+    }
+
+    .intro-stage {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 18px;
+    }
+
+    /* ── Logo-Mark: dein iR-Badge springt in 3D rein und dreht sich ── */
+    .intro-mark {
+      position: relative;
+      width: 84px;
+      height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+      animation: introSpin .7s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* Das echte Logo (rundes Badge – glänzt von sich aus) */
+    .intro-mark-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 16px 34px rgba(0,0,0,.28));
+    }
+
+    /* Glanz-Sweep, der nach dem Landen einmal übers Badge fährt */
+    .intro-mark::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      z-index: 3;
+      background: linear-gradient(115deg, transparent 42%, rgba(255,255,255,.55) 50%, transparent 58%);
+      background-size: 250% 100%;
+      background-position: 210% 0;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation: introSheen .55s ease .72s both;
+    }
+
+    /* Fallback-„I“ als schwarzes Tile — nur falls kein Bild lädt */
+    .intro-mark-i {
+      display: none;
+      position: relative;
+      z-index: 2;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 2.5rem;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .intro-mark--fallback {
+      background: var(--black);
+      border-radius: 18px;
+      box-shadow: 0 22px 55px rgba(0,0,0,.30);
+    }
+    .intro-mark--fallback .intro-mark-i { display: block; }
+    .intro-mark--fallback::after { border-radius: 18px; mix-blend-mode: normal; }
+    .intro-mark--fallback::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: 1;
+      background: linear-gradient(155deg, rgba(255,255,255,.22), rgba(255,255,255,0) 52%);
+      pointer-events: none;
+    }
+
+    @keyframes introSpin {
+      0%   { transform: perspective(700px) rotateY(-360deg) scale(.15); opacity: 0; }
+      30%  { opacity: 1; }
+      100% { transform: perspective(700px) rotateY(0deg) scale(1); opacity: 1; }
+    }
+    @keyframes introSheen {
+      from { background-position: 210% 0; }
+      to   { background-position: -60% 0; }
+    }
+
+    /* ── Wordmark: schreibt sich per Wisch-Reveal daneben auf ── */
+    .intro-word {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      letter-spacing: -0.05em;
+      line-height: 1;
+      color: var(--black);
+      white-space: nowrap;
+      clip-path: inset(0 100% 0 0);
+      transform: translateX(-6px);
+      opacity: 0;
+      animation: introWordIn .55s cubic-bezier(.22,1,.36,1) .34s forwards;
+    }
+    .intro-word .intro-dot { color: var(--gray-400); }
+
+    @keyframes introWordIn {
+      0%   { clip-path: inset(0 100% 0 0); transform: translateX(-6px); opacity: 0; }
+      25%  { opacity: 1; }
+      100% { clip-path: inset(0 0 0 0);    transform: translateX(0);    opacity: 1; }
+    }
+
+    /* Während der Intro: Hero-Einblend-Animationen pausieren, damit sie
+       erst NACH dem Loader (sichtbar) ablaufen. Scroll wird per JS gesperrt. */
+    body.intro-active .hero-tag,
+    body.intro-active .hero-line,
+    body.intro-active .hero-bottom,
+    body.intro-active .hero-scroll {
+      animation-play-state: paused !important;
+    }
+
+    /* Warmup: den Roboter kurz ins Sichtfeld (unsichtbar hinter dem
+       Loader) holen, damit Spline seinen ersten Frame jetzt kompiliert. */
+    spline-viewer.spline-warmup {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 1 !important;
+      pointer-events: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro-mark {
+        animation: none;
+        transform: none;
+        opacity: 1;
+      }
+      .intro-mark::after { animation: none; content: none; }
+      .intro-word {
+        animation: none;
+        clip-path: none;
+        transform: none;
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
+
+<!-- ============================================================
+     INTRO LOADER (Logo klappt auf + Roboter-Warmup)
+============================================================ -->
+<div class="intro-loader" id="introLoader" role="presentation" aria-hidden="true">
+  <div class="intro-stage">
+    <div class="intro-mark">
+      <img class="intro-mark-img" src="logo-mark.png" alt="Irtona Logo" width="84" height="84"
+           onerror="this.style.display='none';this.parentNode.classList.add('intro-mark--fallback');" />
+      <span class="intro-mark-i" aria-hidden="true">I</span>
+    </div>
+    <span class="intro-word">Irtona<span class="intro-dot">.de</span></span>
+  </div>
+</div>
+
+<script>
+/* Intro-Controller — läuft SOFORT (synchron), damit die Hero-Animationen
+   von Anfang an pausiert sind (kein Ablauf hinter dem Loader).
+   Feste, kurze Timeline (≤ 1,5 s): Logo erscheinen → nach oben → verblassen.
+   Der 3D-Roboter wird unabhängig davon im Hintergrund vorgewärmt. */
+(function () {
+  var body   = document.body;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var loader = document.getElementById('introLoader');
+
+  // Hero-Animationen pausieren + Scroll sperren (nur wenn JS läuft →
+  // bei deaktiviertem JS greift der reine CSS-Failsafe des Loaders).
+  body.classList.add('intro-active');
+  document.documentElement.style.overflow = 'hidden';
+
+  function endWarmup() {
+    // Roboter aus dem Vollbild zurück in seine Sektion holen, BEVOR der
+    // weiße Screen transparent wird — sonst würde er kurz aufblitzen.
+    var sv = document.getElementById('splineViewer');
+    if (sv) sv.classList.remove('spline-warmup');
+  }
+
+  var T_HIDE = reduce ? 350 : 1150;  // ganzer Screen beginnt zu verblassen
+  var T_DONE = reduce ? 700 : 1600;  // Ende: Loader weg + Scroll frei
+
+  setTimeout(function () {
+    endWarmup();
+    body.classList.remove('intro-active');   // Hero blendet während des Fadens ein
+    if (loader) loader.classList.add('is-hidden');
+  }, T_HIDE);
+
+  setTimeout(function () {
+    endWarmup();
+    document.documentElement.style.overflow = '';
+    if (loader) loader.style.display = 'none';
+  }, T_DONE);
+})();
+</script>
 
 <!-- ============================================================
      HEADER
@@ -2110,20 +2329,58 @@
 
 <!-- Spline Web Component Runtime — nur auf Desktop laden -->
 <script>
-  if (window.innerWidth > 820) {
-    var s = document.createElement('script');
-    s.type = 'module';
-    s.src = 'https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js';
-    document.head.appendChild(s);
-  }
   (function () {
-    var viewer = document.getElementById('splineViewer');
-    var loader = document.getElementById('splineLoader');
-    if (!viewer || !loader) return;
-    var hide = function () { loader.style.display = 'none'; };
-    viewer.addEventListener('load', hide);
-    viewer.addEventListener('load-complete', hide);
-    setTimeout(hide, 6000);
+    var isDesktop = window.innerWidth > 820;
+    var reduce    = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var viewer    = document.getElementById('splineViewer');
+    var loader    = document.getElementById('splineLoader');
+
+    function hideSectionLoader() { if (loader) loader.style.display = 'none'; }
+    function loadRuntime() {
+      var s = document.createElement('script');
+      s.type = 'module';
+      s.src = 'https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js';
+      document.head.appendChild(s);
+    }
+
+    // Kein Roboter auf Mobile (Sektion ist per CSS ausgeblendet).
+    if (!isDesktop) {
+      hideSectionLoader();
+      return;
+    }
+
+    // Reduzierte Bewegung: Roboter normal laden, aber kein Intro-Warmup.
+    if (reduce) {
+      if (viewer) {
+        viewer.addEventListener('load', hideSectionLoader);
+        viewer.addEventListener('load-complete', hideSectionLoader);
+      }
+      setTimeout(hideSectionLoader, 6000);
+      loadRuntime();
+      return;
+    }
+
+    // WARMUP: den Viewer kurz ins Sichtfeld holen (unsichtbar hinter dem
+    // Intro-Loader), damit Spline den teuren ersten Frame JETZT kompiliert
+    // — nicht erst, wenn der Nutzer runterscrollt (das verursachte das Ruckeln).
+    if (viewer) viewer.classList.add('spline-warmup');
+
+    var settled = false;
+    function settle() {
+      if (settled) return;
+      settled = true;
+      hideSectionLoader();
+      if (viewer) viewer.classList.remove('spline-warmup');   // zurück in die Sektion
+    }
+
+    if (viewer) {
+      viewer.addEventListener('load', settle);
+      viewer.addEventListener('load-complete', settle);
+    }
+    // Fallback: die Intro nie an einem langsamen/fehlgeschlagenen 3D-Load aufhängen.
+    setTimeout(settle, 4000);
+
+    loadRuntime();   // definiert <spline-viewer> und startet den Load
   })();
 </script>
 
