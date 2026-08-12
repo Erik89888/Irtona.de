@@ -2019,14 +2019,7 @@
       animation-play-state: paused !important;
     }
 
-    /* Warmup: den Roboter kurz ins Sichtfeld (unsichtbar hinter dem
-       Loader) holen, damit Spline seinen ersten Frame jetzt kompiliert. */
-    spline-viewer.spline-warmup {
-      position: fixed !important;
-      inset: 0 !important;
-      z-index: 1 !important;
-      pointer-events: none !important;
-    }
+   
 
     @media (prefers-reduced-motion: reduce) {
       .intro-mark {
@@ -2361,7 +2354,7 @@
 <div class="intro-loader" id="introLoader" role="presentation" aria-hidden="true">
   <div class="intro-stage">
     <div class="intro-mark">
-      <img class="intro-mark-img" src="favicon.png" alt="Irtona Logo" width="84" height="84"
+      <img class="intro-mark-img" src="Logo favicon 2.png" alt="Irtona Logo" width="84" height="84"
            onerror="this.style.display='none';this.parentNode.classList.add('intro-mark--fallback');" />
       <span class="intro-mark-i" aria-hidden="true">I</span>
     </div>
