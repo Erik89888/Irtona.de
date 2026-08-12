@@ -7,22 +7,17 @@
     window.location.replace('/' + window.location.search + window.location.hash);
   }
 </script>
-  
   <meta charset="UTF-8" />
-  <meta name="google-site-verification" content="pe_48NPFKbCdFS7gzK6Zga9YplvKDrgtcEpGJ4plIio" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Irtona.de – Maßgeschneiderte Webseiten für kleine Unternehmen. Festpreis. Alles inklusive." />
+  <meta name="google-site-verification" content="pe_48NPFKbCdFS7gzK6Zga9YplvKDrgtcEpGJ4plIio" />
   <title>Irtona.de | Maßgeschneiderte Webseiten zu günstigen Preisen</title>
   <link rel="canonical" href="https://irtona.de/" />
-  <link rel="icon" type="image/png" href="favicon_16x16.png">
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://unpkg.com" />
-  <link rel="preconnect" href="https://prod.spline.design" crossorigin />
-  <script>if(window.innerWidth>820){document.write('<link rel="modulepreload" href="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js">');document.write('<link rel="preload" href="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" as="fetch" crossorigin>');}</script>
   <!-- Outfit = closest SF Pro feel on Google Fonts; on Apple devices -apple-system renders real SF Pro -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  
 
   <style>
     /* ============================================================
@@ -1456,7 +1451,7 @@
 
     @media (max-width: 768px) {
       .section { padding: 80px 0; }
-      .header-nav, .header-right .btn { display: none; }
+      .header-nav, .header-right .btn, #lm-btn { display: none; }
       .hamburger { display: flex; }
 
       /* ── HERO (Mobile) — ruhiges, festes Layout wie die Referenz ──
@@ -2047,6 +2042,315 @@
         opacity: 1;
       }
     }
+    /* ============================================================
+       NEW (index-new): APPLE-STYLE PILL NAV + CINEMATIC VIDEO HERO
+       Only these two things change vs. index.html — the rest of the
+       page is intentionally identical.
+    ============================================================ */
+
+    /* ---- Floating "Apple-style" glass pill navbar ---- */
+    .site-header {
+      background: transparent !important;
+      border-bottom: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      padding: 14px 16px !important;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .site-header.scrolled { padding: 10px 16px !important; }
+
+    .site-header .header-inner {
+      pointer-events: auto;
+      width: 100%;
+      max-width: 1040px;
+      gap: 12px;
+      padding: 8px 10px 8px 20px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.55);
+      background: rgba(255,255,255,.62);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      backdrop-filter: blur(22px) saturate(160%);
+      box-shadow: 0 8px 30px rgba(0,0,0,.10);
+      transition: background-color .4s ease, box-shadow .4s ease,
+                  border-color .4s ease, padding .4s ease;
+    }
+    .site-header.scrolled .header-inner {
+      background: rgba(255,255,255,.80);
+      box-shadow: 0 12px 34px rgba(0,0,0,.16);
+      border-color: rgba(255,255,255,.7);
+    }
+
+    /* nav links → an underline slides in on hover */
+    .site-header .header-nav { gap: 4px; }
+    .site-header .header-nav a {
+      position: relative;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      color: rgba(10,10,10,.72);
+      font-weight: 600;
+      transition: color .25s ease;
+    }
+    .site-header .header-nav a::after {
+      content: '';
+      position: absolute;
+      left: 14px; right: 14px; bottom: 4px;
+      width: auto;                 /* override the inherited width:0/100% from base CSS */
+      height: 2px; border-radius: 2px;
+      background: var(--black);
+      transform: scaleX(0);
+      transform-origin: left;      /* grow from the left → matches left-aligned text */
+      transition: transform .3s cubic-bezier(.76,0,.24,1);
+    }
+    .site-header .header-nav a:hover { color: var(--black); }
+    .site-header .header-nav a:hover::after { width: auto; transform: scaleX(1); }
+    .site-header .header-right .btn { border-radius: 9999px; }
+
+    /* ---- Liquid-Metal CTA ("Projekt starten") — CSS/animated chrome sheen,
+       same look as the kleinmann.arzt nav button (no React/WebGL needed) ---- */
+    #lm-btn{
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      height:42px; border-radius:9999px; isolation:isolate; text-decoration:none;
+      -webkit-tap-highlight-color:transparent;
+      box-shadow:0 0 0 1px rgba(0,0,0,.30), 0 9px 9px rgba(0,0,0,.10), 0 2px 5px rgba(0,0,0,.16);
+      transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+    }
+    #lm-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 0 1px rgba(0,0,0,.40), 0 12px 16px rgba(0,0,0,.14), 0 4px 6px rgba(0,0,0,.16);
+    }
+    #lm-btn:active{ transform:translateY(0) scale(.98); }
+    #lm-shader{
+      position:absolute; inset:0; border-radius:9999px; overflow:hidden; z-index:0;
+      background:linear-gradient(100deg,#8f8f8f,#f4f4f4,#bdbdbd,#ffffff,#9a9a9a,#e8e8e8,#8f8f8f);
+      background-size:220% 100%;
+      animation:lmSheen 4.5s linear infinite;
+    }
+    #lm-btn .lm-core{
+      position:absolute; inset:2px; border-radius:9999px; z-index:1;
+      background:linear-gradient(180deg,#242424 0%,#000 100%);
+    }
+    #lm-btn .lm-label{
+      position:relative; z-index:2;
+      padding:0 22px; color:#a8a8a8; font-size:.86rem; font-weight:600;
+      letter-spacing:.01em; white-space:nowrap;
+      text-shadow:0 1px 2px rgba(0,0,0,.45);
+    }
+    @keyframes lmSheen{ from{background-position:0% 50%} to{background-position:220% 50%} }
+    @media (prefers-reduced-motion: reduce){ #lm-shader{ animation:none !important; } }
+
+    /* ============================================================
+       SPLIT VIDEO HERO (white) — big title hard-left, big full-height
+       AR panel on the right, NO gradient (crisp hard edge).
+       Keeps the old hero's DNA: pulse-dot tag, outline word, fade-ups.
+       NOTE: the clip's background is baked-in black — a true white/
+       transparent background needs a processed/re-exported video.
+    ============================================================ */
+    .vhero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 56%;   /* right panel = bigger image */
+      align-items: stretch;
+      overflow: hidden;
+      background: #000;
+      color: #fff;
+      isolation: isolate;
+    }
+    /* left cell: copy vertically centred, pushed hard to the left edge */
+    .vhero > .container {
+      max-width: none;
+      margin: 0;
+      padding: 120px 0 84px;
+      padding-left: clamp(20px, 3vw, 44px);
+      padding-right: 28px;
+      display: flex;
+      align-items: center;       /* copy block vertically centred (no layout stretch) */
+      position: relative;
+      z-index: 2;
+    }
+    .vhero-content { max-width: 640px; }
+    /* right cell: full-height video, hard edge (no fade) */
+    .vhero-media {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .vhero-media video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      transform: scale(1.9);            /* zoom in → clearly bigger head */
+      transform-origin: center 30%;
+      display: block;
+    }
+
+    .vhero-tag {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.01em;
+      color: rgba(255,255,255,.72);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp .7s .1s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .vhero-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #fff; animation: pulse-dot 2s infinite;
+    }
+
+    .vhero-headline { margin-bottom: 2.4rem; }
+    .vhero-line {
+      display: block;
+      font-family: var(--font-display);
+      /* big title; on the all-black hero it may run over the black area */
+      font-size: clamp(3rem, 6.8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+      opacity: 0;
+      animation: fadeUp .8s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    /* (letter-stretch reverted to original) */
+    .vhero-stretch { display: inline; }
+    .vhero-line-1 { color: #fff; animation-delay: .15s; }
+    .vhero-line-2 {
+      /* outline word on black: black fill (= bg) + white stroke */
+      color: #000;
+      -webkit-text-stroke: 2px #fff;
+      paint-order: stroke fill;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      animation-delay: .25s;
+    }
+    .vhero-line-3 { color: #fff; animation-delay: .35s; }
+
+    .vhero-bottom {
+      display: flex; flex-direction: column; gap: 28px;
+      max-width: 460px;
+      opacity: 0;
+      animation: fadeUp .8s .45s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .vhero-sub {
+      font-size: 1.12rem; line-height: 1.6;
+      color: rgba(255,255,255,.75); font-weight: 300;
+    }
+    .vhero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    /* buttons recoloured for the black hero */
+    .vhero .btn-dark { background: #fff; color: #0a0a0a; }
+    .vhero .btn-dark:hover { background: #f2f2f2; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+    .vhero .btn-outline { color: #fff; border-color: rgba(255,255,255,.42); }
+    .vhero .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,.06); }
+
+    /* keep the new hero hidden until the intro loader lifts (same as old hero) */
+    body.intro-active .vhero-tag,
+    body.intro-active .vhero-line,
+    body.intro-active .vhero-bottom {
+      animation-play-state: paused !important;
+    }
+
+    @media (max-width: 1024px) {
+      /* Smaller than laptop → stack: title on TOP, AR video BELOW.
+         Laptop/Desktop (>=1025px) keep the untouched split defined above. */
+      .vhero { display: block; }
+      .vhero > .container {
+        padding: 116px 0 40px;
+        padding-left: clamp(20px, 4vw, 40px);
+        padding-right: clamp(20px, 4vw, 40px);
+        display: block;
+      }
+      .vhero-content { max-width: 100%; }
+      .vhero-line { font-size: clamp(2.6rem, 6.4vw, 4.6rem); white-space: normal; }
+      .vhero-bottom { max-width: 100%; }
+      .vhero-media { height: 52svh; }
+      .vhero-media video {
+        object-position: center 28%;
+        transform: scale(1.35);
+        transform-origin: center 28%;
+      }
+    }
+    @media (max-width: 768px) {
+      /* stack: big title on top, full-width AR panel below */
+      .vhero { display: block; }
+      .vhero > .container {
+        padding: 104px 0 32px;
+        padding-left: clamp(18px, 5vw, 28px);
+        padding-right: clamp(18px, 5vw, 28px);
+        display: block;
+      }
+      .vhero-content { max-width: 100%; }
+      .vhero-line { font-size: clamp(2.6rem, 12vw, 4rem); white-space: normal; }
+      .vhero-bottom { max-width: 100%; }
+      .vhero-actions { flex-direction: column; }
+      .vhero-actions .btn { width: 100%; justify-content: center; }
+      .vhero-media { height: 48svh; }
+      .vhero-media video {
+        object-position: center 26%;
+        transform: scale(1.4);
+        transform-origin: center 26%;
+      }
+    }
+    /* ============================================================
+       TESTIMONIALS — vertical auto-scrolling columns (reference style),
+       plain CSS. Same technique as the kleinmann.arzt review wall.
+    ============================================================ */
+    .tcols {
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      margin-top: 52px;
+      max-height: 620px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+              mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+    }
+    .tcol { flex: 1 1 0; max-width: 340px; }
+    .tcol-track {
+      display: flex;
+      flex-direction: column;
+      animation: tcolScroll var(--dur, 24s) linear infinite;
+      will-change: transform;
+    }
+    .tcol:hover .tcol-track { animation-play-state: paused; }   /* pause only the hovered column */
+    /* card spacing via margin (not flex gap) → -50% loop is perfectly seamless */
+    .tcard {
+      margin-bottom: 22px;
+      padding: 26px;
+      border-radius: 22px;
+      border: 1px solid var(--gray-200);
+      background: var(--white);
+      box-shadow: 0 12px 30px rgba(0,0,0,.05);
+    }
+    .tcard-text { font-size: .96rem; line-height: 1.62; color: var(--gray-600); }
+    .tcard-foot { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+    .tcard-avatar {
+      width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; overflow: hidden;
+      background: var(--black); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: .82rem; letter-spacing: .02em;
+    }
+    /* drop in a real customer photo any time: <div class="tcard-avatar"><img src="..." alt="..."></div> */
+    .tcard-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tcard-name { font-weight: 600; letter-spacing: -.01em; line-height: 1.25; }
+    .tcard-role { font-size: .84rem; color: var(--gray-400); line-height: 1.3; }
+    /* trust-signal card variant */
+    .tcard-badge {
+      width: 42px; height: 42px; border-radius: 13px;
+      background: var(--black); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.05rem; font-weight: 700; margin-bottom: 16px;
+    }
+    .tcard-title { font-weight: 700; font-size: 1.06rem; letter-spacing: -.01em; margin-bottom: 8px; }
+    /* image card (decorative photos mixed into the wall) */
+    .tcard--img { padding: 0; overflow: hidden; }
+    .tcard--img img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    #referenzen .section-header { text-align: center; margin-left: auto; margin-right: auto; }
+    @keyframes tcolScroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+    @media (max-width: 1023px) { .tcol--3 { display: none; } }
+    @media (max-width: 767px)  { .tcol--2 { display: none; } .tcols { max-height: 560px; } }
+    @media (prefers-reduced-motion: reduce) { .tcol-track { animation: none !important; } }
   </style>
 </head>
 <body>
@@ -2057,7 +2361,7 @@
 <div class="intro-loader" id="introLoader" role="presentation" aria-hidden="true">
   <div class="intro-stage">
     <div class="intro-mark">
-      <img class="intro-mark-img" src="Logo favicon 2.png" alt="Irtona Logo" width="84" height="84"
+      <img class="intro-mark-img" src="favicon.png" alt="Irtona Logo" width="84" height="84"
            onerror="this.style.display='none';this.parentNode.classList.add('intro-mark--fallback');" />
       <span class="intro-mark-i" aria-hidden="true">I</span>
     </div>
@@ -2120,7 +2424,11 @@
     </nav>
 
     <div class="header-right">
-      <a href="kontakt.html" class="btn btn-dark" style="padding:10px 22px; font-size:.88rem; justify-content:center; text-align:center;">Projekt starten</a>
+      <a href="kontakt.html" id="lm-btn" aria-label="Projekt starten">
+        <span id="lm-shader" aria-hidden="true"></span>
+        <span class="lm-core" aria-hidden="true"></span>
+        <span class="lm-label">Projekt starten</span>
+      </a>
       <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
         <span></span>
         <span></span>
@@ -2149,34 +2457,38 @@
 <!-- ============================================================
      HERO
 ============================================================ -->
-<section class="hero" id="start">
-  <div class="hero-bg">
-    <div class="hero-bg-blob hero-bg-blob-1"></div>
-    <div class="hero-bg-blob hero-bg-blob-2"></div>
-  </div>
+<section class="vhero" id="start">
+  <div class="container">
+    <div class="vhero-content">
+      <div class="vhero-tag">
+        Webdesign-Agentur · Steinheim an der Murr
+      </div>
 
-  <div class="container hero-content">
-    <div class="hero-tag">
-      Webdesign-Agentur · Steinheim an der Murr
-    </div>
+      <h1 class="vhero-headline">
+        <span class="vhero-line vhero-line-1"><span class="vhero-stretch">Zukunftssicheres</span></span>
+        <span class="vhero-line vhero-line-2"><span class="vhero-stretch">Webdesign.</span></span>
+        <span class="vhero-line vhero-line-3"><span class="vhero-stretch">Maßgeschneidert.</span></span>
+      </h1>
 
-    <div class="hero-headline">
-      <span class="hero-line hero-line-1">Zukunftssicheres</span>
-      <span class="hero-line hero-line-2">Webdesign.</span>
-      <span class="hero-line hero-line-3">Maßgeschneidert.</span>
-    </div>
-
-    <div class="hero-bottom">
-      <p class="hero-sub">
-        Wir bauen individuelle Webseiten für kleine Unternehmen,
-        die professionell aussehen, Kunden gewinnen und einfach funktionieren —
-        zum Festpreis.
-      </p>
-      <div class="hero-actions">
-        <a href="kontakt.html" class="btn btn-dark btn-lg">Jetzt Projekt anfragen</a>
-        <a href="portfolio.html" class="btn btn-outline btn-lg">Beispiele ansehen</a>
+      <div class="vhero-bottom">
+        <p class="vhero-sub">
+          Wir bauen individuelle Webseiten für kleine Unternehmen,
+          die professionell aussehen, Kunden gewinnen und einfach funktionieren —
+          zum Festpreis.
+        </p>
+        <div class="vhero-actions">
+          <a href="kontakt.html" class="btn btn-dark btn-lg">Jetzt Projekt anfragen</a>
+          <a href="portfolio.html" class="btn btn-outline btn-lg">Beispiele ansehen</a>
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- Full-height AR panel on the right (video is on black → reads as a panel). -->
+  <div class="vhero-media" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="auto" tabindex="-1">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260725_114042_d2ed2a89-f2fa-449b-9609-da456344257b.mp4" type="video/mp4">
+    </video>
   </div>
 </section>
 
@@ -2302,89 +2614,8 @@
 <!-- ============================================================
      INTERACTIVE 3D
 ============================================================ -->
-<section class="spline-section" id="interaktiv">
-  <div class="container">
-    <div class="spline-card reveal">
-      <div class="spline-spotlight"></div>
+<!-- (Interaktiv/3D-Roboter-Sektion entfernt) -->
 
-      <div class="spline-left">
-        <span class="spline-tag">Interaktiv erleben</span>
-        <h2>Webseiten,<br>die sich anfühlen<br>wie Zukunft.</h2>
-        <p>
-          Wir bauen nicht nur Webseiten — wir gestalten Erlebnisse. Bewege die Maus über die Szene
-          und entdecke, wie 3D, Animation und cleveres Design Aufmerksamkeit erzeugen.
-        </p>
-      </div>
-
-      <div class="spline-right">
-        <div class="spline-loader" id="splineLoader">Lädt</div>
-        <spline-viewer
-          id="splineViewer"
-          url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-          loading-anim-type="spinner-small-light"
-          events-target="global">
-        </spline-viewer>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Spline Web Component Runtime — nur auf Desktop laden -->
-<script>
-  (function () {
-    var isDesktop = window.innerWidth > 820;
-    var reduce    = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var viewer    = document.getElementById('splineViewer');
-    var loader    = document.getElementById('splineLoader');
-
-    function hideSectionLoader() { if (loader) loader.style.display = 'none'; }
-    function loadRuntime() {
-      var s = document.createElement('script');
-      s.type = 'module';
-      s.src = 'https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js';
-      document.head.appendChild(s);
-    }
-
-    // Kein Roboter auf Mobile (Sektion ist per CSS ausgeblendet).
-    if (!isDesktop) {
-      hideSectionLoader();
-      return;
-    }
-
-    // Reduzierte Bewegung: Roboter normal laden, aber kein Intro-Warmup.
-    if (reduce) {
-      if (viewer) {
-        viewer.addEventListener('load', hideSectionLoader);
-        viewer.addEventListener('load-complete', hideSectionLoader);
-      }
-      setTimeout(hideSectionLoader, 6000);
-      loadRuntime();
-      return;
-    }
-
-    // WARMUP: den Viewer kurz ins Sichtfeld holen (unsichtbar hinter dem
-    // Intro-Loader), damit Spline den teuren ersten Frame JETZT kompiliert
-    // — nicht erst, wenn der Nutzer runterscrollt (das verursachte das Ruckeln).
-    if (viewer) viewer.classList.add('spline-warmup');
-
-    var settled = false;
-    function settle() {
-      if (settled) return;
-      settled = true;
-      hideSectionLoader();
-      if (viewer) viewer.classList.remove('spline-warmup');   // zurück in die Sektion
-    }
-
-    if (viewer) {
-      viewer.addEventListener('load', settle);
-      viewer.addEventListener('load-complete', settle);
-    }
-    // Fallback: die Intro nie an einem langsamen/fehlgeschlagenen 3D-Load aufhängen.
-    setTimeout(settle, 4000);
-
-    loadRuntime();   // definiert <spline-viewer> und startet den Load
-  })();
-</script>
 
 <!-- ============================================================
      PORTFOLIO
@@ -2557,50 +2788,118 @@
 <section class="section section-alt" id="referenzen">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-label">Kundenstimmen</span>
-      <h2 class="section-heading">Was Kunden<br>über uns sagen.</h2>
+      <span class="section-label">Vertrauen</span>
+      <h2 class="section-heading">Kundenstimmen &<br>gute Gründe.</h2>
     </div>
 
-    <div class="testimonials-grid">
+    <div class="tcols reveal">
 
-      <div class="testi-card reveal">
-        <div class="testi-stars">
-          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <p class="testi-text">"Irtona hat meine Website in rasender Geschwindigkeit modernisiert — seitdem haben mich viele Fotografen-Kollegen auf das neue Design angesprochen. Absolut empfehlenswert!"</p>
-        <div class="testi-author">
-          <div class="testi-avatar">AH</div>
-          <div>
-            <div class="testi-name">Anke H.</div>
-            <div class="testi-role">Fotografin Steinheim an der Murr</div>
+      <!-- Column 1 — review + trust + photo -->
+      <div class="tcol tcol--1">
+        <div class="tcol-track" style="--dur:36s;">
+          <!-- set -->
+          <div class="tcard">
+            <p class="tcard-text">"Irtona hat meine Website in rasender Geschwindigkeit modernisiert — seitdem haben mich viele Fotografen-Kollegen auf das neue Design angesprochen. Absolut empfehlenswert!"</p>
+            <div class="tcard-foot">
+              <div class="tcard-avatar">AH</div>
+              <div><div class="tcard-name">Anke H.</div><div class="tcard-role">Fotografin, Steinheim a. d. Murr</div></div>
+            </div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-badge" aria-hidden="true">✓</div>
+            <div class="tcard-title">Festpreis-Garantie</div>
+            <p class="tcard-text">Ein fester Preis, den du vorher kennst — keine versteckten Kosten, keine Überraschungen.</p>
+          </div>
+          <div class="tcard tcard--img">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" alt="Modernes Webdesign am Laptop" loading="lazy">
+          </div>
+          <!-- duplicate set for the seamless loop -->
+          <div class="tcard" aria-hidden="true">
+            <p class="tcard-text">"Irtona hat meine Website in rasender Geschwindigkeit modernisiert — seitdem haben mich viele Fotografen-Kollegen auf das neue Design angesprochen. Absolut empfehlenswert!"</p>
+            <div class="tcard-foot">
+              <div class="tcard-avatar">AH</div>
+              <div><div class="tcard-name">Anke H.</div><div class="tcard-role">Fotografin, Steinheim a. d. Murr</div></div>
+            </div>
+          </div>
+          <div class="tcard" aria-hidden="true">
+            <div class="tcard-badge">✓</div>
+            <div class="tcard-title">Festpreis-Garantie</div>
+            <p class="tcard-text">Ein fester Preis, den du vorher kennst — keine versteckten Kosten, keine Überraschungen.</p>
+          </div>
+          <div class="tcard tcard--img" aria-hidden="true">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" alt="" loading="lazy">
           </div>
         </div>
       </div>
 
-      <div class="testi-card reveal" style="transition-delay:.1s;">
-        <div class="testi-stars">
-          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <p class="testi-text">„Klarer Preis, keine bösen Überraschungen, und das Ergebnis sieht aus wie eine Agenturseite für das Zehnfache. Ich kann Irtona nur weiterempfehlen."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">MH</div>
-          <div>
-            <div class="testi-name">Mark. H</div>
-            <div class="testi-role">Inhaber CONEMA e.K. <e class="K"></e></div>
+      <!-- Column 2 (from md up) — trust + photo + review -->
+      <div class="tcol tcol--2">
+        <div class="tcol-track" style="--dur:44s;">
+          <div class="tcard">
+            <div class="tcard-badge" aria-hidden="true">✓</div>
+            <div class="tcard-title">14 Tage bis online</div>
+            <p class="tcard-text">Von der Idee zur fertigen Website — in der Regel in nur zwei Wochen.</p>
+          </div>
+          <div class="tcard tcard--img">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" alt="Team bei der Projektarbeit" loading="lazy">
+          </div>
+          <div class="tcard">
+            <p class="tcard-text">„Klarer Preis, keine bösen Überraschungen, und das Ergebnis sieht aus wie eine Agenturseite für das Zehnfache. Ich kann Irtona nur weiterempfehlen."</p>
+            <div class="tcard-foot">
+              <div class="tcard-avatar">MH</div>
+              <div><div class="tcard-name">Mark H.</div><div class="tcard-role">Inhaber, CONEMA e.K.</div></div>
+            </div>
+          </div>
+          <div class="tcard" aria-hidden="true">
+            <div class="tcard-badge">✓</div>
+            <div class="tcard-title">14 Tage bis online</div>
+            <p class="tcard-text">Von der Idee zur fertigen Website — in der Regel in nur zwei Wochen.</p>
+          </div>
+          <div class="tcard tcard--img" aria-hidden="true">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" alt="" loading="lazy">
+          </div>
+          <div class="tcard" aria-hidden="true">
+            <p class="tcard-text">„Klarer Preis, keine bösen Überraschungen, und das Ergebnis sieht aus wie eine Agenturseite für das Zehnfache. Ich kann Irtona nur weiterempfehlen."</p>
+            <div class="tcard-foot">
+              <div class="tcard-avatar">MH</div>
+              <div><div class="tcard-name">Mark H.</div><div class="tcard-role">Inhaber, CONEMA e.K.</div></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="testi-card reveal" style="transition-delay:.2s;">
-        <div class="testi-stars">
-          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-        </div>
-        <p class="testi-text">„Super schnell, super professionell. Innerhalb von zwei Wochen war meine Restaurantseite online — mit digitaler Speisekarte und Reservierungsfunktion. Klasse!"</p>
-        <div class="testi-author">
-          <div class="testi-avatar">TN</div>
-          <div>
-            <div class="testi-name">Tran N.</div>
-            <div class="testi-role">Inhaber, Asia-Restaurant Vaihingen</div>
+      <!-- Column 3 (from lg up) — review + trust + photo -->
+      <div class="tcol tcol--3">
+        <div class="tcol-track" style="--dur:40s;">
+          <div class="tcard">
+            <p class="tcard-text">„Super schnell, super professionell. Innerhalb von zwei Wochen war meine Restaurantseite online — mit digitaler Speisekarte und Reservierungsfunktion. Klasse!"</p>
+            <div class="tcard-foot">
+              <div class="tcard-avatar">TN</div>
+              <div><div class="tcard-name">Tran N.</div><div class="tcard-role">Inhaber, Asia-Restaurant Vaihingen</div></div>
+            </div>
+          </div>
+          <div class="tcard">
+            <div class="tcard-badge" aria-hidden="true">✓</div>
+            <div class="tcard-title">DSGVO-konform</div>
+            <p class="tcard-text">Rechtssicher aufgesetzt: Impressum, Datenschutz und Technik nach deutschem Standard.</p>
+          </div>
+          <div class="tcard tcard--img">
+            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=800&auto=format&fit=crop" alt="Business & Büro" loading="lazy">
+          </div>
+          <div class="tcard" aria-hidden="true">
+            <p class="tcard-text">„Super schnell, super professionell. Innerhalb von zwei Wochen war meine Restaurantseite online — mit digitaler Speisekarte und Reservierungsfunktion. Klasse!"</p>
+            <div class="tcard-foot">
+              <div class="tcard-avatar">TN</div>
+              <div><div class="tcard-name">Tran N.</div><div class="tcard-role">Inhaber, Asia-Restaurant Vaihingen</div></div>
+            </div>
+          </div>
+          <div class="tcard" aria-hidden="true">
+            <div class="tcard-badge">✓</div>
+            <div class="tcard-title">DSGVO-konform</div>
+            <p class="tcard-text">Rechtssicher aufgesetzt: Impressum, Datenschutz und Technik nach deutschem Standard.</p>
+          </div>
+          <div class="tcard tcard--img" aria-hidden="true">
+            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=800&auto=format&fit=crop" alt="" loading="lazy">
           </div>
         </div>
       </div>
