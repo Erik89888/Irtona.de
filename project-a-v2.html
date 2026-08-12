@@ -3,1541 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irtona Studio | Premium Webdesign</title>
+    <title>Studio Nova | Architektur &amp; Planung</title>
+    <meta name="description" content="Studio Nova — Architektur mit Haltung. Wir planen und realisieren Räume vom ersten Entwurf bis zur schlüsselfertigen Übergabe.">
+    <link rel="icon" href="favicon.png" type="image/png">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Readex Pro"', 'system-ui', '-apple-system', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+
     <style>
-        :root {
-            --bg: #080810;
-            --bg-2: #0d0d1a;
-            --bg-card: #111120;
-            --blue: #3b6bff;
-            --blue-bright: #5b87ff;
-            --blue-glow: rgba(59,107,255,0.18);
-            --blue-subtle: rgba(59,107,255,0.08);
-            --white: #f0f0f8;
-            --white-dim: rgba(240,240,248,0.55);
-            --white-muted: rgba(240,240,248,0.25);
-            --border: rgba(255,255,255,0.07);
-            --border-active: rgba(59,107,255,0.4);
-            --gray: #888898;
-        }
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
+        html, body { height: 100%; }
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--white);
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Readex Pro', system-ui, -apple-system, sans-serif;
+            background: #000;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Grain overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.5;
-        }
+        .hero-title { letter-spacing: -0.04em; line-height: 0.95; }
 
-        /* ===== NAV ===== */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 0 60px;
-            height: 72px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(8,8,16,0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-
-        nav.scrolled {
-            height: 64px;
-            background: rgba(8,8,16,0.97);
-        }
-
-        .nav-logo {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            text-decoration: none;
-            color: var(--white);
-        }
-
-        .nav-logo span {
-            color: var(--blue);
-        }
-
-        .nav-center {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .nav-center a {
-            text-decoration: none;
-            color: var(--white-dim);
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.04em;
-            transition: color 0.2s;
-            position: relative;
-        }
-
-        .nav-center a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1.5px;
-            background: var(--blue);
-            transition: width 0.25s;
-        }
-
-        .nav-center a:hover { color: var(--white); }
-        .nav-center a:hover::after { width: 100%; }
-
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-
-        .nav-btn {
-            background: var(--blue);
-            color: white;
-            text-decoration: none;
-            padding: 10px 22px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 0.82rem;
-            letter-spacing: 0.06em;
-            border-radius: 6px;
-            transition: all 0.25s;
-            white-space: nowrap;
-        }
-
-        .nav-btn:hover {
-            background: var(--blue-bright);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px var(--blue-glow);
-        }
-
-        /* Burger */
-        .burger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 6px;
-            border: none;
-            background: none;
-            z-index: 1100;
-        }
-
-        .burger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--white);
-            border-radius: 2px;
-            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-            transform-origin: center;
-        }
-
-        .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-        .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        /* Mobile menu */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(8,8,16,0.98);
-            backdrop-filter: blur(30px);
-            z-index: 999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
+        /* ===== Reveal on scroll ===== */
+        .reveal {
             opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.35s ease, transform 0.35s ease;
-            pointer-events: none;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(.22,.61,.36,1), transform 0.8s cubic-bezier(.22,.61,.36,1);
         }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: 0.08s; }
+        .reveal-d2 { transition-delay: 0.16s; }
+        .reveal-d3 { transition-delay: 0.24s; }
 
-        .mobile-menu.open {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: all;
+        /* Hero content fade-in */
+        .hero-fade { opacity: 0; animation: heroFade 1.1s cubic-bezier(.22,.61,.36,1) 0.15s forwards; }
+        @keyframes heroFade { to { opacity: 1; } }
+
+        /* ===== Marquee / Ticker (seamless) ===== */
+        .marquee {
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+                    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
         }
-
-        .mobile-menu a {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-weight: 800;
-            color: var(--white-dim);
-            text-decoration: none;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
-            width: 80%;
-            text-align: center;
-            letter-spacing: -0.02em;
-            transition: color 0.2s, letter-spacing 0.2s;
-        }
-
-        .mobile-menu a:hover { color: var(--blue); letter-spacing: 0.01em; }
-        .mobile-menu a.btn-mobile {
-            margin-top: 28px;
-            background: var(--blue);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 8px;
-            border: none;
-            font-size: 1.1rem;
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            min-height: 100vh;
+        .marquee-track {
             display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding: 140px 0 80px;
-        }
-
-        /* Animated background grid */
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(59,107,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59,107,255,0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 75%);
-        }
-
-        .hero-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
-        }
-
-        .hero-orb-1 {
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(59,107,255,0.22) 0%, transparent 70%);
-            top: -100px; right: -150px;
-            animation: orbFloat 8s ease-in-out infinite;
-        }
-
-        .hero-orb-2 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(100,60,255,0.15) 0%, transparent 70%);
-            bottom: 0; left: -100px;
-            animation: orbFloat 10s ease-in-out infinite reverse;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -20px) scale(1.05); }
-            66% { transform: translate(-20px, 15px) scale(0.97); }
-        }
-
-        .container {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 0 60px;
-        }
-
-        .hero-inner {
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .hero-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--blue-subtle);
-            border: 1px solid var(--border-active);
-            border-radius: 4px;
-            padding: 6px 14px 6px 10px;
-            margin-bottom: 28px;
-        }
-
-        .hero-tag-dot {
-            width: 8px; height: 8px;
-            background: var(--blue);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--blue);
-            animation: pulseDot 2s ease infinite;
-        }
-
-        @keyframes pulseDot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
-
-        .hero-tag span {
-            font-size: 0.74rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--blue-bright);
-        }
-
-        .hero-title {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2.8rem, 5vw, 5rem);
-            font-weight: 700;
-            line-height: 1.05;
-            letter-spacing: -0.04em;
-        }
-
-        .hero-title .accent { color: var(--blue); font-weight: 800; }
-
-        .hero-title .outline {
-            color: var(--white-dim);
-            font-weight: 400;
-        }
-
-        .hero-subtitle {
-            font-size: 1.05rem;
-            color: var(--white-dim);
-            line-height: 1.75;
-            margin: 24px 0 36px;
-            max-width: 440px;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--blue);
-            color: white;
-            text-decoration: none;
-            padding: 16px 30px;
-            border-radius: 8px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 0.92rem;
-            letter-spacing: 0.04em;
-            transition: all 0.25s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background: var(--blue-bright);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 36px var(--blue-glow);
-        }
-
-        .btn-primary svg { transition: transform 0.2s; }
-        .btn-primary:hover svg { transform: translateX(4px); }
-
-        .btn-ghost {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--white-dim);
-            text-decoration: none;
-            padding: 16px 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.92rem;
-            border: 1px solid var(--border);
-            transition: all 0.25s;
-        }
-
-        .btn-ghost:hover {
-            color: var(--white);
-            border-color: var(--border-active);
-            background: var(--blue-subtle);
-        }
-
-        .hero-visual {
-            position: relative;
-        }
-
-        .hero-image-frame {
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            position: relative;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
-        }
-
-        .hero-image-frame::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(59,107,255,0.1), transparent 50%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .hero-image-frame img {
-            width: 100%;
-            height: 360px;
-            object-fit: cover;
-            display: block;
-            filter: brightness(0.85) saturate(0.8);
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3,1fr);
-            gap: 1px;
-            background: var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-
-        .hero-stat {
-            background: var(--bg-card);
-            padding: 18px 20px;
-            text-align: center;
-        }
-
-        .hero-stat-num {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--blue-bright);
-        }
-
-        .hero-stat-label {
-            font-size: 0.72rem;
-            color: var(--gray);
-            margin-top: 3px;
-            font-weight: 500;
-        }
-
-        /* ===== TICKER ===== */
-        .ticker-section {
-            padding: 20px 0;
-            background: var(--bg-2);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            overflow: hidden;
-        }
-
-        .ticker-track {
-            display: flex;
-            animation: tickerScroll 25s linear infinite;
             width: max-content;
+            animation: marquee 30s linear infinite;
         }
-
-        .ticker-track:hover { animation-play-state: paused; }
-
-        @keyframes tickerScroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-
-        .ticker-item {
+        .marquee:hover .marquee-track { animation-play-state: paused; }
+        .marquee-item {
             display: inline-flex;
             align-items: center;
-            gap: 16px;
-            padding: 0 28px;
-            font-family: 'Syne', sans-serif;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
+            gap: 22px;
+            margin: 0 26px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--white-dim);
+            color: rgba(255,255,255,0.55);
             white-space: nowrap;
         }
-
-        .ticker-item .dot {
-            width: 5px; height: 5px;
-            background: var(--blue);
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        /* ===== SECTION COMMONS ===== */
-        .section {
-            padding: 120px 0;
-        }
-
-        .section-bg-alt { background: var(--bg-2); }
-
-        .section-eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
-        .section-eyebrow::before {
+        .marquee-item::before {
             content: '';
-            display: block;
-            width: 28px;
-            height: 2px;
-            background: var(--blue);
-            flex-shrink: 0;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
         }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-        .section-eyebrow span {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--blue-bright);
-        }
-
-        .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 1.1;
-        }
-
-        .section-subtitle {
-            font-size: 1rem;
-            color: var(--white-dim);
-            line-height: 1.7;
-            margin-top: 14px;
-        }
-
-        /* ===== COMPARISON SLIDER ===== */
-        .comparison-section {
-            padding: 120px 0;
-            background: var(--bg-2);
-        }
-
-        .comparison-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
+        /* ===== Comparison slider ===== */
         .comparison-container {
             position: relative;
             width: 100%;
-            max-width: 900px;
+            max-width: 940px;
             aspect-ratio: 16 / 9;
             margin: 0 auto;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
-            border: 1px solid var(--border);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-            background-image: url('https://images.unsplash.com/photo-1627502208346-b835b72c0f05?q=80&w=1337&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            border: 1px solid rgba(255,255,255,0.1);
+            background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1400');
             background-size: cover;
             background-position: center;
             user-select: none;
         }
-
         .grayscale-layer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1627502208346-b835b72c0f05?q=80&w=1337&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            position: absolute; inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1400');
             background-size: cover; background-position: center;
-            filter: grayscale(100%) brightness(0.75);
-            z-index: 1;
+            filter: grayscale(100%) brightness(0.72);
             clip-path: inset(0 0 0 50%);
         }
-
         .slider-input {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; cursor: ew-resize; z-index: 10;
-            margin: 0;
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            opacity: 0; cursor: ew-resize; margin: 0; z-index: 10;
         }
-
         .slider-visuals {
-            position: absolute; top: 0; left: 50%; width: 0; height: 100%;
-            z-index: 5; pointer-events: none; transform: translateX(-50%);
+            position: absolute; top: 0; left: 50%;
+            width: 0; height: 100%;
+            transform: translateX(-50%);
+            pointer-events: none; z-index: 5;
         }
-
         .slider-line {
-            position: absolute; top: 0; left: 0; width: 3px; height: 100%;
-            background: var(--blue);
-            box-shadow: 0 0 20px var(--blue-glow);
+            position: absolute; top: 0; left: 0;
+            width: 2px; height: 100%;
+            background: #fff;
+            box-shadow: 0 0 22px rgba(255,255,255,0.35);
         }
-
         .slider-button {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 44px; height: 44px;
-            background: var(--blue);
+            width: 46px; height: 46px;
+            background: #fff; color: #000;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 24px rgba(59,107,255,0.5);
-            color: white; font-size: 1rem; font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.4);
         }
-
         .comp-label {
-            position: absolute;
-            top: 20px;
+            position: absolute; top: 18px;
             padding: 6px 14px;
-            background: rgba(8,8,16,0.85);
+            background: rgba(0,0,0,0.55);
             backdrop-filter: blur(8px);
-            border: 1px solid var(--border);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 100px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--white-dim);
+            font-size: 0.68rem; font-weight: 600;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: rgba(255,255,255,0.8);
             z-index: 6;
         }
-
-        .comp-label-before { right: 20px; }
-        .comp-label-after { left: 20px; color: var(--blue-bright); border-color: var(--border-active); }
-
-        /* ===== DESIGN PHILOSOPHY ===== */
-        .philosophy-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .philosophy-text h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2rem, 3.5vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
-        .philosophy-text p {
-            color: var(--white-dim);
-            line-height: 1.8;
-            font-size: 1rem;
-        }
-
-        .palette-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 32px;
-        }
-
-        .palette-swatch {
-            width: 52px; height: 52px;
-            border-radius: 12px;
-            position: relative;
-            transition: transform 0.2s;
-        }
-
-        .palette-swatch:hover { transform: scale(1.1) translateY(-4px); }
-
-        .philosophy-image {
-            position: relative;
-        }
-
-        .philosophy-image img {
-            width: 100%;
-            height: 420px;
-            object-fit: cover;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            filter: brightness(0.75) saturate(0.6);
-            display: block;
-        }
-
-        .philosophy-image::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, var(--blue-subtle), transparent 60%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* floating badge */
-        .float-badge {
-            position: absolute;
-            bottom: 28px;
-            left: -28px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-active);
-            border-radius: 14px;
-            padding: 18px 22px;
-            z-index: 2;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-        }
-
-        .float-badge-num {
-            font-family: 'Syne', sans-serif;
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--blue-bright);
-            line-height: 1;
-        }
-
-        .float-badge-label {
-            font-size: 0.74rem;
-            color: var(--gray);
-            margin-top: 4px;
-            font-weight: 500;
-        }
-
-        /* ===== STATS ===== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1px;
-            background: var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            padding: 52px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: background 0.3s;
-        }
-
-        .stat-card:hover { background: var(--blue-subtle); }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--blue), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .stat-card:hover::before { opacity: 1; }
-
-        .stat-num {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2.2rem, 3.5vw, 3rem);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            color: var(--white);
-        }
-
-        .stat-num span { color: var(--blue); }
-
-        .stat-label {
-            font-size: 0.88rem;
-            color: var(--gray);
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-        /* ===== PROCESS ===== */
-        .process-header { text-align: center; margin-bottom: 70px; }
-
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
-            background: var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .process-card {
-            background: var(--bg-card);
-            padding: 40px 32px;
-            position: relative;
-            transition: background 0.3s;
-        }
-
-        .process-card:hover { background: rgba(59,107,255,0.06); }
-
-        .process-num {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
-            color: rgba(59,107,255,0.15);
-            line-height: 1;
-            margin-bottom: 20px;
-            transition: color 0.3s;
-        }
-
-        .process-card:hover .process-num { color: rgba(59,107,255,0.25); }
-
-        .process-card h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.01em;
-        }
-
-        .process-card p {
-            font-size: 0.88rem;
-            color: var(--white-dim);
-            line-height: 1.7;
-        }
-
-        /* connector line */
-        .process-card:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            top: 46px;
-            right: -1px;
-            width: 1px;
-            height: 24px;
-            background: var(--blue);
-            opacity: 0.5;
-        }
+        .comp-label-before { right: 18px; }
+        .comp-label-after { left: 18px; }
 
         /* ===== FAQ ===== */
-        .faq-header { text-align: center; margin-bottom: 60px; }
-
-        .faq-list {
-            max-width: 780px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .faq-item {
-            border-top: 1px solid var(--border);
-        }
-
-        .faq-item:last-child { border-bottom: 1px solid var(--border); }
-
-        .faq-question {
-            width: 100%;
-            background: none;
-            border: none;
-            color: var(--white);
-            text-align: left;
-            padding: 26px 0;
-            font-family: 'Syne', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            transition: color 0.2s;
-            letter-spacing: -0.01em;
-        }
-
-        .faq-question:hover { color: var(--blue-bright); }
-
-        .faq-icon {
-            width: 28px; height: 28px;
-            border-radius: 50%;
-            border: 1.5px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s;
-            color: var(--blue);
-        }
-
-        .faq-item.active .faq-icon {
-            background: var(--blue);
-            border-color: var(--blue);
-            color: white;
-            transform: rotate(45deg);
-        }
-
         .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(.22,.61,.36,1);
         }
+        .faq-item.active .faq-answer { max-height: 240px; }
+        .faq-icon { transition: transform 0.35s cubic-bezier(.22,.61,.36,1); }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
 
-        .faq-item.active .faq-answer { max-height: 200px; }
-
-        .faq-answer p {
-            color: var(--white-dim);
-            font-size: 0.95rem;
-            line-height: 1.75;
-            padding-bottom: 26px;
-        }
-
-        /* ===== CONTACT MAP ===== */
-        .contact-map-section {
-            padding: 120px 0;
-        }
-
-        .contact-map-header { margin-bottom: 50px; }
-
-        .map-wrap {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-        }
-
-        .map-wrap iframe {
-            width: 100%;
-            height: 560px;
-            display: block;
-            filter: invert(1) hue-rotate(180deg) brightness(0.75) saturate(0.5);
-        }
-
-        .contact-card {
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            background: rgba(8,8,16,0.94);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-active);
-            border-radius: 16px;
-            padding: 32px;
-            width: 280px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-
-        .contact-card h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .contact-card-row {
-            margin-bottom: 16px;
-        }
-
-        .contact-card-row strong {
-            display: block;
-            font-size: 0.68rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-bottom: 4px;
-        }
-
-        .contact-card-row span, .contact-card-row a {
-            font-size: 0.9rem;
-            color: var(--white-dim);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .contact-card-row a:hover { color: var(--blue-bright); }
-
-        .contact-card .btn-primary { width: 100%; justify-content: center; margin-top: 8px; }
-
-        /* ===== CTA ===== */
-        .cta-section {
-            padding: 120px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 700px;
-            height: 400px;
-            background: radial-gradient(ellipse, rgba(59,107,255,0.12), transparent 70%);
-            pointer-events: none;
-        }
-
-        .cta-section .section-title { margin-bottom: 16px; }
-        .cta-section .section-subtitle { margin-bottom: 40px; }
-        .cta-inner { position: relative; z-index: 1; }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: var(--bg-2);
-            border-top: 1px solid var(--border);
-            padding: 72px 0 32px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.8fr 1fr 1fr 1fr;
-            gap: 50px;
-            padding-bottom: 60px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .footer-brand .footer-logo {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--white);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-            display: inline-block;
-            margin-bottom: 16px;
-        }
-
-        .footer-brand .footer-logo span { color: var(--blue); }
-
-        .footer-brand p {
-            font-size: 0.88rem;
-            color: var(--gray);
-            line-height: 1.75;
-            max-width: 280px;
-        }
-
-        .footer-socials {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .social-btn {
-            width: 38px; height: 38px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .social-btn:hover {
-            border-color: var(--border-active);
-            color: var(--blue-bright);
-            background: var(--blue-subtle);
-        }
-
-        .footer-col h4 {
-            font-family: 'Syne', sans-serif;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--white-muted);
-            margin-bottom: 20px;
-        }
-
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 12px; }
-
-        .footer-col ul li a {
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .footer-col ul li a:hover { color: var(--white); }
-
-        .footer-bottom {
-            padding-top: 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .footer-bottom p {
-            font-size: 0.82rem;
-            color: var(--white-muted);
-        }
-
-        .footer-bottom a {
-            color: var(--white-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-bottom a:hover { color: var(--white-dim); }
-
-        /* ===== REVEAL ANIMATIONS ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
-        }
-
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .hero-inner { gap: 50px; }
-            .process-grid { grid-template-columns: 1fr 1fr; }
-            .process-card:not(:last-child)::after { display: none; }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
-        }
-
-        @media (max-width: 900px) {
-            nav { padding: 0 24px; }
-            .nav-center { display: none; }
-            .burger { display: flex; }
-            .mobile-menu { display: flex; }
-            .nav-right .nav-btn { display: none; }
-            .container { padding: 0 24px; }
-
-            .hero { padding: 110px 0 70px; min-height: auto; }
-            .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-            .hero-visual { order: -1; }
-            .hero-image-frame img { height: 240px; }
-
-            .section { padding: 80px 0; }
-            .comparison-section { padding: 80px 0; }
-
-            .philosophy-grid { grid-template-columns: 1fr; gap: 48px; }
-            .philosophy-image img { height: 280px; }
-            .float-badge { left: 0; bottom: 16px; }
-
-            .stats-grid { grid-template-columns: 1fr; }
-            .stat-card { padding: 36px 28px; }
-
-            .process-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
-
-            .map-wrap iframe { height: 420px; }
-            .contact-card {
-                position: static;
-                width: 100%;
-                border-radius: 0 0 20px 20px;
-                margin-top: 0;
-            }
-            .map-wrap { border-radius: 20px; overflow: visible; }
-            .map-wrap iframe { border-radius: 20px 20px 0 0; }
-
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .footer-bottom { flex-direction: column; text-align: center; }
-            .contact-map-section { padding: 80px 0; }
-            .cta-section { padding: 80px 0; }
-        }
-
-        /* ===== SHADER HERO ===== */
-        .shader-hero-v2 {
-            position: relative;
-            width: 100%;
-            min-height: 100svh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-        }
-
-        #shader-canvas-v2 {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-
-        #shader-canvas-v2 canvas {
-            display: block;
-            width: 100% !important;
-            height: 100% !important;
-        }
-
-        /* Neutral dark overlay for text readability */
-        .shader-hero-v2-tint {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background: linear-gradient(
-                to bottom,
-                rgba(0,0,0,0.08) 0%,
-                rgba(0,0,0,0.18) 40%,
-                rgba(0,0,0,0.55) 100%
-            );
-            pointer-events: none;
-        }
-
-        .shader-hero-v2-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 100px;
-            padding-bottom: 80px;
-        }
-
-        .shader-hero-v2-content .hero-tag { margin-bottom: 32px; }
-
-        .shader-hero-v2-content .hero-title {
-            font-size: clamp(3rem, 7vw, 6rem);
-            max-width: 780px;
-        }
-
-        .shader-hero-v2-content .hero-subtitle {
-            text-align: center;
-            margin: 24px auto 40px;
-            max-width: 500px;
-        }
-
-        .shader-hero-v2-content .hero-actions {
-            justify-content: center;
-        }
-
-        .shader-scroll-v2 {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: rgba(240,240,248,0.3);
-            font-size: 0.6rem;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-        }
-
-        .shader-scroll-v2::after {
-            content: '';
-            display: block;
-            width: 1px;
-            height: 36px;
-            background: linear-gradient(to bottom, rgba(59,107,255,0.6), transparent);
-            animation: scrollBlink 2s ease-in-out infinite;
-        }
-
-        @keyframes scrollBlink {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        @media (max-width: 600px) {
-            nav { padding: 0 20px; }
-            .container { padding: 0 20px; }
-
-            .hero-title { font-size: 2.8rem; }
-            .hero-stats { grid-template-columns: 1fr 1fr 1fr; }
-
-            .process-grid { grid-template-columns: 1fr; }
-            .process-card { padding: 28px 24px; }
-
-            .footer-grid { grid-template-columns: 1fr; }
-
-            .section-title { font-size: 2rem; }
-
-            .stats-grid { grid-template-columns: 1fr; gap: 1px; }
-
-            .hero-actions { flex-direction: column; align-items: stretch; }
-            .btn-ghost { justify-content: center; }
-        }
+        /* Mobile menu */
+        .mobile-menu { transition: opacity 0.35s ease, transform 0.35s ease; }
     </style>
 </head>
-<body>
+<body class="bg-black text-white antialiased">
 
-<!-- NAV -->
-<nav id="mainNav">
-    <a href="#" class="nav-logo">Irtona<span>.</span>de</a>
-    <ul class="nav-center">
-        <li><a href="index.html">Start</a></li>
-        <li><a href="#leistungen">Leistungen</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li><a href="preise.html">Preise</a></li>
-        <li><a href="kontakt.html">Kontakt</a></li>
-    </ul>
-    <div class="nav-right">
-        <a href="kontakt.html" class="nav-btn">Projekt anfragen</a>
-        <button class="burger" id="burger" aria-label="Menü öffnen">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
-</nav>
+<!-- ============================= HERO ============================= -->
+<section id="start" class="relative h-screen w-full overflow-hidden bg-black">
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-    <a href="index.html" onclick="closeMobileMenu()">Start</a>
-    <a href="#leistungen" onclick="closeMobileMenu()">Leistungen</a>
-    <a href="portfolio.html" onclick="closeMobileMenu()">Portfolio</a>
-    <a href="preise.html" onclick="closeMobileMenu()">Preise</a>
-    <a href="kontakt.html" onclick="closeMobileMenu()">Kontakt</a>
-    <a href="kontakt.html" class="btn-mobile btn-primary" onclick="closeMobileMenu()">Projekt anfragen →</a>
-</div>
+    <!-- Background video -->
+    <video
+        class="absolute inset-0 w-full h-full object-cover"
+        autoplay loop muted playsinline
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_063509_7d167302-4fd4-480b-8260-18ab572333d4.mp4"></video>
 
-<!-- HERO -->
-<section class="shader-hero-v2" id="start" aria-labelledby="hero-title-v2">
-    <div id="shader-canvas-v2" aria-hidden="true"></div>
-    <div class="shader-hero-v2-tint" aria-hidden="true"></div>
-    <div class="container shader-hero-v2-content">
-        <div class="hero-tag">
-            <div class="hero-tag-dot"></div>
-            <span>Premium Webdesign · Steinheim an der Murr</span>
+    <!-- Overlays for legibility -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-black/35"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/30"></div>
+
+    <!-- Navbar -->
+    <nav class="absolute top-0 left-0 right-0 z-20 px-6 md:px-10 pt-6 flex items-center justify-between gap-4">
+        <!-- Left pill -->
+        <a href="#start" class="flex items-center gap-2 bg-neutral-900/90 backdrop-blur rounded-full pl-4 pr-6 py-3">
+            <svg viewBox="0 0 256 256" class="h-5 w-5" aria-hidden="true">
+                <path d="M 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 128 L 64 128 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z M 128 64 L 128 128 L 64.5 128 L 32 95 L 0 64 L 0 0 L 64 0 Z M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 128 0 L 192 0 Z" fill="#ffffff"/>
+            </svg>
+            <span class="text-white text-sm font-normal tracking-tight">studio nova</span>
+        </a>
+
+        <!-- Center pill -->
+        <div class="hidden md:flex items-center gap-1 bg-neutral-900/90 backdrop-blur rounded-full px-3 py-2">
+            <a href="#projekte" class="text-neutral-300 hover:text-white transition-colors text-sm px-5 py-2 rounded-full">projekte</a>
+            <a href="#leistungen" class="text-neutral-300 hover:text-white transition-colors text-sm px-5 py-2 rounded-full">leistungen</a>
+            <a href="#studio" class="text-neutral-300 hover:text-white transition-colors text-sm px-5 py-2 rounded-full">studio</a>
+            <a href="#kontakt" class="text-neutral-300 hover:text-white transition-colors text-sm px-5 py-2 rounded-full">kontakt</a>
         </div>
-        <h1 class="hero-title" id="hero-title-v2">
-            Deine Vision.<br>
-            <span class="accent">Digitales</span><br>
-            Meisterwerk.
-        </h1>
-        <p class="hero-subtitle">Wir bauen Webseiten, die nicht nur funktionieren, sondern faszinieren. Ohne technisches Fachwissen deinerseits — wir übernehmen das komplette Setup.</p>
-        <div class="hero-actions">
-            <a href="kontakt.html" class="btn-primary">
-                Jetzt starten
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="portfolio.html" class="btn-ghost">
-                Beispiele ansehen
-            </a>
+
+        <!-- Right -->
+        <div class="flex items-center gap-3">
+            <a href="kontakt.html" class="hidden md:inline-flex bg-white text-black text-sm font-normal rounded-full px-6 py-3 hover:bg-neutral-200 transition-colors">projekt anfragen</a>
+            <button id="navToggle" aria-label="Menü öffnen" class="md:hidden flex items-center justify-center bg-neutral-900/90 backdrop-blur rounded-full h-11 w-11 text-white">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Foreground content -->
+    <div class="relative h-full w-full hero-fade">
+
+        <!-- Staggered headline -->
+        <h1 class="hero-title absolute text-white font-medium text-[14vw] md:text-[13vw] left-4 md:left-10 top-[18%]">form</h1>
+        <h1 class="hero-title absolute text-white font-medium text-[14vw] md:text-[13vw] right-4 md:right-10 top-[38%]">raum</h1>
+        <h1 class="hero-title absolute text-white font-medium text-[14vw] md:text-[13vw] left-[18%] md:left-[28%] top-[58%]">vision</h1>
+
+        <!-- Description -->
+        <p class="absolute left-6 md:left-10 top-[46%] max-w-[240px] text-[15px] leading-snug text-white/90">
+            wir planen und realisieren architektur mit haltung — vom ersten entwurf bis zum schlüsselfertigen gebäude.
+        </p>
+
+        <!-- Stat: top-right -->
+        <div class="absolute right-6 md:right-24 top-[15%]">
+            <div class="flex items-center gap-3 justify-end">
+                <span class="hidden md:block h-px w-24 bg-white/40 rotate-[20deg]"></span>
+                <span class="text-4xl md:text-5xl font-medium tracking-tight">+120</span>
+            </div>
+            <div class="text-xs md:text-sm text-white/70 mt-1 text-right">realisierte projekte</div>
+        </div>
+
+        <!-- Stat: bottom-left -->
+        <div class="absolute left-6 md:left-20 bottom-20 md:bottom-24">
+            <div class="flex items-center gap-3">
+                <span class="text-4xl md:text-5xl font-medium tracking-tight">20+</span>
+                <span class="hidden md:block h-px w-24 bg-white/40 rotate-[-20deg]"></span>
+            </div>
+            <div class="text-xs md:text-sm text-white/70 mt-1">jahre erfahrung</div>
+        </div>
+
+        <!-- Stat: bottom-right -->
+        <div class="absolute right-6 md:right-20 bottom-16 md:bottom-20">
+            <div class="flex items-center gap-3 justify-end">
+                <span class="hidden md:block h-px w-24 bg-white/40 rotate-[-20deg]"></span>
+                <span class="text-4xl md:text-5xl font-medium tracking-tight">+35</span>
+            </div>
+            <div class="text-xs md:text-sm text-white/70 mt-1 text-right">auszeichnungen</div>
         </div>
     </div>
-    <p class="shader-scroll-v2" aria-hidden="true">Scroll</p>
+
+    <!-- Bottom gradient -->
+    <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-black"></div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker-section">
-    <div class="ticker-track">
-        <span class="ticker-item">Premium Design <span class="dot"></span></span>
-        <span class="ticker-item">Blitzschnelles Hosting <span class="dot"></span></span>
-        <span class="ticker-item">DSGVO Konform <span class="dot"></span></span>
-        <span class="ticker-item">SEO Optimiert <span class="dot"></span></span>
-        <span class="ticker-item">Festpreis-Garantie <span class="dot"></span></span>
-        <span class="ticker-item">Responsive Design <span class="dot"></span></span>
-        <span class="ticker-item">Premium Design <span class="dot"></span></span>
-        <span class="ticker-item">Blitzschnelles Hosting <span class="dot"></span></span>
-        <span class="ticker-item">DSGVO Konform <span class="dot"></span></span>
-        <span class="ticker-item">SEO Optimiert <span class="dot"></span></span>
-        <span class="ticker-item">Festpreis-Garantie <span class="dot"></span></span>
-        <span class="ticker-item">Responsive Design <span class="dot"></span></span>
+<!-- ============================= TICKER ============================= -->
+<div class="marquee border-y border-white/10 bg-neutral-950 py-5">
+    <div class="marquee-track">
+        <span class="marquee-item">Neubau</span>
+        <span class="marquee-item">Sanierung im Bestand</span>
+        <span class="marquee-item">Innenarchitektur</span>
+        <span class="marquee-item">Bauleitung</span>
+        <span class="marquee-item">3D-Visualisierung</span>
+        <span class="marquee-item">Nachhaltiges Bauen</span>
+        <!-- duplicate for seamless loop -->
+        <span class="marquee-item">Neubau</span>
+        <span class="marquee-item">Sanierung im Bestand</span>
+        <span class="marquee-item">Innenarchitektur</span>
+        <span class="marquee-item">Bauleitung</span>
+        <span class="marquee-item">3D-Visualisierung</span>
+        <span class="marquee-item">Nachhaltiges Bauen</span>
     </div>
 </div>
 
-<!-- COMPARISON SLIDER -->
-<section class="comparison-section" id="portfolio">
-    <div class="container">
-        <div class="comparison-header reveal">
-            <div class="section-eyebrow" style="justify-content:center;">
-                <span>Die Transformation</span>
-            </div>
-            <h2 class="section-title">Vorher. Nachher. <span style="color:var(--blue)">Der Unterschied.</span></h2>
-            <p class="section-subtitle" style="margin-top:12px;">Schiebe den Regler und entdecke den Unterschied zwischen grau und brillant.</p>
+<!-- ============================= COMPARISON ============================= -->
+<section id="projekte" class="bg-neutral-950 py-24 md:py-32">
+    <div class="max-w-[1180px] mx-auto px-6 md:px-10">
+        <div class="text-center mb-14 reveal">
+            <span class="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Die Transformation</span>
+            <h2 class="mt-4 text-4xl md:text-6xl font-medium tracking-tight leading-[1.05]">Vom Bestand<br>zur <span class="text-white/50">Vision.</span></h2>
+            <p class="mt-4 text-white/60 max-w-md mx-auto leading-relaxed">Ziehen Sie den Regler und erleben Sie, wie aus einem bestehenden Raum ein durchdachtes Gesamtkonzept wird.</p>
         </div>
-        <div class="comparison-container reveal reveal-delay-1" id="slider-root">
+
+        <div class="comparison-container reveal reveal-d1" id="slider-root">
             <div class="grayscale-layer" id="grayscale-layer"></div>
-            <input type="range" min="0" max="100" value="50" class="slider-input" id="slider-input" aria-label="Graustufen Vergleich Regler">
+            <input type="range" min="0" max="100" value="50" class="slider-input" id="slider-input" aria-label="Vorher-Nachher Regler">
             <div class="slider-visuals" id="slider-visuals">
                 <div class="slider-line"></div>
                 <div class="slider-button">⟷</div>
             </div>
             <span class="comp-label comp-label-after">Nachher</span>
-            <span class="comp-label comp-label-before">Vorher</span>
+            <span class="comp-label comp-label-before">Bestand</span>
         </div>
     </div>
 </section>
 
-<!-- DESIGN PHILOSOPHY -->
-<section class="section" id="leistungen">
-    <div class="container">
-        <div class="philosophy-grid">
-            <div class="philosophy-text reveal">
-                <div class="section-eyebrow">
-                    <span>Design-Philosophie</span>
-                </div>
-                <h3>Weniger Rauschen. <span style="color:var(--blue)">Mehr Vision.</span></h3>
-                <p>Für unsere Projekte entwickeln wir ein "Dark Mode"-Konzept, das die Hochwertigkeit deiner Arbeit in den Fokus rückt. Jedes Design trägt eine klare Handschrift — präzise, modern, unvergesslich.</p>
-                <div class="palette-row">
-                    <div class="palette-swatch" style="background:#080810; border:1px solid rgba(255,255,255,0.1);" title="Dunkel"></div>
-                    <div class="palette-swatch" style="background:#f0f0f8;" title="Weiß"></div>
-                    <div class="palette-swatch" style="background:#3b6bff;" title="Electric Blue"></div>
-                    <div class="palette-swatch" style="background:linear-gradient(135deg,#3b6bff,#7b4fff);" title="Gradient"></div>
-                </div>
-            </div>
-            <div class="philosophy-image reveal reveal-delay-1">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" alt="Architektur">
-                <div class="float-badge">
-                    <div class="float-badge-num">∞</div>
-                    <div class="float-badge-label">Revisionen</div>
+<!-- ============================= PHILOSOPHY ============================= -->
+<section id="studio" class="py-24 md:py-32">
+    <div class="max-w-[1180px] mx-auto px-6 md:px-10">
+        <div class="grid md:grid-cols-2 gap-14 md:gap-20 items-center">
+            <div class="reveal">
+                <span class="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Haltung</span>
+                <h3 class="mt-4 text-3xl md:text-5xl font-medium tracking-tight leading-[1.08]">Weniger Geste.<br><span class="text-white/50">Mehr Substanz.</span></h3>
+                <p class="mt-6 text-white/60 leading-relaxed">
+                    Für Studio Nova steht die Klarheit der Form im Mittelpunkt. Wir entwerfen Gebäude, die durch Präzision, Material und Licht wirken — nicht durch Effekt. Jedes Projekt trägt eine ruhige, unverwechselbare Handschrift.
+                </p>
+                <div class="flex gap-3 mt-9">
+                    <div class="h-13 w-13 rounded-xl border border-white/15" style="width:52px;height:52px;background:#0a0a0a;" title="Beton"></div>
+                    <div class="h-13 w-13 rounded-xl" style="width:52px;height:52px;background:#5b5751;" title="Stein"></div>
+                    <div class="h-13 w-13 rounded-xl" style="width:52px;height:52px;background:#b8b2a7;" title="Naturton"></div>
+                    <div class="h-13 w-13 rounded-xl" style="width:52px;height:52px;background:#f4f4f2;" title="Licht"></div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
 
-<!-- STATS -->
-<section class="section section-bg-alt" id="preise">
-    <div class="container">
-        <div class="reveal" style="text-align:center; margin-bottom:60px;">
-            <div class="section-eyebrow" style="justify-content:center;">
-                <span>Was dich erwartet</span>
-            </div>
-            <h2 class="section-title">Unsere <span style="color:var(--blue)">Garantien.</span></h2>
-        </div>
-        <div class="stats-grid reveal reveal-delay-1">
-            <div class="stat-card">
-                <div class="stat-num">100<span>%</span></div>
-                <div class="stat-label">Festpreis-Garantie</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-num">24<span>/7</span></div>
-                <div class="stat-label">Premium Support</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-num" style="font-size:3.5rem;">∞</div>
-                <div class="stat-label">Grenzenlose Kreativität</div>
+            <div class="relative reveal reveal-d1">
+                <div class="rounded-2xl overflow-hidden border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000" alt="Innenraum eines Studio-Nova-Projekts" class="w-full h-[420px] object-cover">
+                </div>
+                <div class="absolute -left-4 md:-left-7 bottom-7 bg-neutral-900 border border-white/15 rounded-2xl px-6 py-5 backdrop-blur">
+                    <div class="text-3xl font-medium leading-none">1:1</div>
+                    <div class="text-xs text-white/55 mt-2">Betreuung vom Entwurf<br>bis zur Übergabe</div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- PROCESS -->
-<section class="section" id="ablauf">
-    <div class="container">
-        <div class="process-header reveal">
-            <div class="section-eyebrow" style="justify-content:center;">
-                <span>Wie es läuft</span>
-            </div>
-            <h2 class="section-title">Dein Weg zur<br><span style="color:var(--blue)">neuen Website.</span></h2>
-            <p class="section-subtitle">Transparent, stressfrei und auf Augenhöhe.</p>
+<!-- ============================= STATS ============================= -->
+<section class="bg-neutral-950 py-24 md:py-32">
+    <div class="max-w-[1180px] mx-auto px-6 md:px-10">
+        <div class="text-center mb-14 reveal">
+            <span class="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Studio Nova in Zahlen</span>
+            <h2 class="mt-4 text-4xl md:text-6xl font-medium tracking-tight">Verlässlich. <span class="text-white/50">Messbar.</span></h2>
         </div>
-        <div class="process-grid reveal reveal-delay-1">
-            <div class="process-card">
-                <div class="process-num">01</div>
-                <h3>Das Kennenlernen</h3>
-                <p>Wir besprechen deine Ziele, deine Zielgruppe und deine Wünsche. Kostenlos und unverbindlich.</p>
+        <div class="grid md:grid-cols-3 gap-px bg-white/10 border border-white/10 rounded-2xl overflow-hidden reveal reveal-d1">
+            <div class="bg-black px-8 py-14 text-center transition-colors hover:bg-neutral-900">
+                <div class="text-5xl md:text-6xl font-medium tracking-tight">100%</div>
+                <div class="text-sm text-white/55 mt-3">Termintreue bei Übergaben</div>
             </div>
-            <div class="process-card">
-                <div class="process-num">02</div>
-                <h3>Das Konzept</h3>
-                <p>Wir erstellen einen ersten Entwurf. Du siehst sofort, in welche Richtung dein digitales Zuhause geht.</p>
+            <div class="bg-black px-8 py-14 text-center transition-colors hover:bg-neutral-900">
+                <div class="text-5xl md:text-6xl font-medium tracking-tight">45</div>
+                <div class="text-sm text-white/55 mt-3">Architekt:innen &amp; Planer im Team</div>
             </div>
-            <div class="process-card">
-                <div class="process-num">03</div>
-                <h3>Die Umsetzung</h3>
-                <p>Wir programmieren dein Meisterwerk, optimieren es für Google und Handys — perfekt bis ins Detail.</p>
-            </div>
-            <div class="process-card">
-                <div class="process-num">04</div>
-                <h3>Der Launch</h3>
-                <p>Deine Seite geht live! Auch danach lassen wir dich mit Updates und Anpassungen nicht allein.</p>
+            <div class="bg-black px-8 py-14 text-center transition-colors hover:bg-neutral-900">
+                <div class="text-5xl md:text-6xl font-medium tracking-tight">18</div>
+                <div class="text-sm text-white/55 mt-3">Städte mit Studio-Nova-Bauten</div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- FAQ -->
-<section class="section section-bg-alt" id="faq">
-    <div class="container">
-        <div class="faq-header reveal">
-            <div class="section-eyebrow" style="justify-content:center;">
-                <span>FAQ</span>
-            </div>
-            <h2 class="section-title">Häufige <span style="color:var(--blue)">Fragen.</span></h2>
+<!-- ============================= PROCESS ============================= -->
+<section id="leistungen" class="py-24 md:py-32">
+    <div class="max-w-[1180px] mx-auto px-6 md:px-10">
+        <div class="text-center mb-16 reveal">
+            <span class="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Der Ablauf</span>
+            <h2 class="mt-4 text-4xl md:text-6xl font-medium tracking-tight leading-[1.05]">Ihr Weg zum<br><span class="text-white/50">fertigen Gebäude.</span></h2>
+            <p class="mt-4 text-white/60">Transparent, präzise und in engem Austausch — von der ersten Skizze bis zum Einzug.</p>
         </div>
-        <div class="faq-list reveal reveal-delay-1">
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Brauche ich technisches Vorwissen?
-                    <div class="faq-icon">
+        <div class="grid md:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10 reveal reveal-d1">
+            <div class="bg-black p-9 transition-colors hover:bg-neutral-900">
+                <div class="text-4xl font-medium text-white/15">01</div>
+                <h3 class="mt-5 text-base font-semibold">Erstberatung &amp; Analyse</h3>
+                <p class="mt-3 text-sm text-white/55 leading-relaxed">Wir hören zu, prüfen Grundstück, Bedarf und Budget. Kostenlos und unverbindlich.</p>
+            </div>
+            <div class="bg-black p-9 transition-colors hover:bg-neutral-900">
+                <div class="text-4xl font-medium text-white/15">02</div>
+                <h3 class="mt-5 text-base font-semibold">Entwurf &amp; Konzept</h3>
+                <p class="mt-3 text-sm text-white/55 leading-relaxed">Erste Entwürfe und 3D-Visualisierungen machen Ihre Vision greifbar und diskutierbar.</p>
+            </div>
+            <div class="bg-black p-9 transition-colors hover:bg-neutral-900">
+                <div class="text-4xl font-medium text-white/15">03</div>
+                <h3 class="mt-5 text-base font-semibold">Planung &amp; Genehmigung</h3>
+                <p class="mt-3 text-sm text-white/55 leading-relaxed">Wir übernehmen die Ausführungsplanung und begleiten das gesamte Genehmigungsverfahren.</p>
+            </div>
+            <div class="bg-black p-9 transition-colors hover:bg-neutral-900">
+                <div class="text-4xl font-medium text-white/15">04</div>
+                <h3 class="mt-5 text-base font-semibold">Bauleitung &amp; Übergabe</h3>
+                <p class="mt-3 text-sm text-white/55 leading-relaxed">Wir steuern die Gewerke, sichern Qualität und Termine — bis zur schlüsselfertigen Übergabe.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================= FAQ ============================= -->
+<section id="faq" class="bg-neutral-950 py-24 md:py-32">
+    <div class="max-w-[1180px] mx-auto px-6 md:px-10">
+        <div class="text-center mb-14 reveal">
+            <span class="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">FAQ</span>
+            <h2 class="mt-4 text-4xl md:text-6xl font-medium tracking-tight">Häufige <span class="text-white/50">Fragen.</span></h2>
+        </div>
+        <div class="max-w-3xl mx-auto reveal reveal-d1">
+            <div class="faq-item border-t border-white/10">
+                <button class="faq-question w-full flex items-center justify-between gap-6 py-6 text-left" onclick="toggleFaq(this)">
+                    <span class="text-lg font-medium">Übernehmen Sie auch das Genehmigungsverfahren?</span>
+                    <span class="faq-icon shrink-0 h-7 w-7 rounded-full border border-white/20 flex items-center justify-center">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                    </div>
+                    </span>
                 </button>
-                <div class="faq-answer">
-                    <p>Absolut nicht! Wir übernehmen vom Hosting bis zur Domain-Registrierung jeden einzelnen technischen Schritt für dich. Du musst dich um nichts kümmern.</p>
-                </div>
+                <div class="faq-answer"><p class="pb-6 text-white/60 leading-relaxed">Ja. Von der Bauvoranfrage bis zur Baugenehmigung übernehmen wir die komplette Kommunikation mit Behörden und Fachplanern — Sie müssen sich um nichts kümmern.</p></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Wie lange dauert die Erstellung?
-                    <div class="faq-icon">
+            <div class="faq-item border-t border-white/10">
+                <button class="faq-question w-full flex items-center justify-between gap-6 py-6 text-left" onclick="toggleFaq(this)">
+                    <span class="text-lg font-medium">Wie lange dauert ein typisches Projekt?</span>
+                    <span class="faq-icon shrink-0 h-7 w-7 rounded-full border border-white/20 flex items-center justify-center">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                    </div>
+                    </span>
                 </button>
-                <div class="faq-answer">
-                    <p>In der Regel benötigen wir für eine Standard-Website etwa 2 bis 3 Wochen vom ersten Gespräch bis zum Live-Gang. Bei komplexeren Projekten stimmen wir den Zeitplan individuell ab.</p>
-                </div>
+                <div class="faq-answer"><p class="pb-6 text-white/60 leading-relaxed">Vom ersten Entwurf bis zur Übergabe rechnen wir bei einem Einfamilienhaus mit etwa 12 bis 18 Monaten. Umfang, Genehmigung und Bauweise stimmen wir individuell mit Ihnen ab.</p></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Sind versteckte Kosten zu erwarten?
-                    <div class="faq-icon">
+            <div class="faq-item border-t border-white/10">
+                <button class="faq-question w-full flex items-center justify-between gap-6 py-6 text-left" onclick="toggleFaq(this)">
+                    <span class="text-lg font-medium">Arbeiten Sie mit Festhonoraren?</span>
+                    <span class="faq-icon shrink-0 h-7 w-7 rounded-full border border-white/20 flex items-center justify-center">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                    </div>
+                    </span>
                 </button>
-                <div class="faq-answer">
-                    <p>Nein. Wir arbeiten mit transparenten Festpreisen. Du weißt auf den Cent genau, was deine neue Website kostet, bevor wir den ersten Code schreiben.</p>
-                </div>
+                <div class="faq-answer"><p class="pb-6 text-white/60 leading-relaxed">Wir arbeiten transparent nach HOAI und stimmen den Leistungsumfang vorab klar mit Ihnen ab. So wissen Sie von Beginn an, welche Kosten auf Sie zukommen.</p></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Kann ich meine Website später selbst bearbeiten?
-                    <div class="faq-icon">
+            <div class="faq-item border-t border-b border-white/10">
+                <button class="faq-question w-full flex items-center justify-between gap-6 py-6 text-left" onclick="toggleFaq(this)">
+                    <span class="text-lg font-medium">Planen Sie auch nachhaltig und energieeffizient?</span>
+                    <span class="faq-icon shrink-0 h-7 w-7 rounded-full border border-white/20 flex items-center justify-center">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                    </div>
+                    </span>
                 </button>
-                <div class="faq-answer">
-                    <p>Ja! Auf Wunsch richten wir dir ein einfaches Content-Management-System ein, mit dem du Texte und Bilder selbst aktualisieren kannst — ganz ohne Programmierkenntnisse.</p>
-                </div>
+                <div class="faq-answer"><p class="pb-6 text-white/60 leading-relaxed">Nachhaltigkeit ist bei uns Grundlage, nicht Option. Wir planen ressourcenschonend, mit langlebigen Materialien und effizienter Gebäudetechnik — auf Wunsch bis zum zertifizierten Standard.</p></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CONTACT MAP -->
-<section class="contact-map-section" id="kontakt">
-    <div class="container">
-        <div class="contact-map-header reveal">
-            <div class="section-eyebrow">
-                <span>Kontakt</span>
-            </div>
-            <h2 class="section-title">Lass uns <span style="color:var(--blue)">starten.</span></h2>
+<!-- ============================= CONTACT / MAP ============================= -->
+<section id="kontakt" class="py-24 md:py-32">
+    <div class="max-w-[1180px] mx-auto px-6 md:px-10">
+        <div class="mb-12 reveal">
+            <span class="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Kontakt</span>
+            <h2 class="mt-4 text-4xl md:text-6xl font-medium tracking-tight">Lassen Sie uns <span class="text-white/50">bauen.</span></h2>
         </div>
-        <div class="map-wrap reveal reveal-delay-1">
+        <div class="relative rounded-2xl overflow-hidden border border-white/10 reveal reveal-d1">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2617.915830953683!2d9.27641231568285!3d48.96670897929824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47982c7f4c54117b%3A0x41ffd3c8d0972b0!2sSteinheim%20an%20der%20Murr!5e0!3m2!1sde!2sde!4v1680000000000!5m2!1sde!2sde"
+                class="w-full h-[520px] block"
+                style="filter: invert(1) hue-rotate(180deg) brightness(0.85) grayscale(0.4);"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
-                title="Standort Irtona Studio">
-            </iframe>
-            <div class="contact-card">
-                <h3>Irtona Studio</h3>
-                <div class="contact-card-row">
-                    <strong>Adresse</strong>
-                    <span>Musterstraße 123<br>71711 Steinheim an der Murr</span>
+                title="Standort Studio Nova"></iframe>
+
+            <div class="md:absolute md:top-10 md:right-10 bg-neutral-950/95 md:bg-black/85 backdrop-blur border-t md:border border-white/15 md:rounded-2xl p-8 md:w-80">
+                <h3 class="text-lg font-semibold mb-6">Studio Nova</h3>
+                <div class="mb-5">
+                    <div class="text-[0.68rem] font-semibold tracking-[0.14em] uppercase text-white/40 mb-1">Adresse</div>
+                    <div class="text-sm text-white/70">Musterstraße 123<br>71711 Steinheim an der Murr</div>
                 </div>
-                <div class="contact-card-row">
-                    <strong>E-Mail</strong>
-                    <a href="mailto:info@irtona.de">info@irtona.de</a>
+                <div class="mb-5">
+                    <div class="text-[0.68rem] font-semibold tracking-[0.14em] uppercase text-white/40 mb-1">E-Mail</div>
+                    <a href="mailto:studio@studio-nova.de" class="text-sm text-white/70 hover:text-white transition-colors">studio@studio-nova.de</a>
                 </div>
-                <div class="contact-card-row">
-                    <strong>Telefon</strong>
-                    <a href="tel:+49123456789">+49 123 456789</a>
+                <div class="mb-7">
+                    <div class="text-[0.68rem] font-semibold tracking-[0.14em] uppercase text-white/40 mb-1">Telefon</div>
+                    <a href="tel:+49123456789" class="text-sm text-white/70 hover:text-white transition-colors">+49 123 456789</a>
                 </div>
-                <a href="mailto:info@irtona.de" class="btn-primary">
+                <a href="mailto:studio@studio-nova.de" class="w-full inline-flex items-center justify-center gap-2 bg-white text-black text-sm font-medium rounded-full px-6 py-3 hover:bg-neutral-200 transition-colors">
                     Nachricht senden
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
@@ -1546,110 +465,115 @@
     </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section section-bg-alt">
-    <div class="container">
-        <div class="cta-inner reveal">
-            <div class="section-eyebrow" style="justify-content:center;"><span>Los geht's</span></div>
-            <h2 class="section-title">Bereit für dein eigenes<br><span style="color:var(--blue)">Meisterstück?</span></h2>
-            <p class="section-subtitle">Lass uns gemeinsam etwas Außergewöhnliches schaffen.</p>
-            <div style="margin-top:36px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                <a href="#kontakt" class="btn-primary" style="font-size:1rem; padding:18px 38px;">
-                    Jetzt Projekt anfragen
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-            </div>
+<!-- ============================= CTA ============================= -->
+<section class="bg-neutral-950 py-24 md:py-32 text-center border-t border-white/10">
+    <div class="max-w-[1180px] mx-auto px-6 md:px-10 reveal">
+        <span class="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Los geht's</span>
+        <h2 class="mt-4 text-4xl md:text-6xl font-medium tracking-tight leading-[1.05]">Bereit für Ihr<br><span class="text-white/50">nächstes Bauvorhaben?</span></h2>
+        <p class="mt-5 text-white/60 max-w-md mx-auto">Erzählen Sie uns von Ihrem Grundstück und Ihrer Idee — der erste Termin ist kostenlos.</p>
+        <div class="mt-9">
+            <a href="kontakt.html" class="inline-flex items-center gap-2 bg-white text-black text-sm font-medium rounded-full px-8 py-4 hover:bg-neutral-200 transition-colors">
+                Jetzt Projekt anfragen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <a href="#" class="footer-logo">Irtona<span>.</span>de</a>
-                <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen. Wir bauen Webseiten, die nicht nur gut aussehen, sondern Kunden gewinnen.</p>
-                <div class="footer-socials">
-                    <a href="#" class="social-btn" aria-label="Instagram">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+<!-- ============================= FOOTER ============================= -->
+<footer class="bg-black border-t border-white/10 pt-20 pb-10">
+    <div class="max-w-[1180px] mx-auto px-6 md:px-10">
+        <div class="grid md:grid-cols-4 gap-12 pb-14 border-b border-white/10">
+            <div class="md:pr-8">
+                <a href="#start" class="flex items-center gap-2 mb-5">
+                    <svg viewBox="0 0 256 256" class="h-5 w-5" aria-hidden="true">
+                        <path d="M 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 128 L 64 128 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z M 128 64 L 128 128 L 64.5 128 L 32 95 L 0 64 L 0 0 L 64 0 Z M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 128 0 L 192 0 Z" fill="#ffffff"/>
+                    </svg>
+                    <span class="text-sm">studio nova</span>
+                </a>
+                <p class="text-sm text-white/45 leading-relaxed max-w-xs">Architektur mit Haltung. Wir gestalten Räume, die bleiben — präzise, nachhaltig und unverwechselbar.</p>
+                <div class="flex gap-3 mt-6">
+                    <a href="#" aria-label="Instagram" class="h-9 w-9 border border-white/10 rounded-lg flex items-center justify-center text-white/50 hover:text-white hover:border-white/25 transition-colors">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                     </a>
-                    <a href="#" class="social-btn" aria-label="LinkedIn">
+                    <a href="#" aria-label="LinkedIn" class="h-9 w-9 border border-white/10 rounded-lg flex items-center justify-center text-white/50 hover:text-white hover:border-white/25 transition-colors">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                    </a>
-                    <a href="#" class="social-btn" aria-label="Twitter / X">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
                     </a>
                 </div>
             </div>
-            <div class="footer-col">
-                <h4>Agentur</h4>
-                <ul>
-                    <li><a href="index.html">Startseite</a></li>
-                    <li><a href="preise.html">Leistungen</a></li>
-                    <li><a href="portfolio.html">Beispielseiten</a></li>
-                    <li><a href="kontakt.html">Projekt anfragen</a></li>
+            <div>
+                <h4 class="text-xs font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">Studio</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#projekte" class="text-white/55 hover:text-white transition-colors">Projekte</a></li>
+                    <li><a href="#studio" class="text-white/55 hover:text-white transition-colors">Über uns</a></li>
+                    <li><a href="#leistungen" class="text-white/55 hover:text-white transition-colors">Ablauf</a></li>
+                    <li><a href="#kontakt" class="text-white/55 hover:text-white transition-colors">Kontakt</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h4>Pakete & Preise</h4>
-                <ul>
-                    <li><a href="preise">Start-Paket</a></li>
-                    <li><a href="#preise">Wachstum</a></li>
-                    <li><a href="#preise">Premium</a></li>
-                    <li><a href="#preise">Individuell</a></li>
+            <div>
+                <h4 class="text-xs font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">Leistungen</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#leistungen" class="text-white/55 hover:text-white transition-colors">Neubau</a></li>
+                    <li><a href="#leistungen" class="text-white/55 hover:text-white transition-colors">Sanierung</a></li>
+                    <li><a href="#leistungen" class="text-white/55 hover:text-white transition-colors">Innenarchitektur</a></li>
+                    <li><a href="#leistungen" class="text-white/55 hover:text-white transition-colors">Bauleitung</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h4>Rechtliches</h4>
-                <ul>
-                    <li><a href="impressum.html">Impressum</a></li>
-                    <li><a href="datenschutz.html">Datenschutz</a></li>
-                    <li><a href="agb.html">AGB</a></li>
-                    <li><a href="login.html">Kunden-Login</a></li>
+            <div>
+                <h4 class="text-xs font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">Rechtliches</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="impressum.html" class="text-white/55 hover:text-white transition-colors">Impressum</a></li>
+                    <li><a href="datenschutz.html" class="text-white/55 hover:text-white transition-colors">Datenschutz</a></li>
+                    <li><a href="agb.html" class="text-white/55 hover:text-white transition-colors">AGB</a></li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
-            <p>
-                <a href="impressum.html">Impressum</a> ·
-                <a href="datenschutz.html">Datenschutz</a> ·
-                <a href="agb.html">AGB</a>
-            </p>
+        <div class="pt-7 flex flex-col md:flex-row justify-between items-center gap-3 text-center">
+            <p class="text-sm text-white/35">© 2026 Studio Nova. Alle Rechte vorbehalten.</p>
+            <p class="text-sm text-white/35">Ein Demo-Entwurf von <a href="index.html" class="text-white/50 hover:text-white transition-colors">Irtona.de</a></p>
         </div>
     </div>
 </footer>
 
+<!-- ============================= MOBILE MENU ============================= -->
+<div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-black/98 backdrop-blur-xl flex-col items-center justify-center gap-2 hidden opacity-0" style="transform:translateY(-16px);">
+    <button id="navClose" aria-label="Menü schließen" class="absolute top-7 right-6 h-11 w-11 flex items-center justify-center bg-neutral-900/90 rounded-full">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <a href="#projekte" class="mm-link text-3xl font-medium py-3 text-white/70 hover:text-white transition-colors">projekte</a>
+    <a href="#leistungen" class="mm-link text-3xl font-medium py-3 text-white/70 hover:text-white transition-colors">leistungen</a>
+    <a href="#studio" class="mm-link text-3xl font-medium py-3 text-white/70 hover:text-white transition-colors">studio</a>
+    <a href="#kontakt" class="mm-link text-3xl font-medium py-3 text-white/70 hover:text-white transition-colors">kontakt</a>
+    <a href="#kontakt" class="mm-link mt-6 bg-white text-black text-base font-medium rounded-full px-8 py-4 hover:bg-neutral-200 transition-colors">projekt anfragen</a>
+</div>
+
 <script>
-    /* ===== NAV SCROLL ===== */
-    const mainNav = document.getElementById('mainNav');
-    window.addEventListener('scroll', () => {
-        mainNav.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
-    /* ===== BURGER MENU ===== */
-    const burger = document.getElementById('burger');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    burger.addEventListener('click', () => {
-        const isOpen = burger.classList.toggle('open');
-        mobileMenu.classList.toggle('open', isOpen);
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-
-    function closeMobileMenu() {
-        burger.classList.remove('open');
-        mobileMenu.classList.remove('open');
+    /* ===== Mobile menu ===== */
+    const menu = document.getElementById('mobileMenu');
+    const openMenu = () => {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+        requestAnimationFrame(() => {
+            menu.style.opacity = '1';
+            menu.style.transform = 'translateY(0)';
+        });
+        document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+        menu.style.opacity = '0';
+        menu.style.transform = 'translateY(-16px)';
         document.body.style.overflow = '';
-    }
+        setTimeout(() => { menu.classList.add('hidden'); menu.classList.remove('flex'); }, 320);
+    };
+    document.getElementById('navToggle').addEventListener('click', openMenu);
+    document.getElementById('navClose').addEventListener('click', closeMenu);
+    document.querySelectorAll('.mm-link').forEach(a => a.addEventListener('click', closeMenu));
 
-    /* ===== COMPARISON SLIDER ===== */
+    /* ===== Comparison slider ===== */
     const sliderInput = document.getElementById('slider-input');
     const grayscaleLayer = document.getElementById('grayscale-layer');
     const sliderVisuals = document.getElementById('slider-visuals');
-
-    sliderInput.addEventListener('input', function() {
+    sliderInput.addEventListener('input', function () {
         const pct = this.value;
         grayscaleLayer.style.clipPath = `inset(0 0 0 ${pct}%)`;
         sliderVisuals.style.left = pct + '%';
@@ -1663,117 +587,17 @@
         if (!isActive) item.classList.add('active');
     }
 
-    /* ===== SCROLL REVEAL ===== */
-    const revealEls = document.querySelectorAll('.reveal');
+    /* ===== Scroll reveal ===== */
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    revealEls.forEach(el => observer.observe(el));
-
-    /* ===== HERO STAGGER ===== */
-    document.querySelectorAll('.shader-hero-v2-content > *').forEach((el, i) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(24px)';
-        el.style.transition = `opacity 0.7s ease ${i * 0.14}s, transform 0.7s ease ${i * 0.14}s`;
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }));
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
-<script>
-    (function () {
-        var container = document.getElementById('shader-canvas-v2');
-        if (!container || typeof THREE === 'undefined') return;
-
-        var vertexShader = [
-            'void main() {',
-            '  gl_Position = vec4( position, 1.0 );',
-            '}'
-        ].join('\n');
-
-        // shader-lines fragment shader — grayscale output (no color tint)
-        var fragmentShader = [
-            '#define TWO_PI 6.2831853072',
-            '#define PI 3.14159265359',
-            'precision highp float;',
-            'uniform vec2 resolution;',
-            'uniform float time;',
-            'float random(in float x) { return fract(sin(x)*1e4); }',
-            'float random(vec2 st) {',
-            '  return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);',
-            '}',
-            'void main(void) {',
-            '  vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);',
-            '  vec2 fMosaicScal = vec2(4.0, 2.0);',
-            '  vec2 vScreenSize = vec2(256.0, 256.0);',
-            '  uv.x = floor(uv.x * vScreenSize.x / fMosaicScal.x) / (vScreenSize.x / fMosaicScal.x);',
-            '  uv.y = floor(uv.y * vScreenSize.y / fMosaicScal.y) / (vScreenSize.y / fMosaicScal.y);',
-            '  float t = time * 0.06 + random(uv.x) * 0.4;',
-            '  float lineWidth = 0.0008;',
-            '  vec3 color = vec3(0.0);',
-            '  for(int j = 0; j < 3; j++){',
-            '    for(int i = 0; i < 5; i++){',
-            '      color[j] += lineWidth * float(i*i) / abs(fract(t - 0.01*float(j) + float(i)*0.01)*1.0 - length(uv));',
-            '    }',
-            '  }',
-            '  /* Convert to grayscale — black & white output */',
-            '  float luma = color[0]*0.299 + color[1]*0.587 + color[2]*0.114;',
-            '  gl_FragColor = vec4(luma, luma, luma, 1.0);',
-            '}'
-        ].join('\n');
-
-        var camera = new THREE.Camera();
-        camera.position.z = 1;
-
-        var scene = new THREE.Scene();
-        var geometry = new THREE.PlaneBufferGeometry(2, 2);
-
-        var uniforms = {
-            time:       { type: 'f',  value: 1.0 },
-            resolution: { type: 'v2', value: new THREE.Vector2() }
-        };
-
-        var material = new THREE.ShaderMaterial({
-            uniforms:       uniforms,
-            vertexShader:   vertexShader,
-            fragmentShader: fragmentShader
-        });
-
-        scene.add(new THREE.Mesh(geometry, material));
-
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
-
-        function resize() {
-            var rect = container.getBoundingClientRect();
-            renderer.setSize(rect.width, rect.height);
-            uniforms.resolution.value.x = renderer.domElement.width;
-            uniforms.resolution.value.y = renderer.domElement.height;
-        }
-
-        resize();
-        window.addEventListener('resize', resize, { passive: true });
-
-        var rafId;
-        function animate() {
-            rafId = requestAnimationFrame(animate);
-            uniforms.time.value += 0.05;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        document.addEventListener('visibilitychange', function () {
-            if (document.hidden) { cancelAnimationFrame(rafId); } else { animate(); }
-        });
-    })();
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
+
