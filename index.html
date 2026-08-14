@@ -2019,7 +2019,14 @@
       animation-play-state: paused !important;
     }
 
-   
+    /* Warmup: den Roboter kurz ins Sichtfeld (unsichtbar hinter dem
+       Loader) holen, damit Spline seinen ersten Frame jetzt kompiliert. */
+    spline-viewer.spline-warmup {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 1 !important;
+      pointer-events: none !important;
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .intro-mark {
@@ -2180,6 +2187,12 @@
       display: block;
     }
 
+    /* Mobile-only clone of the AR video (see markup). On desktop the split
+       layout uses .vhero-media on the right; on mobile that panel is hidden
+       and THIS one is shown directly under the title. Same source URL →
+       the browser fetches the clip only once (HTTP cache). */
+    .vhero-media-mobile { display: none; }
+
     .vhero-tag {
       display: inline-flex; align-items: center; gap: 9px;
       font-size: 0.9rem; font-weight: 500; letter-spacing: 0.01em;
@@ -2240,6 +2253,7 @@
     /* keep the new hero hidden until the intro loader lifts (same as old hero) */
     body.intro-active .vhero-tag,
     body.intro-active .vhero-line,
+    body.intro-active .vhero-media-mobile,
     body.intro-active .vhero-bottom {
       animation-play-state: paused !important;
     }
@@ -2256,12 +2270,31 @@
       }
       .vhero-content { max-width: 100%; }
       .vhero-line { font-size: clamp(2.6rem, 6.4vw, 4.6rem); white-space: normal; }
+      .vhero-headline { margin-bottom: 1.5rem; }
       .vhero-bottom { max-width: 100%; }
-      .vhero-media { height: 52svh; }
-      .vhero-media video {
+
+      /* Reihenfolge mobil: Titel → AR-Video → Infotext.
+         Rechtes Panel-Video ausblenden, mobiles Video (unter dem Titel) zeigen. */
+      .vhero-media { display: none; }
+      .vhero-media-mobile {
+        display: block;
+        position: relative;
+        height: 52svh;
+        margin: 0 0 2rem;
+        border-radius: 22px;
+        overflow: hidden;
+        background: #000;
+        opacity: 0;
+        animation: fadeUp .8s .4s cubic-bezier(.22,1,.36,1) forwards;
+      }
+      .vhero-media-mobile video {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
         object-position: center 28%;
         transform: scale(1.35);
         transform-origin: center 28%;
+        display: block;
       }
     }
     @media (max-width: 768px) {
@@ -2274,12 +2307,19 @@
         display: block;
       }
       .vhero-content { max-width: 100%; }
-      .vhero-line { font-size: clamp(2.6rem, 12vw, 4rem); white-space: normal; }
+      /* Fallback ohne JS: bewusst konservativ, damit die langen deutschen
+         Wörter ("Zukunftssicheres", "Maßgeschneidert.") NICHT über den rechten
+         Rand laufen. Mit JS passt fitVheroLines() jede Zeile exakt randnah ein. */
+      .vhero-line {
+        font-size: clamp(1.9rem, 9.5vw, 3.4rem);
+        white-space: normal;
+        overflow-wrap: break-word;
+      }
       .vhero-bottom { max-width: 100%; }
       .vhero-actions { flex-direction: column; }
       .vhero-actions .btn { width: 100%; justify-content: center; }
-      .vhero-media { height: 48svh; }
-      .vhero-media video {
+      .vhero-media-mobile { height: 48svh; margin-bottom: 1.8rem; }
+      .vhero-media-mobile video {
         object-position: center 26%;
         transform: scale(1.4);
         transform-origin: center 26%;
@@ -2354,7 +2394,7 @@
 <div class="intro-loader" id="introLoader" role="presentation" aria-hidden="true">
   <div class="intro-stage">
     <div class="intro-mark">
-      <img class="intro-mark-img" src="Logo favicon 2.png" alt="Irtona Logo" width="84" height="84"
+      <img class="intro-mark-img" src="favicon.png" alt="Irtona Logo" width="84" height="84"
            onerror="this.style.display='none';this.parentNode.classList.add('intro-mark--fallback');" />
       <span class="intro-mark-i" aria-hidden="true">I</span>
     </div>
@@ -2462,6 +2502,14 @@
         <span class="vhero-line vhero-line-2"><span class="vhero-stretch">Webdesign.</span></span>
         <span class="vhero-line vhero-line-3"><span class="vhero-stretch">Maßgeschneidert.</span></span>
       </h1>
+
+      <!-- Mobil (≤1024px): AR-Video direkt unter dem Titel, autoplay.
+           Auf Desktop per CSS ausgeblendet (dort läuft das rechte Panel-Video). -->
+      <div class="vhero-media-mobile" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
+          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260725_114042_d2ed2a89-f2fa-449b-9609-da456344257b.mp4" type="video/mp4">
+        </video>
+      </div>
 
       <div class="vhero-bottom">
         <p class="vhero-sub">
@@ -3607,6 +3655,77 @@
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(fit);
     }
+  }());
+
+  // ── VHERO-VIDEO: Mobile-Autoplay absichern ────────────────────
+  // muted+playsinline+autoplay startet auf den meisten Geräten von selbst.
+  // Manche Umgebungen (iOS Low-Power, In-App-/Drittanbieter-Browser) zeigen
+  // sonst einen Play-Button. Wir stoßen die Wiedergabe aktiv an und
+  // wiederholen den Versuch bei erster Interaktion / Sichtbarkeit.
+  (function () {
+    'use strict';
+    var vids = Array.prototype.slice.call(document.querySelectorAll('.vhero video'));
+    if (!vids.length) return;
+    function kick() {
+      vids.forEach(function (v) {
+        if (v.offsetParent === null) return;   // ausgeblendetes Klon-Video überspringen
+        v.muted = true;
+        var p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
+      });
+    }
+    kick();
+    window.addEventListener('load', kick);
+    document.addEventListener('touchstart', kick, { once: true, passive: true });
+    document.addEventListener('click', kick, { once: true });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) kick(); });
+  }());
+
+  // ── VHERO-TITEL (nur Mobile ≤768): auf Breite einpassen ───────
+  // Jede Titelzeile so groß wie möglich, aber randnah begrenzt → nie Überlauf.
+  // Desktop/Tablet-Split (>768px) bleibt komplett unangetastet.
+  (function () {
+    'use strict';
+    var headline = document.querySelector('.vhero-headline');
+    if (!headline) return;
+    var lines = Array.prototype.slice.call(headline.querySelectorAll('.vhero-line'));
+    if (!lines.length) return;
+    var MEASURE = 100, BP = 768;
+
+    function fit() {
+      if (window.innerWidth > BP) {
+        // Split-Layout: Inline-Größen entfernen → CSS/clamp übernimmt wieder.
+        lines.forEach(function (l) { l.style.fontSize = ''; });
+        return;
+      }
+      var avail = headline.clientWidth;
+      if (!avail) return;
+      var maxRatio = 0;
+      lines.forEach(function (line) {
+        var prev = line.style.fontSize;
+        line.style.fontSize  = MEASURE + 'px';
+        line.style.display   = 'inline-block';
+        line.style.whiteSpace = 'nowrap';
+        line.style.maxWidth  = 'none';
+        var r = line.scrollWidth / MEASURE;
+        line.style.display   = '';
+        line.style.whiteSpace = '';
+        line.style.maxWidth  = '';
+        line.style.fontSize  = prev;
+        if (r > maxRatio) maxRatio = r;
+      });
+      if (!maxRatio) return;
+      var size = (avail / maxRatio) * 0.97;   // randnah, kleine Sicherheitsmarge
+      size = Math.min(size, 60);
+      size = Math.floor(size * 2) / 2;        // halbe Pixel → scharf gerendert
+      lines.forEach(function (line) { line.style.fontSize = size + 'px'; });
+    }
+
+    fit();
+    window.addEventListener('resize', fit, { passive: true });
+    window.addEventListener('orientationchange', fit);
+    window.addEventListener('load', fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   }());
 </script>
 </body>
