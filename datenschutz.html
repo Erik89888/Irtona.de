@@ -13,8 +13,8 @@
     body{font-family:var(--font);background:var(--white);color:var(--black);overflow-x:hidden;-webkit-font-smoothing:antialiased}
     body.menu-open{overflow:hidden}a{text-decoration:none;color:inherit}ul{list-style:none}
     .container{max-width:1160px;margin:0 auto;padding:0 24px}
-    .site-header{position:fixed;top:0;left:0;right:0;z-index:900;padding:18px 0;transition:all .4s ease}
-    .site-header.scrolled{padding:12px 0;background:rgba(255,255,255,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--gray-100)}
+    .site-header{position:fixed;top:0;left:0;right:0;z-index:1100;padding:10px 0;background:rgba(255,255,255,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--gray-100);transition:all .4s ease}
+    .site-header.scrolled{padding:8px 0}
     .header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
     .logo{font-family:var(--font);font-size:1.35rem;font-weight:800;letter-spacing:-0.05em;color:var(--black)}
     .header-nav{display:flex;align-items:center;gap:36px}
@@ -31,11 +31,12 @@
     .mobile-overlay::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--black)}
     .mobile-overlay.is-open{transform:translateX(0);pointer-events:all}
     .mobile-nav-links{display:flex;flex-direction:column}
-    .mobile-nav-links a{font-family:var(--font);font-size:clamp(2.2rem,8vw,3.2rem);font-weight:800;color:var(--black);letter-spacing:-0.04em;line-height:1.2;padding:12px 0;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateX(60px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1),color .2s}
+    .mobile-nav-links a{font-family:var(--font);font-size:clamp(2.4rem,9vw,3.5rem);font-weight:800;color:var(--black);letter-spacing:-0.04em;line-height:1.2;padding:12px 0;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateX(60px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1),color .2s}
     .mobile-nav-links a:last-child{border-bottom:none}.mobile-nav-links a:hover{color:var(--gray-400)}
     .mobile-overlay.is-open .mobile-nav-links a{opacity:1;transform:translateX(0)}
-    .mobile-nav-links a:nth-child(1){transition-delay:.05s}.mobile-nav-links a:nth-child(2){transition-delay:.10s}.mobile-nav-links a:nth-child(3){transition-delay:.15s}.mobile-nav-links a:nth-child(4){transition-delay:.20s}.mobile-nav-links a:nth-child(5){transition-delay:.25s}
-    .mobile-meta{position:absolute;bottom:40px;left:40px;right:40px;display:flex;justify-content:space-between;font-size:.8rem;color:var(--gray-400);opacity:0;transition:opacity .5s .35s ease}
+    .mobile-nav-links a:nth-child(1){transition-delay:.05s}.mobile-nav-links a:nth-child(2){transition-delay:.10s}.mobile-nav-links a:nth-child(3){transition-delay:.15s}.mobile-nav-links a:nth-child(4){transition-delay:.20s}.mobile-nav-links a:nth-child(5){transition-delay:.25s}.mobile-nav-links a:nth-child(6){transition-delay:.30s}
+    .mobile-nav-arrow{font-size:1.5rem;color:var(--gray-200)}
+    .mobile-meta{position:absolute;bottom:40px;left:40px;right:40px;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--gray-400);font-weight:500;opacity:0;transition:opacity .5s .35s ease}
     .mobile-overlay.is-open .mobile-meta{opacity:1}
     .page-hero{padding-top:160px;padding-bottom:64px;border-bottom:1px solid var(--gray-100)}
     .page-hero-label{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gray-400);display:block;margin-bottom:1rem}
@@ -79,26 +80,132 @@
     @media(max-width:900px){.legal-layout{grid-template-columns:1fr;gap:32px}.legal-toc{position:static}.legal-toc-links{flex-direction:row;flex-wrap:wrap}}
     @media(max-width:768px){.header-nav,.header-right .btn{display:none}.hamburger{display:flex}.footer-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:520px){.footer-grid{grid-template-columns:1fr;gap:28px}.footer-bottom{flex-direction:column;text-align:center}}
+
+
+    /* ============================================================
+       FLOATING PILL NAV + LIQUID-METAL CTA
+       Identisch zur Startseite. Steht bewusst am Ende des Stylesheets,
+       damit die Regeln die Basis-Header-Styles oben überschreiben.
+    ============================================================ */
+    .site-header {
+      background: transparent !important;
+      border-bottom: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      padding: 14px 16px !important;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .site-header.scrolled { padding: 10px 16px !important; }
+
+    .site-header .header-inner {
+      pointer-events: auto;
+      width: 100%;
+      max-width: 1040px;
+      gap: 12px;
+      padding: 8px 10px 8px 20px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.55);
+      background: rgba(255,255,255,.62);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      backdrop-filter: blur(22px) saturate(160%);
+      box-shadow: 0 8px 30px rgba(0,0,0,.10);
+      transition: background-color .4s ease, box-shadow .4s ease,
+                  border-color .4s ease, padding .4s ease;
+    }
+    .site-header.scrolled .header-inner {
+      background: rgba(255,255,255,.80);
+      box-shadow: 0 12px 34px rgba(0,0,0,.16);
+      border-color: rgba(255,255,255,.7);
+    }
+
+    /* nav links → an underline slides in on hover */
+    .site-header .header-nav { gap: 4px; }
+    .site-header .header-nav a {
+      position: relative;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      color: rgba(10,10,10,.72);
+      font-weight: 600;
+      transition: color .25s ease;
+    }
+    .site-header .header-nav a::after {
+      content: '';
+      position: absolute;
+      left: 14px; right: 14px; bottom: 4px;
+      width: auto;                 /* override the inherited width:0/100% from base CSS */
+      height: 2px; border-radius: 2px;
+      background: var(--black);
+      transform: scaleX(0);
+      transform-origin: left;      /* grow from the left → matches left-aligned text */
+      transition: transform .3s cubic-bezier(.76,0,.24,1);
+    }
+    .site-header .header-nav a:hover { color: var(--black); }
+    .site-header .header-nav a:hover::after { width: auto; transform: scaleX(1); }
+    .site-header .header-right .btn { border-radius: 9999px; }
+
+    /* ---- Liquid-Metal CTA ("Projekt starten") — CSS/animated chrome sheen ---- */
+    #lm-btn{
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      height:42px; border-radius:9999px; isolation:isolate; text-decoration:none;
+      -webkit-tap-highlight-color:transparent;
+      box-shadow:0 0 0 1px rgba(0,0,0,.30), 0 9px 9px rgba(0,0,0,.10), 0 2px 5px rgba(0,0,0,.16);
+      transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+    }
+    #lm-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 0 1px rgba(0,0,0,.40), 0 12px 16px rgba(0,0,0,.14), 0 4px 6px rgba(0,0,0,.16);
+    }
+    #lm-btn:active{ transform:translateY(0) scale(.98); }
+    #lm-shader{
+      position:absolute; inset:0; border-radius:9999px; overflow:hidden; z-index:0;
+      background:linear-gradient(100deg,#8f8f8f,#f4f4f4,#bdbdbd,#ffffff,#9a9a9a,#e8e8e8,#8f8f8f);
+      background-size:220% 100%;
+      animation:lmSheen 4.5s linear infinite;
+    }
+    #lm-btn .lm-core{
+      position:absolute; inset:2px; border-radius:9999px; z-index:1;
+      background:linear-gradient(180deg,#242424 0%,#000 100%);
+    }
+    #lm-btn .lm-label{
+      position:relative; z-index:2;
+      padding:0 22px; color:#a8a8a8; font-size:.86rem; font-weight:600;
+      letter-spacing:.01em; white-space:nowrap;
+      text-shadow:0 1px 2px rgba(0,0,0,.45);
+    }
+    @keyframes lmSheen{ from{background-position:0% 50%} to{background-position:220% 50%} }
+    @media (prefers-reduced-motion: reduce){ #lm-shader{ animation:none !important; } }
+
+    /* Mobile: Pille schrumpft auf Logo + Burger */
+    @media (max-width: 768px) { #lm-btn { display: none; } }
   </style>
 </head>
 <body>
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a href="index.html" class="logo">Irtona.de</a>
-    <nav class="header-nav"><a href="index.html">Start</a><a href="portfolio.html">Referenzen</a><a href="preise.html">Pakete</a><a href="index.html#faq">FAQ</a></nav>
+    <nav class="header-nav"><a href="index.html">Start</a><a href="portfolio.html">Referenzen</a><a href="preise.html">Pakete</a><a href="index.html#faq">FAQ</a><a href="kontakt.html">Kontakt</a></nav>
     <div class="header-right">
-      <a href="kontakt.html" class="btn btn-dark" style="padding:10px 22px;font-size:.88rem;">Projekt starten →</a>
-      <button class="hamburger" id="hamburger" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
+      <a href="kontakt.html" id="lm-btn" aria-label="Projekt starten">
+        <span id="lm-shader" aria-hidden="true"></span>
+        <span class="lm-core" aria-hidden="true"></span>
+        <span class="lm-label">Projekt starten</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
-<div class="mobile-overlay" id="mobileOverlay">
+<div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Navigation">
   <nav class="mobile-nav-links">
-    <a href="index.html">Start <span>→</span></a><a href="portfolio.html">Referenzen <span>→</span></a>
-    <a href="preise.html">Pakete <span>→</span></a><a href="index.html#faq">FAQ <span>→</span></a>
-    <a href="kontakt.html">Projekt starten <span>→</span></a>
+    <a href="index.html">Start <span class="mobile-nav-arrow">→</span></a>
+    <a href="portfolio.html">Referenzen <span class="mobile-nav-arrow">→</span></a>
+    <a href="index.html#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
+    <a href="preise.html">Pakete <span class="mobile-nav-arrow">→</span></a>
+    <a href="index.html#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
+    <a href="kontakt.html">Projekt starten <span class="mobile-nav-arrow">→</span></a>
   </nav>
-  <div class="mobile-meta"><span>Irtona.de © 2026</span><span>Ludwigsburg, DE</span></div>
+  <div class="mobile-meta"><span>Irtona.de © 2026</span><span>Steinheim an der Murr, DE</span></div>
 </div>
 
 <section class="page-hero">
