@@ -2221,17 +2221,27 @@
     }
     /* (letter-stretch reverted to original) */
     .vhero-stretch { display: inline; }
-    .vhero-line-1 { color: #fff; animation-delay: .15s; }
-    .vhero-line-2 {
-      /* outline word on black: black fill (= bg) + white stroke */
+    /* Outline-Zeilen auf Schwarz (1 + 3): schwarze Füllung (= Hintergrund)
+       + weiße Kontur. Die Füllung MUSS der Hero-Hintergrundfarbe entsprechen,
+       sonst schlägt die Kontur durch jede geschlossene Punze (die Löcher in
+       e, b, d, g, o …). paint-order zeichnet die Kontur zuerst, sie liegt
+       damit vollständig hinter der Füllung — keine Überlappung in der Glyphe.
+       text-rendering: geometricPrecision hält die Kontur auch bei kleinen
+       Schriftgrößen (Mobile) an der echten Glyphenform statt am gehinteten
+       Raster → sichtbar weniger ausgefranste/verpixelte Kanten. */
+    .vhero-line-1,
+    .vhero-line-3 {
       color: #000;
       -webkit-text-stroke: 2px #fff;
       paint-order: stroke fill;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      animation-delay: .25s;
+      text-rendering: geometricPrecision;
     }
-    .vhero-line-3 { color: #fff; animation-delay: .35s; }
+    .vhero-line-1 { animation-delay: .15s; }
+    /* Vollflächige Zeile */
+    .vhero-line-2 { color: #fff; animation-delay: .25s; }
+    .vhero-line-3 { animation-delay: .35s; }
 
     .vhero-bottom {
       display: flex; flex-direction: column; gap: 28px;
@@ -2384,6 +2394,17 @@
     @media (max-width: 1023px) { .tcol--3 { display: none; } }
     @media (max-width: 767px)  { .tcol--2 { display: none; } .tcols { max-height: 560px; } }
     @media (prefers-reduced-motion: reduce) { .tcol-track { animation: none !important; } }
+
+    /* ============================================================
+       MOBILE: Pille zeigt nur Logo + Burger
+       Muss GANZ am Ende stehen: die Regel oben im 768er-Block
+       (.header-nav, .header-right .btn, #lm-btn { display:none })
+       hat dieselbe Spezifitaet wie die spaetere Basisregel
+       #lm-btn{ display:inline-flex } — Media-Queries erhoehen die
+       Spezifitaet nicht, also gewinnt sonst die spaetere Regel und
+       der CTA blieb mobil sichtbar.
+    ============================================================ */
+    @media (max-width: 768px) { #lm-btn { display: none; } }
   </style>
 </head>
 <body>
@@ -2476,7 +2497,7 @@
   <nav class="mobile-nav-links">
     <a href="index.html">Start <span class="mobile-nav-arrow">→</span></a>
     <a href="portfolio.html">Referenzen <span class="mobile-nav-arrow">→</span></a>
-    <a href="index.html#ablauf">Ablauf <span class="mobile-nav-arrow">→</span></a>
+    <a href="index.html#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
     <a href="preise.html">Pakete <span class="mobile-nav-arrow">→</span></a>
     <a href="index.html#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
     <a href="kontakt.html">Projekt starten <span class="mobile-nav-arrow">→</span></a>
@@ -3717,7 +3738,10 @@
       if (!maxRatio) return;
       var size = (avail / maxRatio) * 0.97;   // randnah, kleine Sicherheitsmarge
       size = Math.min(size, 60);
-      size = Math.floor(size * 2) / 2;        // halbe Pixel → scharf gerendert
+      // Ganze Pixel statt halbe: diese Funktion läuft nur mobil (<=768px),
+      // und dort sitzt die Outline-Kontur bei ganzzahliger Schriftgröße
+      // exakt im Gerätepixel-Raster → deutlich schärfere Kante.
+      size = Math.floor(size);
       lines.forEach(function (line) { line.style.fontSize = size + 'px'; });
     }
 
@@ -3730,4 +3754,5 @@
 </script>
 </body>
 </html>
+
 
