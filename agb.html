@@ -89,7 +89,7 @@
     .legal-block p:last-child { margin-bottom: 0; }
     .legal-block ul { display: flex; flex-direction: column; gap: 10px; }
     .legal-block ul li { font-size: .95rem; color: var(--gray-600); line-height: 1.7; font-weight: 300; padding-left: 1.2rem; position: relative; }
-    .legal-block ul li::before { content: '—'; position: absolute; left: 0; color: var(--gray-200); }
+    .legal-block ul li::before { content: '·'; position: absolute; left: 0; color: var(--gray-200); }
     .legal-block strong { color: var(--black); font-weight: 600; }
 
     /* ── FOOTER ── */
@@ -215,6 +215,8 @@
     /* Mobile: Pille schrumpft auf Logo + Burger */
     @media (max-width: 768px) { #lm-btn { display: none; } }
   </style>
+  <link rel="stylesheet" href="site-motion.css" />
+  <script src="site-motion.js" defer></script>
 </head>
 <body>
 
@@ -322,7 +324,7 @@
           <p>Es gilt der im Angebot vereinbarte Festpreis. Alle Preise verstehen sich <strong>zzgl. der gesetzlichen Mehrwertsteuer</strong>, sofern diese ausgewiesen wird.</p>
           <p>Die Zahlung erfolgt in der Regel in drei Teilbeträgen:</p>
           <ul>
-            <li><strong>30 %</strong> Anzahlung bei Auftragserteilung — die Arbeit beginnt erst nach Zahlungseingang</li>
+            <li><strong>30 %</strong> Anzahlung bei Auftragserteilung. Die Arbeit beginnt erst, wenn die Zahlung eingegangen ist</li>
             <li><strong>40 %</strong> nach Freigabe der Designentwürfe</li>
             <li><strong>30 %</strong> nach Abnahme bzw. vor dem Live-Gang</li>
           </ul>
@@ -458,7 +460,7 @@
           <span class="legal-block-num">§ 14</span>
           <h2>Schlussbestimmungen</h2>
           <p>Es gilt das Recht der <strong>Bundesrepublik Deutschland</strong> unter Ausschluss des UN-Kaufrechts. Bei Verbrauchern gilt diese Rechtswahl nur insoweit, als dadurch der durch zwingende Bestimmungen des Rechts des Staates, in dem der Verbraucher seinen gewöhnlichen Aufenthalt hat, gewährte Schutz nicht entzogen wird.</p>
-          <p>Ausschließlicher Gerichtsstand für alle Streitigkeiten aus dem Vertragsverhältnis ist — soweit gesetzlich zulässig — der Geschäftssitz des Auftragnehmers in <strong>Ludwigsburg</strong>.</p>
+          <p>Ausschließlicher Gerichtsstand für alle Streitigkeiten aus dem Vertragsverhältnis ist, soweit gesetzlich zulässig, der Geschäftssitz des Auftragnehmers in <strong>Ludwigsburg</strong>.</p>
           <p>Sollten einzelne Bestimmungen dieses Vertrages oder dieser AGB ganz oder teilweise unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Bestimmungen davon unberührt. Die unwirksame Bestimmung wird durch eine wirksame ersetzt, die dem wirtschaftlichen Zweck der unwirksamen am nächsten kommt (<strong>salvatorische Klausel</strong>).</p>
           <p>Änderungen und Ergänzungen dieses Vertrages bedürfen der <strong>Textform</strong> (z. B. E-Mail). Mündliche Nebenabreden bestehen nicht.</p>
         </div>
@@ -480,7 +482,7 @@
         </div>
       </div>
       <div class="footer-col"><h5>Agentur</h5><ul><li><a href="index.html">Startseite</a></li><li><a href="index.html#leistungen">Leistungen</a></li><li><a href="portfolio.html">Referenzen</a></li><li><a href="kontakt.html">Projekt anfragen</a></li></ul></div>
-      <div class="footer-col"><h5>Pakete</h5><ul><li><a href="index.html#preise">Start — 490 €</a></li><li><a href="index.html#preise">Wachstum — 890 €</a></li><li><a href="index.html#preise">Premium — 1.290 €</a></li><li><a href="kontakt.html">Individuell</a></li></ul></div>
+      <div class="footer-col"><h5>Pakete</h5><ul><li><a href="index.html#preise">Start: 490 €</a></li><li><a href="index.html#preise">Wachstum: 890 €</a></li><li><a href="index.html#preise">Premium: 1.290 €</a></li><li><a href="kontakt.html">Individuell</a></li></ul></div>
       <div class="footer-col"><h5>Rechtliches</h5><ul><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li><li><a href="agb.html">AGB</a></li><li><a href="login.html">Kunden-Login</a></li></ul></div>
     </div>
     <div class="footer-bottom">
