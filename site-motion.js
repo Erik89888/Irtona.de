@@ -88,9 +88,10 @@
       });
     });
 
-    // Einzelblöcke
+    // Einzelblöcke (.footer-bottom bewusst nicht: liegt ganz unten und
+    // würde den Auslösebereich des Observers nie erreichen)
     $all('.legal-block, .info-card, .page-hero-label, .page-hero-meta, .section-header p, ' +
-         '.feature-copy p, .feature-copy h3, .pricing-note, .footer-bottom')
+         '.feature-copy p, .feature-copy h3, .pricing-note')
       .forEach(function (b) {
         if (skipped(b) || b.hasAttribute('data-m')) return;
         b.setAttribute('data-m', 'up');
