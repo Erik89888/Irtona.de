@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+  <script>
+    // Einblend-Schutz: vor dem ersten Paint verstecken, nach 3,5 s sicher freigeben
+    document.documentElement.classList.add('entry-pending');
+    window.__entryFallback = setTimeout(function () {
+      document.documentElement.classList.remove('entry-pending');
+    }, 3500);
+  </script>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Projekt anfragen bei Irtona.de — kostenlos & unverbindlich." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Frag dein Projekt bei Irtona.de an. Kostenlos und unverbindlich." />
   <title>Projekt starten | Irtona.de</title>
   <link rel="canonical" href="https://irtona.de/kontakt.html" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..800&display=block" rel="stylesheet" />
 
   <style>
     /* ============================================================
        TOKENS
+       Referenzrahmen 1464 × 949. Die Karte wird als Ganzes skaliert,
+       deshalb gelten alle Pixelwerte im Karteninneren bei jeder Größe.
     ============================================================ */
     :root {
       --black:    #0a0a0a;
@@ -23,574 +32,488 @@
       --gray-200: #d8d8d8;
       --gray-400: #999999;
       --gray-600: #555555;
-      --radius-sm: 12px;
-      --radius-md: 20px;
-      --radius-lg: 32px;
-      --shadow-sm: 0 4px 20px rgba(0,0,0,.06);
-      --shadow-md: 0 12px 40px rgba(0,0,0,.10);
       --font: -apple-system, BlinkMacSystemFont, 'Outfit', 'Segoe UI', sans-serif;
-      --transition: 0.4s cubic-bezier(0.22,1,0.36,1);
+
+      --page:        #fefefe;
+      --ink:         #0a0a0a;
+      --sub-grey:    #6b6b6b;
+      --badge-bg:    #0a0a0a;
+      --ph:          #7a7a7a;
+      --or:          #8a8a8a;
+      --btn1:        #242424;
+      --btn2:        #000000;
+      --inputFill:   #f7f7f7;
+      --inputBorder: #d8d8d8;
+      --gBorder:     #d8d8d8;
+      --divider:     #d8d8d8;
+
+      --badge-fs: 13.6px; --badge-ls: -0.16px; --badge-gap: 10px;
+      --badge-left: 34px; --badge-top: 684px;
+      --hl-wght: 800;
+      --hl1-fs: 69.14px; --hl1-ls: -2.77px; --hl1-left: 33px; --hl1-top: 750.02px;
+      --hl2-fs: 68.95px; --hl2-ls: -2.76px; --hl2-left: 32px; --hl2-top: 831.01px;
+
+      --card-shadow: 1px 10px 14px rgba(10,14,20,.14), 0 1px 3px rgba(10,14,20,.05);
+      --mobile-hero-h: clamp(300px, 42svh, 360px);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
+    html, body { height: 100%; background: var(--page); }
     body {
       font-family: var(--font);
-      background: var(--white);
       color: var(--black);
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+      overflow: hidden;
     }
     body.menu-open { overflow: hidden; }
-
     a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-    ul  { list-style: none; }
-
-    .container {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    ul { list-style: none; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
     /* ============================================================
-       HEADER
+       PILLEN-NAVIGATION (identisch zur Startseite)
     ============================================================ */
     .site-header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1100;
-      padding: 18px 0;
-      transition: all .4s ease;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1100;
+      background: transparent; border-bottom: none;
+      padding: 14px 16px;
+      display: flex; justify-content: center;
+      pointer-events: none;
     }
-    .site-header.scrolled {
-      padding: 12px 0;
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--gray-100);
-    }
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
+    .site-header .header-inner {
+      pointer-events: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: 1040px;
+      gap: 12px;
+      padding: 8px 10px 8px 20px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.55);
+      background: rgba(255,255,255,.62);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      backdrop-filter: blur(22px) saturate(160%);
+      box-shadow: 0 8px 30px rgba(0,0,0,.10);
     }
     .logo {
-      font-family: var(--font);
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.05em;
-      color: var(--black);
+      font-family: var(--font); font-size: 1.35rem;
+      font-weight: 800; letter-spacing: -0.05em; color: var(--black);
     }
-    .header-nav {
-      display: flex;
-      align-items: center;
-      gap: 36px;
-    }
+    .header-nav { display: flex; align-items: center; gap: 4px; }
     .header-nav a {
-      font-size: .9rem;
-      font-weight: 500;
-      color: var(--gray-600);
-      transition: color .2s;
       position: relative;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      font-size: .9rem;
+      color: rgba(10,10,10,.72);
+      font-weight: 600;
+      transition: color .25s ease;
     }
     .header-nav a::after {
       content: '';
       position: absolute;
-      bottom: -2px; left: 0;
-      width: 0; height: 1.5px;
+      left: 14px; right: 14px; bottom: 4px;
+      height: 2px; border-radius: 2px;
       background: var(--black);
-      transition: width .3s ease;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s cubic-bezier(.76,0,.24,1);
     }
     .header-nav a:hover { color: var(--black); }
-    .header-nav a:hover::after { width: 100%; }
-
+    .header-nav a:hover::after { transform: scaleX(1); }
     .header-right { display: flex; align-items: center; gap: 16px; }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: 100px;
-      font-family: var(--font);
-      font-size: .95rem;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-      transition: var(--transition);
-      white-space: nowrap;
+    #lm-btn {
+      position: relative; display: inline-flex; align-items: center; justify-content: center;
+      height: 42px; border-radius: 9999px; isolation: isolate; text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.30), 0 9px 9px rgba(0,0,0,.10), 0 2px 5px rgba(0,0,0,.16);
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
     }
-    .btn-dark { background: var(--black); color: var(--white); }
-    .btn-dark:hover { background: #1a1a1a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
-    .btn-outline { background: transparent; color: var(--black); border: 1.5px solid var(--gray-200); }
-    .btn-outline:hover { border-color: var(--black); }
+    #lm-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.40), 0 12px 16px rgba(0,0,0,.14), 0 4px 6px rgba(0,0,0,.16);
+    }
+    #lm-btn:active { transform: translateY(0) scale(.98); }
+    #lm-shader {
+      position: absolute; inset: 0; border-radius: 9999px; overflow: hidden; z-index: 0;
+      background: linear-gradient(100deg,#8f8f8f,#f4f4f4,#bdbdbd,#ffffff,#9a9a9a,#e8e8e8,#8f8f8f);
+      background-size: 220% 100%;
+      animation: lmSheen 4.5s linear infinite;
+    }
+    #lm-btn .lm-core {
+      position: absolute; inset: 2px; border-radius: 9999px; z-index: 1;
+      background: linear-gradient(180deg,#242424 0%,#000 100%);
+    }
+    #lm-btn .lm-label {
+      position: relative; z-index: 2;
+      padding: 0 22px; color: #a8a8a8; font-size: .86rem; font-weight: 600;
+      letter-spacing: .01em; white-space: nowrap;
+      text-shadow: 0 1px 2px rgba(0,0,0,.45);
+    }
+    @keyframes lmSheen { from { background-position: 0% 50%; } to { background-position: 220% 50%; } }
 
-    /* Hamburger */
     .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      z-index: 1001;
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer;
+      padding: 8px; z-index: 1001;
     }
     .hamburger span {
-      display: block;
-      width: 26px; height: 1.8px;
-      background: var(--black);
-      border-radius: 2px;
+      display: block; width: 26px; height: 1.8px;
+      background: var(--black); border-radius: 2px;
       transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+      transform-origin: center;
     }
     .hamburger.is-active span:nth-child(1) { transform: translateY(6.8px) rotate(45deg); }
     .hamburger.is-active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.is-active span:nth-child(3) { transform: translateY(-6.8px) rotate(-45deg); }
 
-    /* Mobile overlay */
     .mobile-overlay {
-      position: fixed; inset: 0;
-      background: var(--white);
-      z-index: 1000;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 0 40px;
+      position: fixed; inset: 0; background: var(--white); z-index: 1000;
+      display: flex; flex-direction: column; justify-content: center; padding: 0 40px;
       transform: translateX(100%);
       transition: transform .55s cubic-bezier(.22,1,.36,1);
       pointer-events: none;
     }
+    .mobile-overlay.is-open { transform: translateX(0); pointer-events: all; }
     .mobile-overlay::before {
       content: ''; position: absolute; top: 0; left: 0;
       width: 3px; height: 100%; background: var(--black);
     }
-    .mobile-overlay.is-open { transform: translateX(0); pointer-events: all; }
-    .mobile-nav-links { display: flex; flex-direction: column; gap: 0; }
+    .mobile-nav-links { display: flex; flex-direction: column; }
     .mobile-nav-links a {
       font-family: var(--font);
       font-size: clamp(2.4rem, 9vw, 3.5rem);
-      font-weight: 800;
-      color: var(--black);
-      letter-spacing: -0.04em;
-      line-height: 1.2;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--gray-100);
+      font-weight: 800; color: var(--black);
+      letter-spacing: -0.04em; line-height: 1.2;
+      padding: 12px 0; border-bottom: 1px solid var(--gray-100);
       display: flex; align-items: center; justify-content: space-between;
       opacity: 0; transform: translateX(60px);
       transition: opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1), color .2s;
     }
     .mobile-nav-links a:last-child { border-bottom: none; }
-    .mobile-nav-links a:hover { color: var(--gray-400); }
     .mobile-overlay.is-open .mobile-nav-links a { opacity: 1; transform: translateX(0); }
+    .mobile-nav-links a:hover { color: var(--gray-400); }
     .mobile-nav-links a:nth-child(1) { transition-delay: .05s; }
     .mobile-nav-links a:nth-child(2) { transition-delay: .10s; }
     .mobile-nav-links a:nth-child(3) { transition-delay: .15s; }
     .mobile-nav-links a:nth-child(4) { transition-delay: .20s; }
     .mobile-nav-links a:nth-child(5) { transition-delay: .25s; }
+    .mobile-nav-links a:nth-child(6) { transition-delay: .30s; }
+    .mobile-nav-arrow { font-size: 1.5rem; color: var(--gray-200); }
     .mobile-meta {
       position: absolute; bottom: 40px; left: 40px; right: 40px;
-      display: flex; justify-content: space-between;
+      display: flex; justify-content: space-between; align-items: center;
       font-size: .8rem; color: var(--gray-400); font-weight: 500;
       opacity: 0; transition: opacity .5s .35s ease;
     }
     .mobile-overlay.is-open .mobile-meta { opacity: 1; }
 
-    /* ============================================================
-       PAGE HERO
-    ============================================================ */
-    .page-hero {
-      padding-top: 160px;
-      padding-bottom: 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-hero-bg {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    }
-    .page-hero-blob {
-      position: absolute; border-radius: 50%; filter: blur(80px); opacity: .35;
-    }
-    .page-hero-blob-1 {
-      width: 500px; height: 500px; background: #e8e8e8;
-      top: -100px; right: -60px;
-      animation: blobDrift 14s infinite alternate ease-in-out;
-    }
-    .page-hero-blob-2 {
-      width: 300px; height: 300px; background: #d4d4d4;
-      bottom: 20px; left: -40px;
-      animation: blobDrift 10s 3s infinite alternate-reverse ease-in-out;
-    }
-    @keyframes blobDrift {
-      from { transform: translate(0,0) scale(1); }
-      to   { transform: translate(30px,20px) scale(1.08); }
-    }
-    .page-hero-inner {
-      position: relative; z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .page-hero-label {
-      font-size: .72rem; font-weight: 600;
-      letter-spacing: .15em; text-transform: uppercase;
-      color: var(--gray-400); display: block; margin-bottom: 1.2rem;
-    }
-    .page-hero-title {
-      font-family: var(--font);
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      font-weight: 800;
-      line-height: .97;
-      letter-spacing: -.04em;
-    }
-    .page-hero-title .outline {
-      color: var(--white);
-      -webkit-text-stroke: 2px var(--black);
-      paint-order: stroke fill;
-      -webkit-font-smoothing: antialiased;
-    }
-    .page-hero-sub {
-      margin-top: 1.6rem;
-      font-size: 1.05rem;
-      color: var(--gray-600);
-      line-height: 1.75;
-      font-weight: 300;
-      max-width: 420px;
-    }
-
-    /* Trust badges */
-    .trust-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .trust-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 20px 22px;
-      background: var(--white);
-      border: 1px solid var(--gray-100);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      transition: box-shadow .3s, transform .3s;
-    }
-    .trust-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .trust-icon {
-      width: 40px; height: 40px;
-      background: var(--gray-50);
-      border: 1px solid var(--gray-100);
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .trust-icon svg { width: 18px; height: 18px; color: var(--black); }
-    .trust-item h4 {
-      font-family: var(--font);
-      font-size: .88rem; font-weight: 700;
-      margin-bottom: 3px;
-    }
-    .trust-item p {
-      font-size: .82rem; color: var(--gray-400);
-      line-height: 1.5; font-weight: 300;
-    }
-
-    /* ============================================================
-       FORM SECTION
-    ============================================================ */
-    .form-section {
-      padding: 0 0 120px;
-    }
-    .form-card {
-      background: var(--white);
-      border: 1px solid var(--gray-100);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-    }
-    .form-card-inner {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-    }
-
-    /* Left sidebar */
-    .form-sidebar {
-      background: var(--black);
-      color: var(--white);
-      padding: 52px 44px;
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
-    .form-sidebar-title {
-      font-family: var(--font);
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: -.03em;
-      line-height: 1.15;
-    }
-    .form-sidebar-title span {
-      color: var(--white);
-      -webkit-text-stroke: 1.5px var(--white);
-      opacity: .35;
-    }
-    .sidebar-steps {
-      display: flex; flex-direction: column; gap: 24px;
-    }
-    .sidebar-step {
-      display: flex; gap: 14px; align-items: flex-start;
-    }
-    .sidebar-step-num {
-      width: 28px; height: 28px;
-      border: 1.5px solid rgba(255,255,255,.2);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .72rem; font-weight: 700;
-      flex-shrink: 0; margin-top: 1px;
-      color: rgba(255,255,255,.5);
-      transition: all .3s;
-    }
-    .sidebar-step h4 {
-      font-family: var(--font);
-      font-size: .88rem; font-weight: 600;
-      margin-bottom: 3px;
-      color: var(--white);
-    }
-    .sidebar-step p {
-      font-size: .78rem; font-weight: 300;
-      color: rgba(255,255,255,.45); line-height: 1.5;
-    }
-    .sidebar-divider {
-      height: 1px;
-      background: rgba(255,255,255,.08);
-    }
-    .sidebar-contact {
-      display: flex; flex-direction: column; gap: 14px;
-    }
-    .sidebar-contact-item {
-      display: flex; gap: 10px; align-items: center;
-    }
-    .sidebar-contact-item svg { width: 16px; height: 16px; color: rgba(255,255,255,.4); flex-shrink: 0; }
-    .sidebar-contact-item a,
-    .sidebar-contact-item span {
-      font-size: .82rem; color: rgba(255,255,255,.55);
-      font-weight: 300; transition: color .2s;
-    }
-    .sidebar-contact-item a:hover { color: var(--white); }
-
-    /* Right form area */
-    .form-body {
-      padding: 52px 48px;
-    }
-    .form-body-title {
-      font-family: var(--font);
-      font-size: 1.5rem; font-weight: 800;
-      letter-spacing: -.03em;
-      margin-bottom: .5rem;
-    }
-    .form-body-sub {
-      font-size: .88rem; color: var(--gray-400);
-      font-weight: 300; margin-bottom: 2.4rem;
-    }
-
-    /* Paket-Selector */
-    .package-selector {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 2rem;
-    }
-    .pkg-option { display: none; }
-    .pkg-label {
-      display: flex; flex-direction: column;
-      padding: 14px 16px;
-      border: 1.5px solid var(--gray-100);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: border-color .2s, background .2s;
-    }
-    .pkg-label:hover { border-color: var(--gray-400); }
-    .pkg-option:checked + .pkg-label {
-      border-color: var(--black);
-      background: var(--gray-50);
-    }
-    .pkg-name {
-      font-family: var(--font);
-      font-size: .88rem; font-weight: 700;
-    }
-    .pkg-price {
-      font-size: .78rem; color: var(--gray-400); font-weight: 300; margin-top: 2px;
-    }
-
-    /* Fields */
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      font-size: .8rem; font-weight: 600;
-      letter-spacing: .04em; text-transform: uppercase;
-      color: var(--gray-600); margin-bottom: 8px;
-    }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1.5px solid var(--gray-100);
-      border-radius: var(--radius-sm);
-      font-family: var(--font);
-      font-size: .95rem; font-weight: 300;
-      background: var(--white);
-      color: var(--black);
-      transition: border-color .25s, box-shadow .25s;
-      outline: none;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    .form-group input::placeholder,
-    .form-group textarea::placeholder { color: var(--gray-200); }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--black);
-      box-shadow: 0 0 0 3px rgba(10,10,10,.06);
-    }
-    .form-group textarea { resize: vertical; min-height: 130px; }
-
-    /* Checkbox */
-    .checkbox-row {
-      display: flex; align-items: flex-start; gap: 12px;
-      margin-bottom: 28px;
-    }
-    .checkbox-row input[type="checkbox"] {
-      width: 18px; height: 18px;
-      border: 1.5px solid var(--gray-200);
-      border-radius: 5px;
-      cursor: pointer;
-      accent-color: var(--black);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .checkbox-row label {
-      font-size: .83rem; color: var(--gray-600);
-      font-weight: 300; line-height: 1.55; cursor: pointer;
-    }
-    .checkbox-row a { color: var(--black); text-decoration: underline; text-underline-offset: 2px; }
-
-    /* Submit */
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: var(--font);
-      font-size: 1rem; font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      position: relative; overflow: hidden;
-    }
-    .submit-btn:hover {
-      background: #1a1a1a;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.2);
-    }
-    .submit-btn::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.10) 50%, transparent 70%);
-      background-size: 200% 100%; opacity: 0;
-    }
-    .submit-btn:hover::after { opacity: 1; animation: shine .5s linear; }
-    @keyframes shine {
-      from { background-position: 200% 0; }
-      to   { background-position: -200% 0; }
-    }
-    .submit-note {
-      text-align: center; margin-top: 12px;
-      font-size: .75rem; color: var(--gray-400); font-weight: 300;
-    }
-
-    /* ============================================================
-       FOOTER
-    ============================================================ */
-    .site-footer {
-      background: var(--black);
-      color: rgba(255,255,255,.5);
-      padding: 72px 0 32px;
-      border-top: 1px solid rgba(255,255,255,.05);
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px; margin-bottom: 64px;
-    }
-    .footer-brand .logo {
-      color: var(--white); font-size: 1.4rem;
-      display: block; margin-bottom: 1rem;
-    }
-    .footer-brand p { font-size: .88rem; line-height: 1.7; max-width: 300px; }
-    .footer-social { display: flex; gap: 10px; margin-top: 1.5rem; }
-    .social-btn {
-      width: 38px; height: 38px;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,.4);
-      transition: var(--transition);
-    }
-    .social-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); transform: translateY(-2px); }
-    .social-btn svg { width: 16px; height: 16px; }
-    .footer-col h5 {
-      font-family: var(--font); font-size: .85rem; font-weight: 700;
-      color: var(--white); margin-bottom: 1.2rem; letter-spacing: .02em;
-    }
-    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
-    .footer-col ul li a { font-size: .85rem; color: rgba(255,255,255,.4); transition: color .2s; }
-    .footer-col ul li a:hover { color: var(--white); }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,.07);
-      padding-top: 28px;
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 20px; flex-wrap: wrap;
-    }
-    .footer-bottom p { font-size: .8rem; }
-    .footer-legal { display: flex; gap: 20px; }
-    .footer-legal a { font-size: .8rem; color: rgba(255,255,255,.3); transition: color .2s; }
-    .footer-legal a:hover { color: var(--white); }
-
-    /* ============================================================
-       REVEAL
-    ============================================================ */
-    .reveal { transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
-    body.js-ready .reveal:not(.active) { opacity: 0; transform: translateY(36px); }
-    .reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
-
-    /* ============================================================
-       RESPONSIVE
-    ============================================================ */
-    @media (max-width: 960px) {
-      .page-hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .form-card-inner { grid-template-columns: 1fr; }
-      .form-sidebar { padding: 40px 32px; }
-    }
-
     @media (max-width: 768px) {
-      .header-nav, .header-right .btn { display: none; }
+      .header-nav, #lm-btn { display: none; }
       .hamburger { display: flex; }
-      .form-body { padding: 36px 24px; }
-      .form-row { grid-template-columns: 1fr; }
-      .package-selector { grid-template-columns: 1fr 1fr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
 
-    @media (max-width: 520px) {
-      .package-selector { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-      .footer-bottom { flex-direction: column; text-align: center; }
+    /* ============================================================
+       BÜHNE: Desktop (Querformat, ab 700px) ist die Grundkomposition
+    ============================================================ */
+    .stage { position: fixed; inset: 0; overflow: hidden; }
+
+    .photo {
+      position: absolute; left: 0; top: 0;
+      height: 100%; width: 57.1038%;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    .photo-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: 100% 50%;
+      display: block;
+      -webkit-user-drag: none;
+    }
+    .photo-img--wide { display: none; }
+    .scrim {
+      display: none;
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(7,10,13,.02) 18%, rgba(7,10,13,.12) 48%, rgba(7,10,13,.78) 100%);
+      pointer-events: none;
+    }
+
+    .hero {
+      position: absolute; left: 0; bottom: 0;
+      width: 836px; height: 949px;
+      transform-origin: left bottom;
+      pointer-events: none;
+    }
+    .hero > * { pointer-events: auto; }
+
+    .badge {
+      position: absolute; left: var(--badge-left); top: var(--badge-top);
+      display: inline-flex; align-items: center; gap: var(--badge-gap);
+      height: 37px; padding: 0 16px 0 19px;
+      border-radius: 999px;
+      background: var(--badge-bg);
+      -webkit-backdrop-filter: blur(7px) saturate(120%);
+      backdrop-filter: blur(7px) saturate(120%);
+      box-shadow: 0 1px 2px rgba(0,0,0,.18), 0 6px 18px rgba(0,0,0,.14);
+      color: #fff;
+      font-size: var(--badge-fs); font-weight: 500; letter-spacing: var(--badge-ls);
+      white-space: nowrap;
+    }
+    .badge svg { position: relative; top: -1px; width: 17px; height: 16.27px; flex: none; }
+
+    .hl {
+      position: absolute;
+      font-family: var(--font);
+      font-weight: var(--hl-wght);
+      font-variation-settings: 'wght' var(--hl-wght);
+      line-height: 1;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    #hl1 { left: var(--hl1-left); top: var(--hl1-top); font-size: var(--hl1-fs); letter-spacing: var(--hl1-ls); }
+    #hl2 { left: var(--hl2-left); top: var(--hl2-top); font-size: var(--hl2-fs); letter-spacing: var(--hl2-ls); }
+
+    .pane { position: absolute; left: 57.1038%; right: 0; top: 0; bottom: 0; }
+
+    .card {
+      position: absolute; left: 1px; top: 84px;
+      width: 613px; height: 900px;
+      border-radius: 26px; overflow: hidden;
+      background: rgba(254,254,254,.90);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      backdrop-filter: blur(28px) saturate(160%);
+      border: 1px solid rgba(0,0,0,.036);
+      box-shadow: var(--card-shadow);
+    }
+
+    /* Karteninneres: feste Referenzmaße, JS skaliert es als Ganzes */
+    .card-in {
+      position: absolute; left: 0; top: 0;
+      width: 613px; height: 900px;
+      transform-origin: left top;
+      padding: 0 44px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .card-in form { display: flex; flex-direction: column; }
+
+    #h1 {
+      font-family: var(--font);
+      font-size: 50px; font-weight: 800;
+      font-variation-settings: 'wght' 800;
+      letter-spacing: -0.04em; line-height: 1.05;
+      color: var(--ink); text-align: center;
+    }
+    #sub {
+      margin-top: 16px;
+      font-size: 20px; line-height: 1.4; font-weight: 300;
+      color: var(--sub-grey); text-align: center;
+    }
+    #sub b { font-weight: 700; color: var(--ink); }
+
+    /* Paketauswahl */
+    #pkgs {
+      margin-top: 32px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .pkg-option { position: absolute; opacity: 0; pointer-events: none; }
+    .pkg-label {
+      display: flex; flex-direction: column; justify-content: center;
+      height: 68px; padding: 0 22px;
+      border: 1.5px solid var(--gBorder); border-radius: 16px;
+      background: rgba(255,255,255,.92);
+      cursor: pointer;
+      transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s cubic-bezier(.2,.7,.3,1);
+    }
+    .pkg-label:hover { border-color: var(--black); }
+    .pkg-label:active { transform: translateY(1px); }
+    .pkg-name { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+    .pkg-price { font-size: 15px; color: var(--gray-600); margin-top: 3px; }
+    .pkg-option:checked + .pkg-label { background: var(--black); border-color: var(--black); color: #fff; }
+    .pkg-option:checked + .pkg-label .pkg-price { color: rgba(255,255,255,.6); }
+    .pkg-option:focus-visible + .pkg-label { outline: 2px solid #2b6cb0; outline-offset: 2px; }
+
+    /* Felder */
+    .field {
+      display: flex; align-items: center;
+      border-radius: 14px;
+      background: var(--inputFill);
+      border: 1.5px solid var(--inputBorder);
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .field:focus-within { border-color: var(--black); background: #fff; }
+    #fName  { margin-top: 16px; height: 68px; }
+    #fEmail { margin-top: 12px; height: 68px; }
+    #fMsg   { margin-top: 12px; height: 140px; align-items: stretch; }
+    .field input, .field textarea {
+      width: 100%; height: 100%;
+      border: 0; outline: 0; background: transparent;
+      padding: 0 22px;
+      font-family: var(--font); font-size: 19px; color: var(--ink);
+    }
+    .field textarea { padding: 18px 22px; resize: none; line-height: 1.45; }
+    .field input::placeholder, .field textarea::placeholder { color: var(--ph); }
+
+    #fCheck {
+      margin-top: 16px;
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 15.5px; line-height: 1.45; color: var(--gray-600);
+    }
+    #fCheck input { margin-top: 2px; width: 19px; height: 19px; accent-color: var(--black); flex: none; cursor: pointer; }
+    #fCheck a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+    #sendBtn {
+      margin-top: 22px; height: 70px; width: 100%;
+      border: 0; border-radius: 999px; cursor: pointer;
+      background: linear-gradient(180deg, var(--btn1) 0%, var(--btn2) 100%);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      padding-left: 0; padding-right: 4px;
+      font-family: var(--font); font-size: 19px; font-weight: 500; letter-spacing: .2px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.16), 0 2px 5px rgba(0,0,0,.10);
+      transition: transform .18s cubic-bezier(.2,.7,.3,1), box-shadow .18s ease, filter .18s ease;
+    }
+    #sendBtn:hover { filter: brightness(1.35); }
+    #sendBtn:active { transform: translateY(1px); }
+    #sendBtn svg { width: 15px; height: 15px; }
+
+    #bottom {
+      margin-top: 24px;
+      text-align: center; font-size: 17px; color: var(--gray-600);
+    }
+    #bottom a.mail {
+      color: #000; font-weight: 700;
+      text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px;
+    }
+    #bottom .legal { display: block; margin-top: 10px; font-size: 14px; color: var(--gray-400); }
+    #bottom .legal a:hover { color: var(--ink); }
+
+    :focus-visible { outline: 2px solid #2b6cb0; outline-offset: 2px; }
+
+    /* ============================================================
+       TABLET HOCHKANT (body.tabport, von JS gesetzt)
+       Foto wird zum Band oben, Karte darunter über die volle Breite.
+    ============================================================ */
+    body.tabport .photo { width: 100%; }
+    body.tabport .photo-img--tall { display: none; }
+    body.tabport .photo-img--wide { display: block; object-position: 50% 50%; }
+    body.tabport .pane { left: 0; }
+
+    /* ============================================================
+       HANDY (unter 700px): normaler Dokumentfluss, nichts skaliert
+    ============================================================ */
+    @media (max-width: 699px) {
+      html, body { height: auto; }
+      body { min-height: 100%; overflow-y: auto; background: #fff; }
+      .stage { position: relative; inset: auto; display: flex; flex-direction: column; min-height: 100svh; overflow: visible; }
+
+      .photo { position: relative; width: 100%; height: var(--mobile-hero-h); flex: none; }
+      .photo-img--tall { display: none; }
+      .photo-img--wide { display: block; object-position: 64% 48%; transform: scale(1.015); }
+      .scrim { display: block; }
+
+      .hero {
+        position: absolute; left: clamp(18px, 6vw, 28px); right: clamp(18px, 6vw, 28px); bottom: 50px;
+        width: auto; height: auto; transform: none;
+        display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+      }
+      .badge {
+        position: static; height: 31px; padding: 0 12px; gap: 8px;
+        background: rgba(24,27,30,.82);
+        box-shadow: 0 4px 16px rgba(0,0,0,.18);
+        font-size: 11px;
+      }
+      .badge svg { width: 13px; height: 12.4px; }
+      .hl-wrap { display: flex; flex-direction: column; }
+      .hl {
+        position: static;
+        color: #fff;
+        font-size: clamp(30px, 8.8vw, 38px) !important;
+        letter-spacing: -.035em !important;
+        line-height: .96;
+        text-shadow: 0 2px 18px rgba(0,0,0,.32);
+      }
+
+      .pane { position: relative; left: auto; right: auto; top: auto; bottom: auto; flex: 1 0 auto; }
+      .card {
+        position: relative; left: auto; top: auto; width: auto; height: auto;
+        margin: -28px 0 0;
+        border-radius: 28px 28px 0 0;
+        background: #fff; border: 0;
+        -webkit-backdrop-filter: none; backdrop-filter: none;
+        box-shadow: 0 -10px 28px rgba(20,28,36,.10);
+        min-height: calc(100svh - var(--mobile-hero-h) + 28px);
+      }
+      .card-in {
+        position: static; width: auto; height: auto; transform: none;
+        max-width: 500px; margin: 0 auto;
+        padding: 36px clamp(24px, 7vw, 38px) max(30px, env(safe-area-inset-bottom));
+        display: flex; flex-direction: column; justify-content: center;
+        min-height: inherit;
+      }
+      #h1 { font-size: clamp(31px, 8.8vw, 38px); }
+      #sub { font-size: 15px; margin-top: 10px; }
+      #pkgs { margin-top: 24px; gap: 8px; }
+      .pkg-label { height: 54px; padding: 0 14px; }
+      .pkg-name { font-size: 14.5px; }
+      .pkg-price { font-size: 12.5px; }
+      #fName, #fEmail { height: 56px; }
+      #fMsg { height: 120px; }
+      .field input, .field textarea { font-size: 16px; }
+      #sendBtn { height: 58px; font-size: 17px; }
+      #bottom { font-size: 14px; }
+    }
+    @media (max-width: 370px) {
+      :root { --mobile-hero-h: 280px; }
+      .card-in { padding-left: 20px; padding-right: 20px; }
+      .hl { font-size: 30px !important; }
+    }
+    @media (max-width: 699px) and (max-height: 520px) and (orientation: landscape) {
+      :root { --mobile-hero-h: 240px; }
+      .card-in { justify-content: flex-start; }
+    }
+
+    /* ============================================================
+       EINBLENDEN: erster Frame (nur solange html.entry-pending)
+       Das Video ist die Bühne und bewegt sich bewusst nicht.
+    ============================================================ */
+    .entry-pending .card,
+    .entry-pending .badge,
+    .entry-pending #hl1, .entry-pending #hl2,
+    .entry-pending #h1, .entry-pending #sub,
+    .entry-pending #pkgs, .entry-pending #fName, .entry-pending #fEmail,
+    .entry-pending #fMsg, .entry-pending #fCheck, .entry-pending #sendBtn,
+    .entry-pending #bottom {
+      opacity: 0;
+      will-change: transform, opacity, clip-path;
+    }
+    .entry-pending .card { transform: translateY(12px) scale(.988); }
+    .entry-pending .badge { transform: translateY(8px); }
+    .entry-pending #hl1, .entry-pending #hl2 { transform: translateY(16px); clip-path: inset(100% 0 0 0); }
+    .entry-pending #h1, .entry-pending #sub { transform: translateY(10px); }
+    .entry-pending #pkgs, .entry-pending #fName, .entry-pending #fEmail,
+    .entry-pending #fMsg, .entry-pending #fCheck, .entry-pending #sendBtn,
+    .entry-pending #bottom { transform: translateY(8px); }
+    @media (max-width: 699px) {
+      .entry-pending .card { transform: translateY(14px); }
+      .entry-pending #hl1, .entry-pending #hl2 { transform: translateY(12px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .entry-pending .card,
+      .entry-pending .badge,
+      .entry-pending #hl1, .entry-pending #hl2,
+      .entry-pending #h1, .entry-pending #sub,
+      .entry-pending #pkgs, .entry-pending #fName, .entry-pending #fEmail,
+      .entry-pending #fMsg, .entry-pending #fCheck, .entry-pending #sendBtn,
+      .entry-pending #bottom {
+        opacity: 1; transform: none; clip-path: none; will-change: auto;
+      }
     }
   </style>
+  <link rel="stylesheet" href="site-motion.css" />
+  <script src="site-motion.js" defer></script>
 </head>
 <body>
 
@@ -605,9 +528,14 @@
       <a href="portfolio.html">Referenzen</a>
       <a href="preise.html">Pakete</a>
       <a href="index.html#faq">FAQ</a>
+      <a href="kontakt.html">Kontakt</a>
     </nav>
     <div class="header-right">
-      <a href="index.html" class="btn btn-outline" style="padding:10px 22px; font-size:.88rem;">← Zurück</a>
+      <a href="kontakt.html" id="lm-btn" aria-label="Projekt starten">
+        <span id="lm-shader" aria-hidden="true"></span>
+        <span class="lm-core" aria-hidden="true"></span>
+        <span class="lm-label">Projekt starten</span>
+      </a>
       <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -616,332 +544,318 @@
 </header>
 
 <!-- Mobile overlay -->
-<div class="mobile-overlay" id="mobileOverlay">
+<div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Navigation">
   <nav class="mobile-nav-links">
-    <a href="index.html">Start <span>→</span></a>
-    <a href="portfolio.html">Referenzen <span>→</span></a>
-    <a href="preise.html">Pakete <span>→</span></a>
-    <a href="index.html#faq">FAQ <span>→</span></a>
-    <a href="index.html">Startseite <span>→</span></a>
+    <a href="index.html">Start <span class="mobile-nav-arrow">→</span></a>
+    <a href="portfolio.html">Referenzen <span class="mobile-nav-arrow">→</span></a>
+    <a href="index.html#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
+    <a href="preise.html">Pakete <span class="mobile-nav-arrow">→</span></a>
+    <a href="index.html#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
+    <a href="kontakt.html">Projekt starten <span class="mobile-nav-arrow">→</span></a>
   </nav>
   <div class="mobile-meta">
     <span>Irtona.de © 2026</span>
-    <span>Steinheim, DE</span>
+    <span>Steinheim an der Murr, DE</span>
   </div>
 </div>
 
 <!-- ============================================================
-     PAGE HERO
+     BÜHNE
 ============================================================ -->
-<section class="page-hero">
-  <div class="page-hero-bg">
-    <div class="page-hero-blob page-hero-blob-1"></div>
-    <div class="page-hero-blob page-hero-blob-2"></div>
-  </div>
-  <div class="container page-hero-inner">
+<main class="stage">
 
-    <div class="reveal">
-      <span class="page-hero-label">Kostenlos & Unverbindlich</span>
-      <h1 class="page-hero-title">
-        Lass uns<br>
-        <span class="outline">starten.</span>
-      </h1>
-      <p class="page-hero-sub">
-        Erzähl uns von deinem Vorhaben. Wir antworten innerhalb von 24 Stunden — ohne Verkaufsdruck, ohne versteckte Kosten.
-      </p>
-    </div>
+  <section class="photo" id="photo">
+    <video class="photo-img photo-img--tall" autoplay muted loop playsinline preload="auto" aria-label="Ein Wanderfalke im Sturzflug">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260813_052122_e77a27e6-17f1-4794-889b-3ceaa0e9e8cb.mp4" type="video/mp4">
+    </video>
+    <video class="photo-img photo-img--wide" aria-hidden="true" autoplay muted loop playsinline preload="auto" tabindex="-1">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260813_052122_e77a27e6-17f1-4794-889b-3ceaa0e9e8cb.mp4" type="video/mp4">
+    </video>
+    <div class="scrim" aria-hidden="true"></div>
 
-    <div class="trust-list reveal" style="transition-delay:.1s;">
-      <div class="trust-item">
-        <div class="trust-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <polyline points="9,12 11,14 15,10"/>
-          </svg>
-        </div>
-        <div>
-          <h4>100 % Festpreis</h4>
-          <p>Keine versteckten Kosten, kein Stundensatz-Risiko.</p>
-        </div>
+    <div class="hero" id="hero">
+      <div class="badge">
+        <svg viewBox="0 0 582 557" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M449.0 0.0 435.0 0.0 415.0 10.0 200.0 249.0 187.0 276.0 189.0 299.0 212.0 326.0 232.0 332.0 289.0 334.0 289.0 516.0 301.0 543.0 324.0 556.0 346.0 556.0 374.0 536.0 573.0 311.0 582.0 288.0 579.0 264.0 559.0 240.0 539.0 233.0 478.0 230.0 478.0 32.0 470.0 13.0ZM442.0 38.0 446.0 250.0 466.0 267.0 540.0 270.0 547.0 285.0 341.0 520.0 332.0 522.0 324.0 514.0 321.0 314.0 307.0 300.0 295.0 297.0 233.0 297.0 224.0 291.0 221.0 282.0ZM1.0 67.0 4.0 81.0 17.0 90.0 216.0 90.0 223.0 87.0 232.0 74.0 228.0 57.0 215.0 49.0 18.0 49.0 5.0 57.0ZM0.0 285.0 4.0 300.0 17.0 308.0 105.0 308.0 118.0 299.0 121.0 291.0 119.0 278.0 111.0 270.0 103.0 267.0 17.0 267.0 4.0 275.0ZM1.0 495.0 4.0 511.0 10.0 517.0 23.0 520.0 179.0 520.0 191.0 516.0 200.0 500.0 196.0 488.0 182.0 479.0 18.0 479.0 9.0 483.0Z"/></svg>
+        <span id="badgeTxt">Antwort innerhalb von 24 Stunden</span>
       </div>
-      <div class="trust-item">
-        <div class="trust-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9"/>
-            <polyline points="12,7 12,12 15.5,14.5"/>
-          </svg>
-        </div>
-        <div>
-          <h4>Antwort in 24 Stunden</h4>
-          <p>Wir melden uns schnell — Werktags meist noch am selben Tag.</p>
-        </div>
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
-        </div>
-        <div>
-          <h4>Ohne Druck & Risiko</h4>
-          <p>Die Anfrage ist unverbindlich. Du entscheidest, ob es passt.</p>
-        </div>
+      <div class="hl-wrap">
+        <span class="hl" id="hl1">Lass uns</span>
+        <span class="hl" id="hl2">starten.</span>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <section class="pane" id="pane">
+    <div class="card" id="card">
+      <div class="card-in" id="cardIn">
+        <h1 id="h1">Projekt anfragen</h1>
+        <p id="sub"><b>Kostenlos</b> und unverbindlich. Erzähl uns kurz, was du vorhast.</p>
 
-<!-- ============================================================
-     FORM
-============================================================ -->
-<section class="form-section">
-  <div class="container">
-    <div class="form-card reveal">
-      <div class="form-card-inner">
+        <form action="https://formspree.io/f/mojydjwy" method="POST" id="contactForm">
+          <input type="hidden" name="kundennummer" id="kundennummer_input">
+          <input type="hidden" name="_next" value="https://irtona.de/danke.html">
 
-        <!-- Sidebar -->
-        <aside class="form-sidebar">
-          <div>
-            <p style="font-size:.72rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:1rem;">So läuft es ab</p>
-            <h2 class="form-sidebar-title">In 3 Schritten<br>zur fertigen<br>Website.</h2>
+          <div id="pkgs" role="radiogroup" aria-label="Paket">
+            <input type="radio" name="paket" id="pkg-start" value="start" class="pkg-option">
+            <label for="pkg-start" class="pkg-label">
+              <span class="pkg-name">Start</span>
+              <span class="pkg-price">490 € einmalig</span>
+            </label>
+
+            <input type="radio" name="paket" id="pkg-wachstum" value="wachstum" class="pkg-option" checked>
+            <label for="pkg-wachstum" class="pkg-label">
+              <span class="pkg-name">Wachstum ✦</span>
+              <span class="pkg-price">890 € einmalig</span>
+            </label>
+
+            <input type="radio" name="paket" id="pkg-premium" value="premium" class="pkg-option">
+            <label for="pkg-premium" class="pkg-label">
+              <span class="pkg-name">Premium</span>
+              <span class="pkg-price">1.290 € einmalig</span>
+            </label>
+
+            <input type="radio" name="paket" id="pkg-beratung" value="beratung" class="pkg-option">
+            <label for="pkg-beratung" class="pkg-label">
+              <span class="pkg-name">Erst mal beraten</span>
+              <span class="pkg-price">Kostenlos</span>
+            </label>
           </div>
 
-          <div class="sidebar-steps">
-            <div class="sidebar-step">
-              <div class="sidebar-step-num">01</div>
-              <div>
-                <h4>Anfrage senden</h4>
-                <p>Füll das Formular aus — dauert 1 Minute.</p>
-              </div>
-            </div>
-            <div class="sidebar-step">
-              <div class="sidebar-step-num">02</div>
-              <div>
-                <h4>Kurzes Gespräch</h4>
-                <p>Wir klären alles per WhatsApp, Telefon oder E-Mail.</p>
-              </div>
-            </div>
-            <div class="sidebar-step">
-              <div class="sidebar-step-num">03</div>
-              <div>
-                <h4>Go Live 🚀</h4>
-                <p>Deine Website ist in 10–14 Tagen online.</p>
-              </div>
-            </div>
+          <div class="field" id="fName">
+            <input type="text" id="name" name="name" required autocomplete="name" placeholder="Name oder Unternehmen" aria-label="Name oder Unternehmen">
+          </div>
+          <div class="field" id="fEmail">
+            <input type="email" id="email" name="email" required autocomplete="email" placeholder="E-Mail, z. B. max@firma.de" aria-label="E-Mail Adresse">
+          </div>
+          <div class="field" id="fMsg">
+            <textarea id="message" name="message" required placeholder="Was hast du vor? Je mehr du erzählst, desto besser können wir helfen." aria-label="Dein Projekt"></textarea>
           </div>
 
-          <div class="sidebar-divider"></div>
-
-          <div class="sidebar-contact">
-            <div class="sidebar-contact-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="4" width="20" height="16" rx="3"/>
-                <polyline points="2,4 12,13 22,4"/>
-              </svg>
-              <a href="mailto:info@irtona.de">info@irtona.de</a>
-            </div>
-            <div class="sidebar-contact-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                <circle cx="12" cy="9" r="2.5"/>
-              </svg>
-              <span>Steinheim an der Murr, Baden-Württemberg</span>
-            </div>
-            <div class="sidebar-contact-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-              </svg>
-              <a href="https://www.instagram.com/irtona.de" target="_blank" rel="noopener">@irtona.de</a>
-            </div>
+          <div id="fCheck">
+            <input type="checkbox" id="datenschutz" name="datenschutz" required>
+            <label for="datenschutz">Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> gelesen und bin einverstanden.</label>
           </div>
-        </aside>
 
-        <!-- Form body -->
-        <div class="form-body">
-          <h2 class="form-body-title">Projekt anfragen</h2>
-          <p class="form-body-sub">Welches Paket interessiert dich? Wähl direkt aus oder lass es uns einfach wissen.</p>
+          <button type="submit" id="sendBtn">
+            <span>Anfrage senden</span>
+            <svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M3 11h15.4M11 3.3l7.7 7.7-7.7 7.7" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
 
-          <form action="https://formspree.io/f/mojydjwy" method="POST" id="contactForm">
-            <input type="hidden" name="kundennummer" id="kundennummer_input">
-            <input type="hidden" name="_next" value="https://irtona.de/danke.html">
-         
-
-            <!-- Package picker -->
-            <div class="package-selector">
-              <input type="radio" name="paket" id="pkg-start" value="start" class="pkg-option">
-              <label for="pkg-start" class="pkg-label">
-                <span class="pkg-name">Start</span>
-                <span class="pkg-price">490 € einmalig</span>
-              </label>
-
-              <input type="radio" name="paket" id="pkg-wachstum" value="wachstum" class="pkg-option" checked>
-              <label for="pkg-wachstum" class="pkg-label">
-                <span class="pkg-name">Wachstum ✦</span>
-                <span class="pkg-price">890 € einmalig</span>
-              </label>
-
-              <input type="radio" name="paket" id="pkg-premium" value="premium" class="pkg-option">
-              <label for="pkg-premium" class="pkg-label">
-                <span class="pkg-name">Premium</span>
-                <span class="pkg-price">1.290 € einmalig</span>
-              </label>
-
-              <input type="radio" name="paket" id="pkg-beratung" value="beratung" class="pkg-option">
-              <label for="pkg-beratung" class="pkg-label">
-                <span class="pkg-name">Beratung</span>
-                <span class="pkg-price">Kostenlos</span>
-              </label>
-            </div>
-
-            <!-- Name + Email -->
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Name / Unternehmen</label>
-                <input type="text" id="name" name="name" required placeholder="Wie dürfen wir dich nennen?">
-              </div>
-              <div class="form-group">
-                <label for="email">E-Mail Adresse</label>
-                <input type="email" id="email" name="email" required placeholder="deine@email.de">
-              </div>
-            </div>
-
-            <!-- Message -->
-            <div class="form-group">
-              <label for="message">Dein Projekt</label>
-              <textarea id="message" name="message" rows="5" required placeholder="Was hast du vor? Gibt es schon erste Ideen? Je mehr du erzählst, desto besser können wir helfen."></textarea>
-            </div>
-
-            <!-- Checkbox -->
-            <div class="checkbox-row">
-              <input type="checkbox" id="datenschutz" name="datenschutz" required>
-              <label for="datenschutz">
-                Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzrichtlinien</a> gelesen und akzeptiere diese.
-              </label>
-            </div>
-
-            <button type="submit" class="submit-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-              </svg>
-              Anfrage unverbindlich senden
-            </button>
-            <p class="submit-note">Du hörst von uns innerhalb von 24 Stunden · Keine Kosten, kein Risiko</p>
-          </form>
-        </div>
-
+        <p id="bottom">
+          Oder ganz klassisch: <a class="mail" href="mailto:info@irtona.de">info@irtona.de</a>
+          <span class="legal"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a></span>
+        </p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================
-     FOOTER
-============================================================ -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="logo">Irtona.de</a>
-        <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen.</p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/irtona.de" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a href="#" class="social-btn" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h5>Agentur</h5>
-        <ul>
-          <li><a href="index.html">Startseite</a></li>
-          <li><a href="index.html#leistungen">Leistungen</a></li>
-          <li><a href="portfolio.html">Referenzen</a></li>
-          <li><a href="kontakt.html">Projekt anfragen</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Pakete</h5>
-        <ul>
-          <li><a href="index.html#preise">Start — 490 €</a></li>
-          <li><a href="index.html#preise">Wachstum — 890 €</a></li>
-          <li><a href="index.html#preise">Premium — 1.290 €</a></li>
-          <li><a href="kontakt.html">Individuell</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Rechtliches</h5>
-        <ul>
-          <li><a href="impressum.html">Impressum</a></li>
-          <li><a href="datenschutz.html">Datenschutz</a></li>
-          <li><a href="agb.html">AGB</a></li>
-         
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
-      <div class="footer-legal">
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-        <a href="agb.html">AGB</a>
-      </div>
-    </div>
-  </div>
-</footer>
+</main>
 
 <script>
-  // Header scroll
-  const header = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
+  // ── Burger / Mobile-Menü ─────────────────────────────────────
+  (function () {
+    var hamburger = document.getElementById('hamburger');
+    var overlay   = document.getElementById('mobileOverlay');
+    function openMenu()  { hamburger.classList.add('is-active'); overlay.classList.add('is-open'); document.body.classList.add('menu-open'); hamburger.setAttribute('aria-expanded', 'true'); }
+    function closeMenu() { hamburger.classList.remove('is-active'); overlay.classList.remove('is-open'); document.body.classList.remove('menu-open'); hamburger.setAttribute('aria-expanded', 'false'); }
+    hamburger.addEventListener('click', function () { hamburger.classList.contains('is-active') ? closeMenu() : openMenu(); });
+    overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+  })();
 
-  // Burger
-  const hamburger     = document.getElementById('hamburger');
-  const mobileOverlay = document.getElementById('mobileOverlay');
+  // ── Kundennummer für die Anfrage (6-stellig, z. B. KN-482930) ──
+  (function () {
+    var kn = document.getElementById('kundennummer_input');
+    if (kn) kn.value = 'KN-' + Math.floor(100000 + Math.random() * 900000);
+  })();
 
-  function openMenu()  { hamburger.classList.add('is-active'); mobileOverlay.classList.add('is-open'); document.body.classList.add('menu-open'); hamburger.setAttribute('aria-expanded','true'); }
-  function closeMenu() { hamburger.classList.remove('is-active'); mobileOverlay.classList.remove('is-open'); document.body.classList.remove('menu-open'); hamburger.setAttribute('aria-expanded','false'); }
+  // ── Layout: drei Modi (Desktop quer, Tablet hochkant, Handy) ──
+  (function () {
+    var PANE_W = 628, CARD_W = 613, CARD_H = 900, REF_W = 1464;
+    var IMG_W = 1177, IMG_H = 1336, IMG_REF_SCALE = 836 / 1177;
+    var PANE_RATIO = PANE_W / REF_W;
+    var HERO_W = 681, HL_FS = 69.14;
+    var RAMP_HI = 1280, RAMP_LO = 1000, PHOTO_MIN = 0.42;
+    var RAMP_LO2 = 820, PHOTO_MIN2 = 0.36;
+    var NAV_H = 84;   // Platz für die schwebende Pillen-Navigation
 
-  hamburger.addEventListener('click', () => hamburger.classList.contains('is-active') ? closeMenu() : openMenu());
-  mobileOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    var body   = document.body;
+    var photo  = document.getElementById('photo');
+    var pane   = document.getElementById('pane');
+    var card   = document.getElementById('card');
+    var cardIn = document.getElementById('cardIn');
+    var hero   = document.getElementById('hero');
 
-  // Reveal
-  document.body.classList.add('js-ready');
-  const revealEls = document.querySelectorAll('.reveal');
-  function activateReveal(el) { el.classList.add('active'); }
+    var mqLandscape = window.matchMedia('(min-width:700px) and (min-aspect-ratio:51/50)');
+    var mqPortrait  = window.matchMedia('(min-width:700px) and (max-aspect-ratio:51/50)');
 
-  if ('IntersectionObserver' in window) {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { activateReveal(e.target); obs.unobserve(e.target); } });
-    }, { threshold: 0 });
-    revealEls.forEach(el => obs.observe(el));
-    setTimeout(() => revealEls.forEach(activateReveal), 800);
-  } else {
-    revealEls.forEach(activateReveal);
-  }
-  document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('contactForm');
-    const knInput = document.getElementById('kundennummer_input');
-
-    // Generiert eine 6-stellige Nummer (z.B. 482930)
-    const generateKN = () => {
-        return Math.floor(100000 + Math.random() * 900000);
-    };
-
-    // Nummer beim Laden generieren und ins versteckte Feld setzen
-    if (knInput) {
-        knInput.value = "KN-" + generateKN();
+    // Inline-Stile schlagen das Stylesheet. Beim Moduswechsel deshalb
+    // zuerst alles löschen, sonst bleiben Werte des alten Modus hängen.
+    function clearInline() {
+      [photo, pane, card, cardIn, hero].forEach(function (el) { el.style.cssText = ''; });
     }
-});
 
+    var mode = null;
+    function setMode(m) {
+      if (m === mode) return;
+      clearInline();
+      mode = m;
+      body.classList.toggle('land', m === 'land');
+      body.classList.toggle('tabport', m === 'tabport');
+      body.classList.toggle('stacked', m === 'phone');
+    }
 
+    // Fotospalte gibt beim Schmalerwerden stufenlos Breite an die Karte ab
+    function photoRatio(vw) {
+      var base = 1 - PANE_RATIO;
+      if (vw >= RAMP_HI) return base;
+      if (vw >= RAMP_LO) return PHOTO_MIN + (base - PHOTO_MIN) * (vw - RAMP_LO) / (RAMP_HI - RAMP_LO);
+      if (vw >= RAMP_LO2) return PHOTO_MIN2 + (PHOTO_MIN - PHOTO_MIN2) * (vw - RAMP_LO2) / (RAMP_LO - RAMP_LO2);
+      return PHOTO_MIN2;
+    }
+
+    function placeCard(paneW, top, availH, gapL, csMax) {
+      var mR = 14, mB = 14;
+      var cw = paneW - gapL - mR;
+      var ch = availH - mB;
+      var cs = Math.min(cw / CARD_W, ch / CARD_H, csMax);
+      card.style.left = gapL + 'px';
+      card.style.top = top + 'px';
+      card.style.width = cw + 'px';
+      card.style.height = ch + 'px';
+      card.style.borderRadius = Math.max(18, 26 * cs) + 'px';
+      card.style.borderWidth = Math.max(1, cs) + 'px';
+      var tx = (cw - CARD_W * cs) / 2;
+      var ty = Math.max(0, (ch - CARD_H * cs) / 2);
+      cardIn.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + cs + ')';
+    }
+
+    // Der Titel fährt mit dem Cover-Maßstab des Videos, wird aber nie breiter als die Spalte
+    function seatHero(photoW, vh) {
+      var imgScale = Math.max(photoW / IMG_W, vh / IMG_H);
+      var s = Math.min(imgScale / IMG_REF_SCALE, photoW * 0.92 / HERO_W);
+      hero.style.transform = 'scale(' + s + ')';
+    }
+
+    function layout() {
+      var vw = window.innerWidth, vh = window.innerHeight;
+
+      if (mqLandscape.matches) {
+        setMode('land');
+        var photoW = Math.round(vw * photoRatio(vw));
+        photo.style.width = photoW + 'px';
+        pane.style.left = photoW + 'px';
+        seatHero(photoW, vh);
+        placeCard(vw - photoW, NAV_H, vh - NAV_H, 1, 1.15);
+
+      } else if (mqPortrait.matches) {
+        setMode('tabport');
+        var band = Math.round(vh * 0.34);
+        var side = Math.round(vw * 0.0525);
+        photo.style.height = band + 'px';
+        pane.style.top = band + 'px';
+        // Titel am Fuß des Bandes, Schriftgröße aus der Bandhöhe
+        var s = Math.min(band * 0.1058 / HL_FS, (vw - 2 * side) / HERO_W);
+        hero.style.transform = 'scale(' + s + ')';
+        hero.style.left = (side - 33 * s) + 'px';
+        hero.style.bottom = (band * 0.065 - 49 * s) + 'px';
+        placeCard(vw, 14, vh - band - 14, 14, 1.25);
+
+      } else {
+        // Handy: bewusst leer, das Stylesheet macht alles im Dokumentfluss
+        setMode('phone');
+      }
+    }
+
+    layout();
+    window.addEventListener('resize', layout, { passive: true });
+    window.addEventListener('orientationchange', layout);
+    if (mqLandscape.addEventListener) {
+      mqLandscape.addEventListener('change', layout);
+      mqPortrait.addEventListener('change', layout);
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  })();
+
+  // ── Video-Autoplay absichern (iOS Stromsparmodus, In-App-Browser) ──
+  (function () {
+    var vids = Array.prototype.slice.call(document.querySelectorAll('.photo video'));
+    function kick() {
+      vids.forEach(function (v) {
+        if (v.offsetParent === null) return;
+        v.muted = true;
+        var p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
+      });
+    }
+    kick();
+    window.addEventListener('load', kick);
+    window.addEventListener('resize', kick, { passive: true });
+    document.addEventListener('touchstart', kick, { once: true, passive: true });
+  })();
+
+  // ── Einblend-Animation (läuft genau einmal) ──
+  (function () {
+    var root = document.documentElement;
+
+    function releaseEntrance() {
+      root.classList.remove('entry-pending');
+      if (window.__entryFallback) clearTimeout(window.__entryFallback);
+    }
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !Element.prototype.animate) { releaseEntrance(); return; }
+
+    var ease = 'cubic-bezier(.16,1,.3,1)';
+    var softEase = 'cubic-bezier(.22,1,.36,1)';
+
+    function run() {
+      var compact = window.matchMedia('(max-width:699px)').matches;
+      var hlY = compact ? 'translateY(12px)' : 'translateY(16px)';
+      var steps = [
+        ['.card',    40,  820, ease,     { opacity: 0, transform: compact ? 'translateY(14px)' : 'translateY(12px) scale(.988)' }],
+        ['.badge',   120, 480, softEase, { opacity: 0, transform: 'translateY(8px)' }],
+        ['#hl1',     240, 760, ease,     { opacity: 0, transform: hlY, clipPath: 'inset(100% 0 0 0)' }],
+        ['#hl2',     330, 760, ease,     { opacity: 0, transform: hlY, clipPath: 'inset(100% 0 0 0)' }],
+        ['#h1',      470, 620, ease,     { opacity: 0, transform: 'translateY(10px)' }],
+        ['#sub',     570, 560, ease,     { opacity: 0, transform: 'translateY(10px)' }],
+        ['#pkgs',    680, 540, softEase, { opacity: 0, transform: 'translateY(8px)' }],
+        ['#fName',   760, 520, softEase, { opacity: 0, transform: 'translateY(8px)' }],
+        ['#fEmail',  830, 520, softEase, { opacity: 0, transform: 'translateY(8px)' }],
+        ['#fMsg',    900, 520, softEase, { opacity: 0, transform: 'translateY(8px)' }],
+        ['#fCheck',  970, 480, softEase, { opacity: 0, transform: 'translateY(8px)' }],
+        ['#sendBtn', 1050, 560, ease,    { opacity: 0, transform: 'translateY(8px)' }],
+        ['#bottom',  1170, 500, softEase, { opacity: 0, transform: 'translateY(6px)' }]
+      ];
+
+      var animations = [];
+      steps.forEach(function (st) {
+        var el = document.querySelector(st[0]);
+        if (!el) return;
+        var from = st[4];
+        var to = { opacity: 1, transform: 'none' };
+        if (from.clipPath) to.clipPath = 'inset(0 0 0 0)';
+        animations.push(el.animate([from, to], { delay: st[1], duration: st[2], easing: st[3], fill: 'both' }));
+      });
+
+      // Ab jetzt hält die Animationsebene den versteckten ersten Frame
+      releaseEntrance();
+
+      Promise.allSettled(animations.map(function (a) { return a.finished; })).then(function () {
+        animations.forEach(function (a) { a.cancel(); });
+        animations.length = 0;
+        releaseEntrance();
+      });
+    }
+
+    Promise.race([
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+      new Promise(function (r) { setTimeout(r, 650); })
+    ]).then(function () {
+      requestAnimationFrame(function () { requestAnimationFrame(run); });
+    });
+  })();
 </script>
 </body>
 </html>
