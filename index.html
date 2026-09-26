@@ -2401,11 +2401,16 @@
        Desktop/Tablet bleiben unverändert.
     ============================================================ */
     @media (max-width: 768px) {
-      /* 1) Hero-Video: doppelte Höhe (48svh → 96svh), näher an der Überschrift.
-         translateY hebt den Videoinhalt im Rahmen an (oben ist das Video schwarz). */
+      /* 1) Hero-Video: Das Video selbst bleibt 96svh hoch (Größe der Figur
+         unverändert), der Rahmen schneidet nur den schwarzen Rand ab:
+         oben leicht (top), unten stark (kleinere Rahmenhöhe). */
       .vhero-headline { margin-bottom: .5rem; }
-      .vhero-media-mobile { height: 96svh; }
+      .vhero-media-mobile { height: 66svh; margin-bottom: 1rem; }
       .vhero-media-mobile video {
+        inset: auto;
+        top: -8svh;
+        left: 0;
+        height: 96svh;
         transform: translateY(-7%) scale(1.15);
       }
 
@@ -3805,5 +3810,6 @@
 </script>
 </body>
 </html>
+
 
 
