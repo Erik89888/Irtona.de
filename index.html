@@ -2396,6 +2396,83 @@
     @media (prefers-reduced-motion: reduce) { .tcol-track { animation: none !important; } }
 
     /* ============================================================
+       NUR MOBIL (≤768px): großes Hero-Video, Referenzen + Ablauf als
+       horizontale Wisch-Reihe, Kundenstimmen laufen nach rechts.
+       Desktop/Tablet bleiben unverändert.
+    ============================================================ */
+    @media (max-width: 768px) {
+      /* 1) Hero-Video: gleiche Position, doppelte Höhe (48svh → 96svh) */
+      .vhero-media-mobile { height: 96svh; }
+      .vhero-media-mobile video {
+        transform: scale(1.15);
+      }
+
+      /* 2) Referenzen + Ablauf: eine Karte sichtbar, Rest nach rechts wischen */
+      .portfolio-grid,
+      .process-grid {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin-left: -24px;
+        margin-right: -24px;
+        padding: 0 24px 4px;
+        scroll-padding: 0 24px;
+      }
+      .portfolio-grid::-webkit-scrollbar,
+      .process-grid::-webkit-scrollbar { display: none; }
+      .portfolio-grid > .porto-card,
+      .process-grid > .process-step {
+        flex: 0 0 86%;
+        scroll-snap-align: start;
+      }
+      .porto-card { height: 440px; }
+      /* Ablauf: aus dem zusammenhängenden Raster werden einzelne Karten */
+      .process-grid { background: none; border-radius: 0; }
+      .process-step {
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--gray-200);
+      }
+
+      /* 3) Kundenstimmen: horizontale Laufbänder nach rechts statt nach unten */
+      .tcols {
+        flex-direction: column;
+        gap: 16px;
+        max-height: none;
+        margin-left: -24px;
+        margin-right: -24px;
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+                mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+      }
+      .tcol { max-width: none; overflow: hidden; }
+      .tcol--2 { display: block; }
+      .tcol-track {
+        flex-direction: row;
+        align-items: stretch;
+        width: max-content;
+        animation-name: tcolScrollX;
+      }
+      .tcard {
+        flex: 0 0 270px;
+        margin-bottom: 0;
+        margin-right: 16px;
+      }
+      .tcard--img img { height: 100%; min-height: 200px; }
+    }
+    @media (max-width: 430px) {
+      .portfolio-grid,
+      .process-grid,
+      .tcols { margin-left: -18px; margin-right: -18px; }
+      .portfolio-grid,
+      .process-grid { padding: 0 18px 4px; scroll-padding: 0 18px; }
+    }
+    /* Inhalt wandert nach rechts; -50% ↔ 0 ist dank doppeltem Set nahtlos */
+    @keyframes tcolScrollX { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+    /* ============================================================
        MOBILE: Pille zeigt nur Logo + Burger
        Muss GANZ am Ende stehen: die Regel oben im 768er-Block
        (.header-nav, .header-right .btn, #lm-btn { display:none })
@@ -2469,18 +2546,18 @@
 ============================================================ -->
 <header class="site-header" id="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="logo">Irtona.de</a>
+    <a href="/" class="logo">Irtona.de</a>
 
     <nav class="header-nav">
-      <a href="index.html">Start</a>
-      <a href="portfolio.html">Referenzen</a>
-      <a href="preise.html">Pakete</a>
+      <a href="/">Start</a>
+      <a href="/portfolio">Referenzen</a>
+      <a href="/preise">Pakete</a>
       <a href="#faq">FAQ</a>
-      <a href="kontakt.html">Kontakt</a>
+      <a href="/kontakt">Kontakt</a>
     </nav>
 
     <div class="header-right">
-      <a href="kontakt.html" id="lm-btn" aria-label="Projekt starten">
+      <a href="/kontakt" id="lm-btn" aria-label="Projekt starten">
         <span id="lm-shader" aria-hidden="true"></span>
         <span class="lm-core" aria-hidden="true"></span>
         <span class="lm-label">Projekt starten</span>
@@ -2497,12 +2574,12 @@
 <!-- MOBILE OVERLAY -->
 <div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Navigation">
   <nav class="mobile-nav-links">
-    <a href="index.html">Start <span class="mobile-nav-arrow">→</span></a>
-    <a href="portfolio.html">Referenzen <span class="mobile-nav-arrow">→</span></a>
-    <a href="index.html#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
-    <a href="preise.html">Pakete <span class="mobile-nav-arrow">→</span></a>
-    <a href="index.html#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
-    <a href="kontakt.html">Projekt starten <span class="mobile-nav-arrow">→</span></a>
+    <a href="/">Start <span class="mobile-nav-arrow">→</span></a>
+    <a href="/portfolio">Referenzen <span class="mobile-nav-arrow">→</span></a>
+    <a href="/#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
+    <a href="/preise">Pakete <span class="mobile-nav-arrow">→</span></a>
+    <a href="/#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
+    <a href="/kontakt">Projekt starten <span class="mobile-nav-arrow">→</span></a>
   </nav>
   <div class="mobile-meta">
     <span>Irtona.de © 2026</span>
@@ -2541,8 +2618,8 @@
           zum Festpreis.
         </p>
         <div class="vhero-actions">
-          <a href="kontakt.html" class="btn btn-dark btn-lg">Jetzt Projekt anfragen</a>
-          <a href="portfolio.html" class="btn btn-outline btn-lg">Beispiele ansehen</a>
+          <a href="/kontakt" class="btn btn-dark btn-lg">Jetzt Projekt anfragen</a>
+          <a href="/portfolio" class="btn btn-outline btn-lg">Beispiele ansehen</a>
         </div>
       </div>
     </div>
@@ -2691,12 +2768,12 @@
         <span class="section-label">Referenzen</span>
         <h2 class="section-heading">Projekte, die<br>beeindrucken.</h2>
       </div>
-      <a href="portfolio.html" class="btn btn-outline">Alle Beispiele ansehen →</a>
+      <a href="/portfolio" class="btn btn-outline">Alle Beispiele ansehen →</a>
     </div>
 
     <div class="portfolio-grid">
 
-      <a href="project-a-v2.html" class="porto-card reveal">
+      <a href="/project-a-v2" class="porto-card reveal">
         <div class="porto-card-bg" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=900&auto=format&fit=crop');"></div>
         <div class="porto-card-overlay"></div>
         <div class="porto-arrow">↗</div>
@@ -2707,7 +2784,7 @@
         </div>
       </a>
 
-      <a href="restaurant.html" class="porto-card reveal" style="transition-delay:.1s;">
+      <a href="/restaurant" class="porto-card reveal" style="transition-delay:.1s;">
         <div class="porto-card-bg" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=900&auto=format&fit=crop');"></div>
         <div class="porto-card-overlay"></div>
         <div class="porto-arrow">↗</div>
@@ -2718,7 +2795,7 @@
         </div>
       </a>
 
-      <a href="project-c.html" class="porto-card reveal" style="transition-delay:.2s;">
+      <a href="/project-c" class="porto-card reveal" style="transition-delay:.2s;">
         <div class="porto-card-bg" style="background-image: url('https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=900&auto=format&fit=crop');"></div>
         <div class="porto-card-overlay"></div>
         <div class="porto-arrow">↗</div>
@@ -2798,7 +2875,7 @@
           <li>Rechtssicher (DSGVO-konform)</li>
           <li>Persönliche Betreuung im Projekt</li>
         </ul>
-        <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
+        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
 
       <!-- Wachstum -->
@@ -2816,7 +2893,7 @@
           <li>Alles aus Start-Paket inklusive</li>
           <li>Persönliche Betreuung im Projekt</li>
         </ul>
-        <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
+        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
 
       <!-- Premium -->
@@ -2833,7 +2910,7 @@
           <li>Volle Betreuung & Premium Design</li>
           <li>Persönliche Betreuung im Projekt</li>
         </ul>
-        <a href="kontakt.html" class="btn btn-dark">Jetzt anfragen →</a>
+        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen →</a>
       </div>
 
     </div>
@@ -2985,7 +3062,7 @@
         <p style="margin-top:1.2rem; font-size:1rem; color:var(--gray-600); line-height:1.7; font-weight:300;">
           Deine Frage ist nicht dabei? Kein Problem, schreib uns einfach direkt.
         </p>
-        <a href="kontakt.html" class="btn btn-dark" style="margin-top:2rem;">Direkt fragen →</a>
+        <a href="/kontakt" class="btn btn-dark" style="margin-top:2rem;">Direkt fragen →</a>
       </div>
 
       <div class="faq-list reveal" id="faqList">
@@ -3181,7 +3258,7 @@
           </div>
         </div>
 
-        <a href="kontakt.html" class="btn btn-dark btn-lg" style="margin-top: 8px; width: fit-content;">
+        <a href="/kontakt" class="btn btn-dark btn-lg" style="margin-top: 8px; width: fit-content;">
           Projekt anfragen →
         </a>
       </div>
@@ -3203,7 +3280,7 @@
       und dein Unternehmen steht professionell im Netz.
     </p>
     <div class="cta-actions reveal">
-      <a href="kontakt.html" class="btn btn-light btn-lg">Jetzt kostenlos anfragen →</a>
+      <a href="/kontakt" class="btn btn-light btn-lg">Jetzt kostenlos anfragen →</a>
       <a href="#faq" class="btn btn-outline btn-lg">Noch Fragen? FAQ lesen</a>
     </div>
   </div>
@@ -3235,26 +3312,26 @@
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#portfolio">Referenzen</a></li>
           <li><a href="#prozess">Ablauf</a></li>
-          <li><a href="kontakt.html">Projekt anfragen</a></li>
+          <li><a href="/kontakt">Projekt anfragen</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h5>Pakete</h5>
         <ul>
-          <li><a href="preise.html">Start: 490 €</a></li>
-          <li><a href="preise.html">Wachstum: 890 €</a></li>
-          <li><a href="preise.html">Premium: 1.290 €</a></li>
-          <li><a href="kontakt.html">Individuell anfragen</a></li>
+          <li><a href="/preise">Start: 490 €</a></li>
+          <li><a href="/preise">Wachstum: 890 €</a></li>
+          <li><a href="/preise">Premium: 1.290 €</a></li>
+          <li><a href="/kontakt">Individuell anfragen</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h5>Rechtliches</h5>
         <ul>
-          <li><a href="impressum.html">Impressum</a></li>
-          <li><a href="datenschutz.html">Datenschutz</a></li>
-          <li><a href="agb.html">AGB</a></li>
+          <li><a href="/impressum">Impressum</a></li>
+          <li><a href="/datenschutz">Datenschutz</a></li>
+          <li><a href="/agb">AGB</a></li>
         </ul>
       </div>
     </div>
@@ -3262,9 +3339,9 @@
     <div class="footer-bottom">
       <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
       <div class="footer-legal">
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-        <a href="agb.html">AGB</a>
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+        <a href="/agb">AGB</a>
       </div>
     </div>
     <p class="footer-tax">* Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p>
@@ -3753,3 +3830,4 @@
 </script>
 </body>
 </html>
+
