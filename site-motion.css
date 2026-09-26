@@ -1,0 +1,102 @@
+/* ============================================================
+   IRTONA SITE MOTION
+   Gemeinsame Animationen für Startseite und Unterseiten.
+   Wird von site-motion.js gesteuert: das Script setzt die
+   data-m Attribute und die Klasse .m-in, sobald ein Element
+   in den sichtbaren Bereich scrollt. Ohne JS bleibt alles sichtbar.
+============================================================ */
+
+:root {
+  --m-ease: cubic-bezier(.22, 1, .36, 1);
+  --m-ease-io: cubic-bezier(.76, 0, .24, 1);
+}
+
+/* ---------- Scroll-Fortschritt ganz oben ---------- */
+.m-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--black, #0a0a0a);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 1200;
+  pointer-events: none;
+}
+
+/* ---------- Pillen-Navigation: Einflug + aktive Seite ---------- */
+html.m-js .site-header .header-inner {
+  animation: mPillIn .9s var(--m-ease) .1s both;
+}
+body.intro-active .site-header .header-inner { animation-play-state: paused; }
+
+@keyframes mPillIn {
+  from { opacity: 0; transform: translateY(-26px) scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+.site-header .header-nav a[aria-current="page"] { color: var(--black, #0a0a0a); }
+.site-header .header-nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+/* ---------- Überschriften: Wort für Wort aus einer Maske ---------- */
+.m-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: .08em;
+  margin-bottom: -.08em;
+}
+.m-word > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform .9s var(--m-ease);
+  transition-delay: calc(var(--i, 0) * 55ms);
+}
+[data-m="words"].m-in .m-word > span { transform: none; }
+
+/* ---------- Einzelne Blöcke: sanft nach oben ---------- */
+[data-m="up"] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .8s var(--m-ease), transform .8s var(--m-ease);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+[data-m="up"].m-in { opacity: 1; transform: none; }
+
+/* ---------- Bilder: aufziehender Vorhang + leichter Zoom ---------- */
+[data-m="img"] {
+  clip-path: inset(12% 6% 12% 6% round 32px);
+  transition: clip-path 1.2s var(--m-ease-io);
+}
+[data-m="img"] img,
+[data-m="img"] iframe {
+  transform: scale(1.14);
+  transition: transform 1.6s var(--m-ease);
+}
+[data-m="img"].m-in { clip-path: inset(0 0 0 0 round 32px); }
+[data-m="img"].m-in img,
+[data-m="img"].m-in iframe { transform: none; }
+
+/* ---------- Seitenwechsel ---------- */
+html.m-js body { animation: mPageIn .6s var(--m-ease) both; }
+/* Startseite hat ihren eigenen Intro-Loader */
+html.m-js body.has-intro { animation: none; }
+html.m-js body.m-leaving { animation: mPageOut .28s ease forwards; }
+@keyframes mPageIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mPageOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* ---------- Weniger Bewegung gewünscht: alles sofort zeigen ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .m-progress { display: none; }
+  html.m-js .site-header .header-inner,
+  html.m-js body { animation: none !important; }
+  .m-word > span,
+  [data-m="up"],
+  [data-m="img"],
+  [data-m="img"] img,
+  [data-m="img"] iframe {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}
