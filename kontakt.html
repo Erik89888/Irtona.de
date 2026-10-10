@@ -10,9 +10,19 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Frag dein Projekt bei Irtona.de an. Kostenlos und unverbindlich." />
-  <title>Projekt starten | Irtona.de</title>
-  <link rel="canonical" href="https://irtona.de/kontakt.html" />
+  <meta name="description" content="Website anfragen bei Irtona.de in Steinheim an der Murr: kostenlos und unverbindlich. Du bekommst schnell eine persönliche Rückmeldung mit Festpreis." />
+  <title>Projekt anfragen | Webdesign Steinheim an der Murr | Irtona.de</title>
+  <link rel="canonical" href="https://irtona.de/kontakt" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Irtona.de" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:url" content="https://irtona.de/kontakt" />
+  <meta property="og:title" content="Projekt anfragen | Irtona.de" />
+  <meta property="og:description" content="Kostenlos und unverbindlich anfragen. Persönliche Rückmeldung mit Festpreis." />
+  <meta property="og:image" content="https://irtona.de/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -388,6 +398,29 @@
     #bottom .legal { display: block; margin-top: 10px; font-size: 14px; color: var(--gray-400); }
     #bottom .legal a:hover { color: var(--ink); }
 
+    /* Bestätigung nach dem Absenden (ersetzt die alte Danke-Seite) */
+    #sent { display: none; text-align: center; }
+    .is-sent #contactForm, .is-sent #sub { display: none; }
+    .is-sent #sent { display: block; }
+    #sent .sent-icon {
+      width: 76px; height: 76px; margin: 36px auto 24px;
+      border-radius: 50%; background: var(--black); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      animation: sentPop .6s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    #sent .sent-icon svg { width: 34px; height: 34px; }
+    #sent p { font-size: 20px; line-height: 1.5; color: var(--sub-grey); }
+    #sent p b { color: var(--ink); }
+    #sent .sent-back {
+      display: inline-flex; margin-top: 30px; height: 62px; padding: 0 34px;
+      align-items: center; border-radius: 999px;
+      border: 1.5px solid var(--gBorder); font-size: 18px; font-weight: 500;
+      transition: border-color .18s ease;
+    }
+    #sent .sent-back:hover { border-color: var(--black); }
+    #sendBtn[disabled] { opacity: .6; cursor: wait; }
+    @keyframes sentPop { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+
     :focus-visible { outline: 2px solid #2b6cb0; outline-offset: 2px; }
 
     /* ============================================================
@@ -522,16 +555,16 @@
 ============================================================ -->
 <header class="site-header" id="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="logo">Irtona.de</a>
+    <a href="/" class="logo">Irtona.de</a>
     <nav class="header-nav">
-      <a href="index.html">Start</a>
-      <a href="portfolio.html">Referenzen</a>
-      <a href="preise.html">Pakete</a>
-      <a href="index.html#faq">FAQ</a>
-      <a href="kontakt.html">Kontakt</a>
+      <a href="/">Start</a>
+      <a href="/portfolio">Referenzen</a>
+      <a href="/preise">Pakete</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/kontakt">Kontakt</a>
     </nav>
     <div class="header-right">
-      <a href="kontakt.html" id="lm-btn" aria-label="Projekt starten">
+      <a href="/kontakt" id="lm-btn" aria-label="Projekt starten">
         <span id="lm-shader" aria-hidden="true"></span>
         <span class="lm-core" aria-hidden="true"></span>
         <span class="lm-label">Projekt starten</span>
@@ -546,12 +579,12 @@
 <!-- Mobile overlay -->
 <div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Navigation">
   <nav class="mobile-nav-links">
-    <a href="index.html">Start <span class="mobile-nav-arrow">→</span></a>
-    <a href="portfolio.html">Referenzen <span class="mobile-nav-arrow">→</span></a>
-    <a href="index.html#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
-    <a href="preise.html">Pakete <span class="mobile-nav-arrow">→</span></a>
-    <a href="index.html#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
-    <a href="kontakt.html">Projekt starten <span class="mobile-nav-arrow">→</span></a>
+    <a href="/">Start <span class="mobile-nav-arrow">→</span></a>
+    <a href="/portfolio">Referenzen <span class="mobile-nav-arrow">→</span></a>
+    <a href="/#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
+    <a href="/preise">Pakete <span class="mobile-nav-arrow">→</span></a>
+    <a href="/#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
+    <a href="/kontakt">Projekt starten <span class="mobile-nav-arrow">→</span></a>
   </nav>
   <div class="mobile-meta">
     <span>Irtona.de © 2026</span>
@@ -593,7 +626,6 @@
 
         <form action="https://formspree.io/f/mojydjwy" method="POST" id="contactForm">
           <input type="hidden" name="kundennummer" id="kundennummer_input">
-          <input type="hidden" name="_next" value="https://irtona.de/danke.html">
 
           <div id="pkgs" role="radiogroup" aria-label="Paket">
             <input type="radio" name="paket" id="pkg-start" value="start" class="pkg-option">
@@ -633,7 +665,7 @@
 
           <div id="fCheck">
             <input type="checkbox" id="datenschutz" name="datenschutz" required>
-            <label for="datenschutz">Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> gelesen und bin einverstanden.</label>
+            <label for="datenschutz">Ich habe die <a href="/datenschutz" target="_blank">Datenschutzerklärung</a> gelesen und bin einverstanden.</label>
           </div>
 
           <button type="submit" id="sendBtn">
@@ -642,9 +674,18 @@
           </button>
         </form>
 
+        <div id="sent" role="status" aria-live="polite">
+          <div class="sent-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,12.5 9.5,18 20,6.5"/></svg>
+          </div>
+          <p>Deine Anfrage ist bei uns angekommen.<br>Wir melden uns <b>innerhalb von 24 Stunden</b> bei dir.</p>
+          <a class="sent-back" href="/">Zurück zur Startseite</a>
+        </div>
+
         <p id="bottom">
           Oder ganz klassisch: <a class="mail" href="mailto:info@irtona.de">info@irtona.de</a>
-          <span class="legal"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a></span>
+          <span class="legal"><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/agb">AGB</a></span>
+          <span class="legal">© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</span>
         </p>
       </div>
     </div>
@@ -668,6 +709,30 @@
   (function () {
     var kn = document.getElementById('kundennummer_input');
     if (kn) kn.value = 'KN-' + Math.floor(100000 + Math.random() * 900000);
+  })();
+
+  // ── Formular im Hintergrund senden, Bestätigung in der Karte zeigen ──
+  (function () {
+    var form = document.getElementById('contactForm');
+    var btn  = document.getElementById('sendBtn');
+    var card = document.getElementById('cardIn');
+    if (!form || !window.fetch) return;   // ohne fetch: normales Absenden an Formspree
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      btn.disabled = true;
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        if (!res.ok) throw new Error('Formspree ' + res.status);
+        document.getElementById('h1').textContent = 'Danke dir!';
+        card.classList.add('is-sent');
+      }).catch(function () {
+        // Im Fehlerfall klassisch absenden, damit keine Anfrage verloren geht
+        form.submit();
+      });
+    });
   })();
 
   // ── Layout: drei Modi (Desktop quer, Tablet hochkant, Handy) ──
