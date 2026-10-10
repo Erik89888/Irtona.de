@@ -22,10 +22,12 @@
 
   /* ---------- Aktive Seite in der Pille markieren ---------- */
   function markActive() {
-    var path = location.pathname.split('/').pop() || 'index.html';
+    // "/preise", "/preise.html" und "preise.html" gelten als dieselbe Seite
+    function norm(p) { return (p.split('/').pop() || 'index').replace(/\.html$/, ''); }
+    var path = norm(location.pathname);
     $all('.site-header .header-nav a').forEach(function (a) {
       var href = (a.getAttribute('href') || '').split('#')[0];
-      if (href && href === path && a.getAttribute('href').indexOf('#') === -1) {
+      if (href && norm(href) === path && a.getAttribute('href').indexOf('#') === -1) {
         a.setAttribute('aria-current', 'page');
       }
     });
