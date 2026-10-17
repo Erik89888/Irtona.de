@@ -747,13 +747,23 @@
       background: var(--gray-100);
     }
 
-    .feature-visual img {
+    .feature-visual img,
+    .feature-visual video {
+      display: block;
       width: 100%; height: 100%;
       object-fit: cover;
       transition: transform .8s cubic-bezier(.22,1,.36,1);
     }
 
-    .feature-visual:hover img { transform: scale(1.04); }
+    .feature-visual:hover img,
+    .feature-visual:hover video { transform: scale(1.04); }
+
+    /* site-motion.css kennt nur img/iframe: gleicher Vorhang-Zoom für die Leistungs-Videos */
+    [data-m="img"] video { transform: scale(1.14); transition: transform 1.6s cubic-bezier(.22,1,.36,1); }
+    [data-m="img"].m-in video { transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      [data-m="img"] video { transform: none !important; transition: none !important; }
+    }
 
     .feature-badge {
       position: absolute;
@@ -1395,6 +1405,24 @@
     }
 
     .cta-actions { display: flex; justify-content: center; gap: 12px; position: relative; z-index: 1; }
+
+    /* CTA mit Video-Banner: oben weich aus dem hellen Kontaktbereich (gray-50)
+       einblenden, Mitte abgedunkelt für die weiße Schrift, unten nahtlos in den Footer */
+    .cta-section--video { padding-top: 260px; }
+    .cta-media { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .cta-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cta-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, var(--gray-50) 0, rgba(247,247,247,.9) 30px, rgba(247,247,247,0) 210px),
+        linear-gradient(to bottom, rgba(10,10,10,.15) 0, rgba(10,10,10,.62) 300px, rgba(10,10,10,.7) 70%, var(--black) 100%);
+    }
+    .cta-section--video::before { z-index: 0; }
+    .cta-section--video .container { position: relative; z-index: 1; }
+    .cta-section--video p { color: rgba(255,255,255,.82); }
+    @media (max-width: 768px) { .cta-section--video { padding-top: 250px; } }
 
     /* ============================================================
        FOOTER
@@ -2457,6 +2485,11 @@
     /* image card (decorative photos mixed into the wall) */
     .tcard--img { padding: 0; overflow: hidden; }
     .tcard--img img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .tcard--tall img { height: 280px; }
+    .tcard-stars { font-size: .95rem; letter-spacing: .14em; color: var(--black); margin-bottom: 12px; }
+    .tcols-google { color: var(--black); font-weight: 600; text-decoration: none; }
+    .tcols-star { color: #F5B400; }
+    .tcols-google:hover .tcols-more { opacity: .65; }
     #referenzen .section-header { text-align: center; margin-left: auto; margin-right: auto; }
     @keyframes tcolScroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
     @media (max-width: 1023px) { .tcol--3 { display: none; } }
@@ -2746,7 +2779,7 @@
     <!-- Feature 1 -->
     <div class="features-layout reveal">
       <div class="feature-visual">
-        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=900" alt="Beratung & Support" loading="lazy" />
+        <video class="lazy-video" muted loop playsinline preload="none" poster="leistung-beratung.jpg" data-src="leistung-beratung.mp4" aria-hidden="true" tabindex="-1"></video>
         <span class="feature-badge">01 · Kommunikation</span>
       </div>
       <div class="feature-copy">
@@ -2764,7 +2797,7 @@
     <!-- Feature 2 -->
     <div class="features-layout reverse reveal">
       <div class="feature-visual">
-        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=900" alt="Taschenrechner und Unterlagen: Website zum transparenten Festpreis" loading="lazy" />
+        <video class="lazy-video" muted loop playsinline preload="none" poster="leistung-festpreis.jpg" data-src="leistung-festpreis.mp4" aria-hidden="true" tabindex="-1"></video>
         <span class="feature-badge">02 · Transparenz</span>
       </div>
       <div class="feature-copy">
@@ -2782,7 +2815,7 @@
     <!-- Feature 3 -->
     <div class="features-layout reveal">
       <div class="feature-visual">
-        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=900" alt="Alles aus einer Hand" loading="lazy" />
+        <video class="lazy-video" muted loop playsinline preload="none" poster="leistung-fullservice.jpg" data-src="leistung-fullservice.mp4" aria-hidden="true" tabindex="-1"></video>
         <span class="feature-badge">03 · Full-Service</span>
       </div>
       <div class="feature-copy">
@@ -2816,7 +2849,7 @@
         <span class="section-label">Referenzen</span>
         <h2 class="section-heading">Projekte, die<br>beeindrucken.</h2>
       </div>
-      <a href="/portfolio" class="btn btn-outline">Alle Beispiele ansehen →</a>
+      <a href="/portfolio" class="btn btn-outline">Alle Beispiele ansehen</a>
     </div>
 
     <div class="portfolio-grid">
@@ -2923,7 +2956,7 @@
           <li>Rechtssicher (DSGVO-konform)</li>
           <li>Persönliche Betreuung im Projekt</li>
         </ul>
-        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen →</a>
+        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen</a>
       </div>
 
       <!-- Wachstum -->
@@ -2941,7 +2974,7 @@
           <li>Alles aus Start-Paket inklusive</li>
           <li>Persönliche Betreuung im Projekt</li>
         </ul>
-        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen →</a>
+        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen</a>
       </div>
 
       <!-- Premium -->
@@ -2958,7 +2991,7 @@
           <li>Volle Betreuung & Premium Design</li>
           <li>Persönliche Betreuung im Projekt</li>
         </ul>
-        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen →</a>
+        <a href="/kontakt" class="btn btn-dark">Jetzt anfragen</a>
       </div>
 
     </div>
@@ -2978,117 +3011,118 @@
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">Vertrauen</span>
-      <h2 class="section-heading">Kundenstimmen &<br>gute Gründe.</h2>
+      <h2 class="section-heading">Das sagen<br>unsere Kunden.</h2>
+      <p><a class="tcols-google" href="https://www.google.com/maps?cid=15891075119671955265" target="_blank" rel="noopener">5,0 <span class="tcols-star" aria-hidden="true">★</span> auf Google · <span class="tcols-more">alle Bewertungen ansehen</span></a></p>
     </div>
 
     <div class="tcols reveal">
 
-      <!-- Column 1 — review + trust + photo -->
+      <!-- Column 1: Bewertung + 2 Fotos (echte Google-Bewertungen, Stand 17.10.2026) -->
       <div class="tcol tcol--1">
         <div class="tcol-track" style="--dur:36s;">
           <!-- set -->
           <div class="tcard">
-            <p class="tcard-text">"Irtona hat meine Website in rasender Geschwindigkeit modernisiert. Seitdem haben mich viele Fotografen-Kollegen auf das neue Design angesprochen. Absolut empfehlenswert!"</p>
+            <div class="tcard-stars" role="img" aria-label="5 von 5 Sternen">★★★★★</div>
+            <p class="tcard-text">„Sehr nett, gute Umsetzung und tolles Endergebnis."</p>
             <div class="tcard-foot">
-              <div class="tcard-avatar">AH</div>
-              <div><div class="tcard-name">Anke H.</div><div class="tcard-role">Fotografin, Steinheim a. d. Murr</div></div>
+              <div class="tcard-avatar">CD</div>
+              <div><div class="tcard-name">Conrad D.</div><div class="tcard-role">Google-Bewertung</div></div>
             </div>
           </div>
-          <div class="tcard">
-            <div class="tcard-badge" aria-hidden="true">✓</div>
-            <div class="tcard-title">Festpreis-Garantie</div>
-            <p class="tcard-text">Ein fester Preis, den du vorher kennst. Ohne versteckte Kosten und ohne Überraschungen.</p>
-          </div>
           <div class="tcard tcard--img">
-            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" alt="Modernes Webdesign am Laptop" loading="lazy">
+            <img src="kunden-1.jpg" alt="Modernes Webdesign am Laptop" loading="lazy">
+          </div>
+          <div class="tcard tcard--img tcard--tall">
+            <img src="kunden-2.jpg" alt="Website-Entwürfe auf Papier skizziert" loading="lazy">
           </div>
           <!-- duplicate set for the seamless loop -->
           <div class="tcard" aria-hidden="true">
-            <p class="tcard-text">"Irtona hat meine Website in rasender Geschwindigkeit modernisiert. Seitdem haben mich viele Fotografen-Kollegen auf das neue Design angesprochen. Absolut empfehlenswert!"</p>
+            <div class="tcard-stars">★★★★★</div>
+            <p class="tcard-text">„Sehr nett, gute Umsetzung und tolles Endergebnis."</p>
             <div class="tcard-foot">
-              <div class="tcard-avatar">AH</div>
-              <div><div class="tcard-name">Anke H.</div><div class="tcard-role">Fotografin, Steinheim a. d. Murr</div></div>
+              <div class="tcard-avatar">CD</div>
+              <div><div class="tcard-name">Conrad D.</div><div class="tcard-role">Google-Bewertung</div></div>
             </div>
           </div>
-          <div class="tcard" aria-hidden="true">
-            <div class="tcard-badge">✓</div>
-            <div class="tcard-title">Festpreis-Garantie</div>
-            <p class="tcard-text">Ein fester Preis, den du vorher kennst. Ohne versteckte Kosten und ohne Überraschungen.</p>
-          </div>
           <div class="tcard tcard--img" aria-hidden="true">
-            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" alt="" loading="lazy">
+            <img src="kunden-1.jpg" alt="" loading="lazy">
+          </div>
+          <div class="tcard tcard--img tcard--tall" aria-hidden="true">
+            <img src="kunden-2.jpg" alt="" loading="lazy">
           </div>
         </div>
       </div>
 
-      <!-- Column 2 (from md up) — trust + photo + review -->
+      <!-- Column 2 (from md up): 2 Bewertungen + 2 Fotos, damit auf Tablets alle Stimmen sichtbar sind -->
       <div class="tcol tcol--2">
         <div class="tcol-track" style="--dur:44s;">
-          <div class="tcard">
-            <div class="tcard-badge" aria-hidden="true">✓</div>
-            <div class="tcard-title">14 Tage bis online</div>
-            <p class="tcard-text">Von der Idee zur fertigen Website dauert es meistens nur zwei Wochen.</p>
-          </div>
           <div class="tcard tcard--img">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" alt="Team bei der Projektarbeit" loading="lazy">
+            <img src="kunden-3.jpg" alt="Team bei der Projektarbeit" loading="lazy">
           </div>
           <div class="tcard">
-            <p class="tcard-text">„Klarer Preis, keine bösen Überraschungen, und das Ergebnis sieht aus wie eine Agenturseite für das Zehnfache. Ich kann Irtona nur weiterempfehlen."</p>
+            <div class="tcard-stars" role="img" aria-label="5 von 5 Sternen">★★★★★</div>
+            <p class="tcard-text">„Sehr nett und super hilfsbereit kann ich nur weiterempfehlen"</p>
             <div class="tcard-foot">
-              <div class="tcard-avatar">MH</div>
-              <div><div class="tcard-name">Mark H.</div><div class="tcard-role">Inhaber, CONEMA e.K.</div></div>
+              <div class="tcard-avatar">MM</div>
+              <div><div class="tcard-name">Meiko M.</div><div class="tcard-role">Google-Bewertung</div></div>
             </div>
           </div>
-          <div class="tcard" aria-hidden="true">
-            <div class="tcard-badge">✓</div>
-            <div class="tcard-title">14 Tage bis online</div>
-            <p class="tcard-text">Von der Idee zur fertigen Website dauert es meistens nur zwei Wochen.</p>
+          <div class="tcard tcard--img">
+            <img src="kunden-4.jpg" alt="Zufriedene Kunden nach dem Projektabschluss" loading="lazy">
+          </div>
+          <div class="tcard">
+            <div class="tcard-stars" role="img" aria-label="5 von 5 Sternen">★★★★★</div>
+            <p class="tcard-text">„Sehr zuverlässig und höflich. Auf jeden Fall empfehlenswert 👍"</p>
+            <div class="tcard-foot">
+              <div class="tcard-avatar">BF</div>
+              <div><div class="tcard-name">Benjamin F.</div><div class="tcard-role">Google-Bewertung</div></div>
+            </div>
           </div>
           <div class="tcard tcard--img" aria-hidden="true">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" alt="" loading="lazy">
+            <img src="kunden-3.jpg" alt="" loading="lazy">
           </div>
           <div class="tcard" aria-hidden="true">
-            <p class="tcard-text">„Klarer Preis, keine bösen Überraschungen, und das Ergebnis sieht aus wie eine Agenturseite für das Zehnfache. Ich kann Irtona nur weiterempfehlen."</p>
+            <div class="tcard-stars">★★★★★</div>
+            <p class="tcard-text">„Sehr nett und super hilfsbereit kann ich nur weiterempfehlen"</p>
             <div class="tcard-foot">
-              <div class="tcard-avatar">MH</div>
-              <div><div class="tcard-name">Mark H.</div><div class="tcard-role">Inhaber, CONEMA e.K.</div></div>
+              <div class="tcard-avatar">MM</div>
+              <div><div class="tcard-name">Meiko M.</div><div class="tcard-role">Google-Bewertung</div></div>
+            </div>
+          </div>
+          <div class="tcard tcard--img" aria-hidden="true">
+            <img src="kunden-4.jpg" alt="" loading="lazy">
+          </div>
+          <div class="tcard" aria-hidden="true">
+            <div class="tcard-stars">★★★★★</div>
+            <p class="tcard-text">„Sehr zuverlässig und höflich. Auf jeden Fall empfehlenswert 👍"</p>
+            <div class="tcard-foot">
+              <div class="tcard-avatar">BF</div>
+              <div><div class="tcard-name">Benjamin F.</div><div class="tcard-role">Google-Bewertung</div></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Column 3 (from lg up) — review + trust + photo -->
+      <!-- Column 3 (from lg up): Fotos -->
       <div class="tcol tcol--3">
         <div class="tcol-track" style="--dur:40s;">
-          <div class="tcard">
-            <p class="tcard-text">„Super schnell, super professionell. Innerhalb von zwei Wochen war meine Restaurantseite online, mit digitaler Speisekarte und Reservierungsfunktion. Klasse!"</p>
-            <div class="tcard-foot">
-              <div class="tcard-avatar">TN</div>
-              <div><div class="tcard-name">Tran N.</div><div class="tcard-role">Inhaber, Asia-Restaurant Vaihingen</div></div>
-            </div>
-          </div>
-          <div class="tcard">
-            <div class="tcard-badge" aria-hidden="true">✓</div>
-            <div class="tcard-title">DSGVO-konform</div>
-            <p class="tcard-text">Rechtssicher aufgesetzt: Impressum, Datenschutz und Technik nach deutschem Standard.</p>
+          <div class="tcard tcard--img tcard--tall">
+            <img src="kunden-5.jpg" alt="Arbeit an einer Website am Laptop" loading="lazy">
           </div>
           <div class="tcard tcard--img">
-            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=800&auto=format&fit=crop" alt="Business & Büro" loading="lazy">
+            <img src="kunden-6.jpg" alt="Heller Arbeitsplatz mit Laptop und Bildschirm" loading="lazy">
           </div>
-          <div class="tcard" aria-hidden="true">
-            <p class="tcard-text">„Super schnell, super professionell. Innerhalb von zwei Wochen war meine Restaurantseite online, mit digitaler Speisekarte und Reservierungsfunktion. Klasse!"</p>
-            <div class="tcard-foot">
-              <div class="tcard-avatar">TN</div>
-              <div><div class="tcard-name">Tran N.</div><div class="tcard-role">Inhaber, Asia-Restaurant Vaihingen</div></div>
-            </div>
+          <div class="tcard tcard--img">
+            <img src="kunden-7.jpg" alt="Besprechung eines Website-Entwurfs am Laptop" loading="lazy">
           </div>
-          <div class="tcard" aria-hidden="true">
-            <div class="tcard-badge">✓</div>
-            <div class="tcard-title">DSGVO-konform</div>
-            <p class="tcard-text">Rechtssicher aufgesetzt: Impressum, Datenschutz und Technik nach deutschem Standard.</p>
+          <div class="tcard tcard--img tcard--tall" aria-hidden="true">
+            <img src="kunden-5.jpg" alt="" loading="lazy">
           </div>
           <div class="tcard tcard--img" aria-hidden="true">
-            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=800&auto=format&fit=crop" alt="" loading="lazy">
+            <img src="kunden-6.jpg" alt="" loading="lazy">
+          </div>
+          <div class="tcard tcard--img" aria-hidden="true">
+            <img src="kunden-7.jpg" alt="" loading="lazy">
           </div>
         </div>
       </div>
@@ -3110,7 +3144,7 @@
         <p style="margin-top:1.2rem; font-size:1rem; color:var(--gray-600); line-height:1.7; font-weight:300;">
           Deine Frage ist nicht dabei? Kein Problem, schreib uns einfach direkt.
         </p>
-        <a href="/kontakt" class="btn btn-dark" style="margin-top:2rem;">Direkt fragen →</a>
+        <a href="/kontakt" class="btn btn-dark" style="margin-top:2rem;">Direkt fragen</a>
       </div>
 
       <div class="faq-list reveal" id="faqList">
@@ -3307,7 +3341,7 @@
         </div>
 
         <a href="/kontakt" class="btn btn-dark btn-lg" style="margin-top: 8px; width: fit-content;">
-          Projekt anfragen →
+          Projekt anfragen
         </a>
       </div>
     </div>
@@ -3317,7 +3351,10 @@
 <!-- ============================================================
      CTA
 ============================================================ -->
-<section class="cta-section">
+<section class="cta-section cta-section--video">
+  <div class="cta-media" aria-hidden="true">
+    <video class="lazy-video" muted loop playsinline preload="none" poster="cta-banner.jpg" data-src="cta-banner.mp4" tabindex="-1"></video>
+  </div>
   <div class="container">
     <h2 class="section-heading reveal" style="max-width: 640px; margin: 0 auto;">
       Bereit für deine neue Website?
@@ -3328,7 +3365,7 @@
       und dein Unternehmen steht professionell im Netz.
     </p>
     <div class="cta-actions reveal">
-      <a href="/kontakt" class="btn btn-light btn-lg">Jetzt kostenlos anfragen →</a>
+      <a href="/kontakt" class="btn btn-light btn-lg">Jetzt kostenlos anfragen</a>
       <a href="#faq" class="btn btn-outline btn-lg">Noch Fragen? FAQ lesen</a>
     </div>
   </div>
@@ -3382,14 +3419,13 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
+      <p>© 2026 Irtona Webdesign. Alle Rechte vorbehalten.</p>
       <div class="footer-legal">
         <a href="/impressum">Impressum</a>
         <a href="/datenschutz">Datenschutz</a>
         <a href="/agb">AGB</a>
       </div>
     </div>
-    <p class="footer-tax">* Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.</p>
   </div>
 </footer>
 
@@ -3871,6 +3907,24 @@
     window.addEventListener('orientationchange', fit);
     window.addEventListener('load', fit);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  }());
+
+  /* Leistungs-Videos: erst kurz vor dem Sichtbereich laden, außerhalb pausieren */
+  (function () {
+    var vids = document.querySelectorAll('video.lazy-video');
+    if (!vids.length) return;
+    function start(v) {
+      if (!v.src) { v.src = v.getAttribute('data-src'); v.load(); }
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    }
+    if (!('IntersectionObserver' in window)) { vids.forEach(start); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) start(e.target);
+        else if (e.target.src) e.target.pause();
+      });
+    }, { rootMargin: '300px 0px' });
+    vids.forEach(function (v) { io.observe(v); });
   }());
 </script>
 </body>
