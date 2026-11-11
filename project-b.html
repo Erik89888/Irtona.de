@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Referenz Meine Futterkiste | Irtona.de</title>
+  <meta name="description" content="Referenzprojekt von Irtona.de: die neue Website von Meine Futterkiste in Steinheim-Höpfigheim. Sortiment, BARF-Rechner, Öffnungszeiten live aus Google und echte Bewertungen." />
+  <link rel="canonical" href="https://irtona.de/project-b" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Irtona.de" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:url" content="https://irtona.de/project-b" />
+  <meta property="og:title" content="Referenz Meine Futterkiste | Irtona.de" />
+  <meta property="og:description" content="So ist die neue Website von Meine Futterkiste entstanden und das bringt sie dem Laden." />
+  <meta property="og:image" content="https://irtona.de/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon_16x16.png">
+  <script type="importmap">{ "imports": { "three": "./three.module.min.js" } }</script>
+  <link rel="modulepreload" href="three.module.min.js">
+
+  <script>
+    /* WebGL-Band nur, wenn der Browser es kann und keine reduzierte Bewegung gewünscht ist.
+       Sonst bleibt das statische Raster stehen. */
+    (function () {
+      var ok = false;
+      try {
+        var c = document.createElement('canvas');
+        ok = !!(c.getContext('webgl2') || c.getContext('webgl'));
+      } catch (e) {}
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) ok = false;
+      if (ok) {
+        document.documentElement.classList.add('gl-on');
+        // Lädt das 3D-Skript nicht, fällt die Seite nach 9 s auf das Raster zurück
+        setTimeout(function () { if (!window.__fkReady) document.documentElement.classList.remove('gl-on'); }, 9000);
+      }
+    })();
+  </script>
+
+  <style>
+    :root {
+      --black:   #0a0a0a;
+      --white:   #ffffff;
+      --gray-50: #f7f7f7;
+      --gray-100:#eeeeee;
+      --gray-200:#d8d8d8;
+      --gray-400:#999999;
+      --gray-600:#555555;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --transition: 0.4s cubic-bezier(0.22,1,0.36,1);
+      --font-display: -apple-system, BlinkMacSystemFont, 'Outfit', 'Segoe UI', sans-serif;
+      --font-body:    -apple-system, BlinkMacSystemFont, 'Outfit', 'Segoe UI', sans-serif;
+      /* Kleine Labels nutzen dieselbe Schrift wie die ganze Seite (Outfit) */
+      --font-mono: var(--font-body);
+
+      /* Band / Bühne */
+      --st-bg:  #0b0c0a;
+      --st-ink: #f4f1ea;
+      --st-mid: #8d8b86;
+      --st-line: rgba(244,241,234,.14);
+
+      /* Futterkiste-Akzente, sparsam */
+      --fk-green: #1a3d1a;
+      --fk-green-2: #2f6b33;
+      --fk-mint: #a7e8b0;
+      --fk-orange: #e8690f;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; background: var(--st-bg); }
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.menu-open { overflow: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.05; letter-spacing: -0.03em; }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gray-400);
+      display: block; margin-bottom: 1.2rem;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.03em;
+    }
+
+    /* ============================================================
+       HEADER (wie portfolio.html)
+    ============================================================ */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1100; padding: 10px 0;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--gray-100);
+      transition: all 0.4s ease;
+    }
+    .site-header.scrolled { padding: 8px 0; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; letter-spacing: -0.05em; color: var(--black); }
+    .header-nav { display: flex; align-items: center; gap: 36px; }
+    .header-nav a { font-size: 0.9rem; font-weight: 500; color: var(--gray-600); transition: color .2s; position: relative; }
+    .header-nav a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: var(--black); transition: width .3s ease; }
+    .header-nav a:hover { color: var(--black); }
+    .header-nav a:hover::after { width: 100%; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 100px;
+      font-family: var(--font-body); font-size: 0.95rem;
+      font-weight: 500; cursor: pointer; border: none;
+      transition: var(--transition); white-space: nowrap;
+    }
+    .btn-dark { background: var(--black); color: var(--white); }
+    .btn-dark:hover { background: #1a1a1a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+    .btn-outline { background: transparent; color: var(--black); border: 1.5px solid var(--gray-200); }
+    .btn-outline:hover { border-color: var(--black); transform: translateY(-2px); }
+    .btn-light { background: var(--white); color: var(--black); }
+    .btn-light:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    .btn-ghost-light { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,.3); }
+    .btn-ghost-light:hover { border-color: var(--white); transform: translateY(-2px); }
+    .btn-lg { padding: 18px 36px; font-size: 1rem; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001;
+    }
+    .hamburger span {
+      display: block; width: 26px; height: 1.8px; background: var(--black); border-radius: 2px;
+      transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .3s ease; transform-origin: center;
+    }
+    .hamburger.is-active span:nth-child(1) { transform: translateY(6.8px) rotate(45deg); }
+    .hamburger.is-active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.is-active span:nth-child(3) { transform: translateY(-6.8px) rotate(-45deg); }
+
+    .mobile-overlay {
+      position: fixed; inset: 0; background: var(--white); z-index: 1000;
+      display: flex; flex-direction: column; justify-content: center; padding: 0 40px;
+      transform: translateX(100%); transition: transform .55s cubic-bezier(.22,1,.36,1); pointer-events: none;
+    }
+    .mobile-overlay.is-open { transform: translateX(0); pointer-events: all; }
+    .mobile-overlay::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--black); }
+    .mobile-nav-links { display: flex; flex-direction: column; gap: 0; }
+    .mobile-nav-links a {
+      font-family: var(--font-display); font-size: clamp(2.4rem, 9vw, 3.5rem);
+      font-weight: 800; color: var(--black); letter-spacing: -0.04em; line-height: 1.2;
+      padding: 12px 0; border-bottom: 1px solid var(--gray-100);
+      display: flex; align-items: center; justify-content: space-between;
+      opacity: 0; transform: translateX(60px);
+      transition: opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1), color .2s;
+    }
+    .mobile-nav-links a:last-child { border-bottom: none; }
+    .mobile-overlay.is-open .mobile-nav-links a { opacity: 1; transform: translateX(0); }
+    .mobile-nav-links a:hover { color: var(--gray-400); }
+    .mobile-nav-links a:nth-child(1) { transition-delay: .05s; }
+    .mobile-nav-links a:nth-child(2) { transition-delay: .10s; }
+    .mobile-nav-links a:nth-child(3) { transition-delay: .15s; }
+    .mobile-nav-links a:nth-child(4) { transition-delay: .20s; }
+    .mobile-nav-links a:nth-child(5) { transition-delay: .25s; }
+    .mobile-nav-links a:nth-child(6) { transition-delay: .30s; }
+    .mobile-nav-arrow { font-size: 1.5rem; color: var(--gray-200); }
+    .mobile-meta {
+      position: absolute; bottom: 40px; left: 40px; right: 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; color: var(--gray-400); font-weight: 500;
+      opacity: 0; transition: opacity .5s .35s ease;
+    }
+    .mobile-overlay.is-open .mobile-meta { opacity: 1; }
+
+    /* ============================================================
+       BÜHNE: Band aus Karten (nach Vorlage "Video Ribbon")
+    ============================================================ */
+    #track { position: relative; background: var(--st-bg); }
+    .gl-on #track { height: 590vh; }
+    .stage {
+      position: relative; overflow: hidden;
+      background: var(--st-bg); color: var(--st-ink);
+      font-family: var(--font-body);
+    }
+    .gl-on .stage { position: sticky; top: 0; height: 100vh; height: 100svh; }
+
+    .stage h1 { font-weight: 400; }
+    .hl {
+      position: absolute; left: 0; right: 0;
+      font-weight: 400; font-size: clamp(40px, 6.7vw, 130px);
+      line-height: 1; letter-spacing: -.055em; white-space: nowrap;
+      text-align: center; will-change: transform; text-transform: uppercase;
+    }
+    #l1 { top: calc(50% - .98em); transform-origin: 50% 100%; }
+    #l2 { top: calc(50% + .03em); transform-origin: 50% 0%; }
+    #l1 span, #l2 span { display: inline-block; overflow: hidden; padding: .08em .02em; margin-top: -.08em; margin-bottom: -.08em; }
+    #l1 span { margin-right: 15vw; }
+    #l2 span { margin-left: 15vw; }
+    /* Intro: Buchstaben steigen nacheinander aus der Maske */
+    .hl i { display: inline-block; font-style: normal; transform: translateY(112%); animation: letterUp 1.15s cubic-bezier(.22,1,.36,1) forwards; animation-delay: calc(.3s + var(--i) * 55ms); }
+    @keyframes letterUp { to { transform: none; } }
+    .gl-on #l1 { transform: translate3d(var(--o1, 0px), 0, 0) scale(var(--s0, 1.45)); }
+    .gl-on #l2 { transform: translate3d(var(--o2, 0px), 0, 0) scale(var(--s0, 1.45)); }
+
+    #cue {
+      position: absolute; left: 50%; bottom: 92px; transform: translateX(-50%);
+      pointer-events: none; text-align: center;
+    }
+    #cue .cue-in {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font: 600 10.5px var(--font-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--st-mid);
+      opacity: 0; animation: fadeIn .8s ease 1.6s forwards;
+    }
+    #cue b { position: relative; display: block; width: 1px; height: 34px; background: var(--st-line); overflow: hidden; }
+    #cue b::after { content: ''; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--st-ink); animation: cueRun 1.8s cubic-bezier(.76,0,.24,1) 2s infinite; }
+    @keyframes cueRun { to { top: 100%; } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .cap-in { display: block; opacity: 0; animation: fadeIn .9s ease 1.1s forwards; }
+    html:not(.gl-on) #cue { display: none; }
+
+    #cap {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 15em; text-align: center; font-size: clamp(9px, .74vw, 13px);
+      font-weight: 500; line-height: 1.3; letter-spacing: .03em;
+      text-transform: uppercase; color: var(--st-ink);
+    }
+    .gl-on #cap { transform: translate(-50%, calc(-50% + var(--capy, 0px))); }
+
+    #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
+    .gl-on #gl { display: block; }
+    #glow { position: absolute; left: 0; right: 0; top: 0; height: 42%; background: linear-gradient(rgba(244,241,234,.1), rgba(244,241,234,0)); pointer-events: none; }
+    #cross { position: absolute; left: 32px; right: 32px; top: 37.5%; height: 1px; background: var(--st-line); pointer-events: none; }
+    #cross i { position: absolute; left: 50%; top: -.62em; margin-left: -.3em; font: 400 13px var(--font-mono); font-style: normal; color: var(--st-mid); background: var(--st-bg); padding: 0 .3em; line-height: 1.2; }
+    #hint {
+      position: absolute; left: 50%; top: 104px; transform: translateX(-50%);
+      font: 600 11.5px var(--font-mono); letter-spacing: .12em; color: var(--st-ink);
+      padding-bottom: 6px; border-bottom: 1px solid var(--st-line); white-space: nowrap;
+      transition: border-color .2s;
+    }
+    #hint:hover { border-color: var(--st-ink); }
+    #rule { position: absolute; left: 3.5vw; right: 3.5vw; top: 50%; height: 1px; background: var(--st-line); transform-origin: left; transform: scaleX(0); pointer-events: none; }
+    #ghint {
+      position: absolute; left: 50%; top: 14%; transform: translateX(-50%);
+      font: 600 11px var(--font-mono); letter-spacing: .14em; text-transform: uppercase;
+      color: var(--st-mid); opacity: 0; white-space: nowrap; pointer-events: none;
+    }
+    .bot {
+      position: absolute; left: 32px; right: 32px; bottom: 26px;
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: end;
+      font-size: 12.5px; line-height: 1.35; pointer-events: none;
+    }
+    .bot p { color: var(--st-ink); max-width: 21em; }
+    .bot .mid { font: 600 11.5px var(--font-mono); letter-spacing: .12em; }
+    .bot .mid s { text-decoration: none; color: var(--st-mid); margin: 0 .9em; }
+    .bot .r {
+      justify-self: end; display: flex; gap: 12px; align-items: center;
+      font: 600 11.5px var(--font-mono); letter-spacing: .12em; pointer-events: auto; color: var(--st-ink);
+    }
+    .bot .r:after { content: ""; width: 22px; height: 1px; background: var(--st-ink); transition: width .25s ease; }
+    .bot .r:hover:after { width: 34px; }
+    #name {
+      position: absolute; left: 0; top: 0; padding: 6px 11px;
+      background: var(--st-ink); color: var(--st-bg); border-radius: 99px;
+      font-size: 11.5px; font-weight: 600; letter-spacing: .04em;
+      pointer-events: none; opacity: 0; transition: opacity .16s; white-space: nowrap;
+    }
+    .stage.is-hit { cursor: pointer; }
+
+    /* Statisches Raster: ohne WebGL oder bei reduzierter Bewegung */
+    .fk-fallback { display: none; }
+    html:not(.gl-on) .stage { padding: 150px 0 120px; }
+    html:not(.gl-on) .hl, html:not(.gl-on) #cap { position: relative; top: auto; transform: none; }
+    html:not(.gl-on) #l1 span, html:not(.gl-on) #l2 span { margin: 0; }
+    html:not(.gl-on) #cap { left: auto; margin: 22px auto 0; }
+    html:not(.gl-on) #glow, html:not(.gl-on) #cross, html:not(.gl-on) #rule,
+    html:not(.gl-on) #ghint, html:not(.gl-on) #name { display: none; }
+    html:not(.gl-on) #hint { top: 104px; }
+    html:not(.gl-on) .bot { position: relative; left: auto; right: auto; bottom: auto; margin: 64px 32px 0; }
+    html:not(.gl-on) .fk-fallback {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      width: min(1100px, 88vw); margin: 56px auto 0;
+    }
+    .fk-fallback a { display: block; border-radius: 6px; overflow: hidden; aspect-ratio: 2.1 / 1.32; background: #141513; position: relative; }
+    .fk-fallback img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transition: transform .6s var(--ease, ease); }
+    .fk-fallback a:hover img { transform: scale(1.03); }
+    .fk-fallback span {
+      position: absolute; left: 10px; bottom: 10px; padding: 5px 10px;
+      background: var(--st-ink); color: var(--st-bg); border-radius: 99px;
+      font-size: 11px; font-weight: 600; letter-spacing: .04em;
+    }
+
+    /* Übergang aus dem Schwarz ins Helle */
+    /* Ticker als Übergang, danach schiebt sich der helle Teil mit runden Ecken darüber */
+    .fk-ticker { background: var(--st-bg); color: var(--st-ink); overflow: hidden; padding: 30px 0 84px; border-top: 1px solid var(--st-line); }
+    .tk-track { display: flex; align-items: center; width: max-content; animation: tkRun 46s linear infinite; }
+    .tk-track span {
+      font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(1.6rem, 3.6vw, 3rem); letter-spacing: -0.03em; line-height: 1; white-space: nowrap;
+    }
+    .tk-track span:nth-child(4n+3) { color: rgba(244,241,234,.32); }
+    .tk-track b { display: block; width: 10px; height: 10px; border-radius: 50%; background: var(--fk-mint); margin: 0 clamp(18px, 2.4vw, 34px); flex: none; }
+    @keyframes tkRun { to { transform: translateX(-50%); } }
+    #bausteine { position: relative; z-index: 1; margin-top: -48px; border-radius: 48px 48px 0 0; }
+    @media (max-width: 768px) { .fk-ticker { padding: 22px 0 64px; } #bausteine { margin-top: -36px; border-radius: 32px 32px 0 0; } }
+
+    /* ============================================================
+       INHALT
+    ============================================================ */
+    .section { padding: 120px 0; }
+    .section-alt { background: var(--gray-50); }
+    .section-header { max-width: 640px; }
+    .section-header p { margin-top: 1.2rem; font-size: 1.05rem; color: var(--gray-600); line-height: 1.7; font-weight: 300; }
+    .lead { font-size: 1.12rem; color: var(--gray-600); line-height: 1.75; font-weight: 300; }
+    .lead strong { color: var(--black); font-weight: 600; }
+
+    .reveal { transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    body.js-ready .reveal:not(.active) { opacity: 0; transform: translateY(36px); }
+    .reveal.active { opacity: 1 !important; transform: translateY(0) !important; }
+
+    /* Ausgangslage */
+    .brief { display: grid; grid-template-columns: 1.25fr 1fr; gap: 80px; align-items: start; }
+    .brief .lead + .lead { margin-top: 1.2rem; }
+    .facts { border-top: 1px solid var(--gray-100); }
+    .facts div { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--gray-100); }
+    .facts dt { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); padding-top: 3px; }
+    .facts dd { font-size: 1rem; font-weight: 500; line-height: 1.5; }
+    .facts dd a { border-bottom: 1.5px solid var(--black); }
+    .facts dd a:hover { color: var(--fk-green-2); border-color: var(--fk-green-2); }
+
+    /* Bausteine */
+    .blocks-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-bottom: 72px; }
+    .blocks-head p { max-width: 380px; color: var(--gray-600); line-height: 1.7; font-weight: 300; }
+    /* Feature-Karten: Bild und Text nebeneinander, Seiten im Wechsel */
+    .feats { display: flex; flex-direction: column; gap: 28px; }
+    .feat {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center;
+      background: var(--white); border: 1px solid var(--gray-100); border-radius: var(--radius-lg);
+      padding: 18px 48px 18px 18px; scroll-margin-top: 96px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.05);
+    }
+    .feat:nth-child(even) { grid-template-columns: 1fr 1.2fr; padding: 18px 18px 18px 48px; }
+    .feat:nth-child(even) .feat-shot { order: 2; }
+    body.js-ready .feat.reveal:not(.active) { opacity: 0; transform: translateX(-70px) rotate(-1deg); }
+    body.js-ready .feat.reveal:nth-child(even):not(.active) { transform: translateX(70px) rotate(1deg); }
+    .feat.reveal { transition: opacity .9s cubic-bezier(.22,1,.36,1), transform 1.1s cubic-bezier(.22,1,.36,1); }
+    .feat-shot {
+      position: relative; aspect-ratio: 16 / 10; overflow: hidden;
+      border-radius: 22px; background: #effcef;
+    }
+    .feat-shot img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+    .feat-shot.mid img { object-position: 50% 50%; }
+    .feat-shot.tall.play img { animation: shotPan 18s ease-in-out infinite; }
+    @keyframes shotPan {
+      0%, 14%   { object-position: 50% 0; }
+      50%, 64%  { object-position: 50% 100%; }
+      100%      { object-position: 50% 0; }
+    }
+    .feat-copy { padding: 24px 0; }
+    .feat-top { display: flex; align-items: center; gap: 14px; margin-bottom: 1.1rem; }
+    .feat-num { font: 500 .8rem var(--font-mono); color: var(--gray-400); letter-spacing: .04em; }
+    .feat-tag { padding: 5px 12px; border-radius: 99px; background: #eef7ef; color: var(--fk-green-2); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .feat h3 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 800; margin-bottom: 1.1rem; }
+    .feat-copy > p { color: var(--gray-600); line-height: 1.75; font-weight: 300; font-size: 1.02rem; }
+    .gain {
+      margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid var(--gray-100);
+      display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: baseline;
+    }
+    .gain small { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--fk-orange); white-space: nowrap; }
+    .gain p { font-size: 1.08rem; font-weight: 600; line-height: 1.5; color: var(--black); }
+
+    /* Unter der Haube */
+    .tech { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; margin-top: 60px; }
+    .tech > div { background: var(--white); padding: 36px 28px; }
+    .tech h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .8rem; letter-spacing: -0.02em; }
+    .tech p { font-size: .9rem; color: var(--gray-600); line-height: 1.65; font-weight: 300; }
+
+    /* Zahlen */
+    .stats-head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 56px; }
+    .stats-head .lead { font-size: 1rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .tile { background: var(--white); border: 1px solid var(--gray-100); border-radius: var(--radius-md); padding: 26px 24px 24px; }
+    .tile-label { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-400); }
+    .tile-num { font-family: var(--font-display); font-size: clamp(2.2rem, 3.6vw, 3rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin: 12px 0 6px; font-variant-numeric: tabular-nums; }
+    .tile-sub { font-size: .85rem; color: var(--gray-600); line-height: 1.5; }
+
+    .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .chart-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: var(--radius-md); padding: 24px 24px 14px; position: relative; }
+    .chart-card h3 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+    .chart-card .chart-sub { font-size: .82rem; color: var(--gray-400); margin-top: 4px; }
+    .chart { position: relative; margin-top: 14px; height: 210px; }
+    .chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .chart .grid-l { stroke: #ececec; stroke-width: 1; }
+    .chart .axis-t { font: 500 11px var(--font-body); fill: #8a8a8a; }
+    .chart .mark-l { stroke: #b5b5b5; stroke-width: 1; stroke-dasharray: 3 4; }
+    .chart .mark-t { font: 600 11px var(--font-body); fill: #555; }
+    .chart .line { fill: none; stroke: var(--fk-green-2); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .chart .area { fill: rgba(47,107,51,.08); }
+    .chart .cross { stroke: #0a0a0a; stroke-width: 1; opacity: 0; }
+    .chart .dot { fill: var(--fk-green-2); stroke: #fff; stroke-width: 2; opacity: 0; }
+    .chart.hover .cross, .chart.hover .dot { opacity: 1; }
+    .chart .tip {
+      position: absolute; top: 0; left: 0; pointer-events: none; opacity: 0;
+      background: var(--black); color: var(--white); border-radius: 10px; padding: 8px 11px;
+      font-size: .78rem; line-height: 1.35; white-space: nowrap; transition: opacity .12s;
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    }
+    .chart .tip b { display: block; font-size: .95rem; font-weight: 700; }
+    .chart.hover .tip { opacity: 1; }
+    .chart.draw .line { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+    .chart.draw.drawn .line { transition: stroke-dashoffset 1.6s cubic-bezier(.22,1,.36,1); stroke-dashoffset: 0; }
+    .chart-card details { margin-top: 6px; font-size: .8rem; color: var(--gray-600); }
+    .chart-card summary { cursor: pointer; padding: 6px 0; color: var(--gray-400); }
+    .chart-card summary:hover { color: var(--black); }
+    .chart-card table { border-collapse: collapse; width: 100%; margin: 6px 0 8px; font-variant-numeric: tabular-nums; }
+    .chart-card td, .chart-card th { padding: 4px 6px; border-bottom: 1px solid var(--gray-100); text-align: left; }
+    .chart-card td:last-child, .chart-card th:last-child { text-align: right; }
+    .tbl-wrap { max-height: 220px; overflow: auto; }
+
+    .reading { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; margin-top: 16px; }
+    .reading .tile p { font-size: 1rem; line-height: 1.7; color: var(--gray-600); font-weight: 300; margin-top: 12px; }
+    .reading .tile p strong { color: var(--black); font-weight: 600; }
+    .tile-dark { background: var(--fk-green); border-color: var(--fk-green); color: var(--white); }
+    .tile-dark .tile-label { color: var(--fk-mint); }
+    .tile-dark p { color: rgba(255,255,255,.78) !important; }
+    .tile-dark h3 { font-size: 1.6rem; font-weight: 800; margin-top: 12px; letter-spacing: -0.03em; }
+    .src { margin-top: 18px; font-size: .78rem; color: var(--gray-400); }
+    .is-placeholder { color: var(--gray-400); }
+    .ph-flag { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 99px; background: #fff1e6; color: var(--fk-orange); font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; vertical-align: middle; }
+
+    /* Zeitstrahl */
+    .timeline { display: grid; grid-template-columns: repeat(6, 1fr); margin-top: 64px; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 0; right: 0; top: 7px; height: 1px; background: var(--gray-200); }
+    .tl { position: relative; padding: 34px 18px 0 0; }
+    .tl::before { content: ''; position: absolute; left: 0; top: 0; width: 15px; height: 15px; border-radius: 50%; background: var(--white); border: 2px solid var(--black); }
+    .tl.hl-dot::before { background: var(--fk-orange); border-color: var(--fk-orange); }
+    .tl time { display: block; font: 500 .78rem var(--font-mono); letter-spacing: .04em; color: var(--gray-400); margin-bottom: 8px; }
+    .tl h3 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+    .tl p { font-size: .86rem; color: var(--gray-600); line-height: 1.6; font-weight: 300; }
+
+    /* CTA */
+    .cta { background: var(--black); color: var(--white); padding: 130px 0; position: relative; overflow: hidden; }
+    .cta::before { content: ''; position: absolute; inset: auto -10% -60% -10%; height: 120%; background: radial-gradient(50% 50% at 50% 50%, rgba(167,232,176,.14), rgba(167,232,176,0)); pointer-events: none; }
+    .cta .container { position: relative; display: grid; grid-template-columns: 1.3fr 1fr; gap: 60px; align-items: end; }
+    .cta h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -0.045em; }
+    .cta p { color: rgba(255,255,255,.6); line-height: 1.7; font-weight: 300; font-size: 1.05rem; margin-bottom: 28px; }
+    .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* ============================================================
+       FOOTER (wie portfolio.html)
+    ============================================================ */
+    .site-footer { background: var(--black); color: rgba(255,255,255,.5); padding: 72px 0 32px; border-top: 1px solid rgba(255,255,255,.05); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px; }
+    .footer-brand .logo { color: var(--white); font-size: 1.4rem; display: block; margin-bottom: 1rem; }
+    .footer-brand p { font-size: .88rem; line-height: 1.7; max-width: 300px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .social-btn { width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.4); transition: var(--transition); }
+    .social-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); transform: translateY(-2px); }
+    .social-btn svg { width: 16px; height: 16px; }
+    .footer-col h5 { font-family: var(--font-display); font-size: .85rem; font-weight: 700; color: var(--white); margin-bottom: 1.2rem; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: .85rem; color: rgba(255,255,255,.4); transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.07); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: .8rem; }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: .8rem; color: rgba(255,255,255,.3); transition: color .2s; }
+    .footer-legal a:hover { color: var(--white); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .brief { grid-template-columns: 1fr; gap: 48px; }
+      .feat, .feat:nth-child(even) { grid-template-columns: 1fr; gap: 8px; padding: 14px 14px 10px; }
+      .feat:nth-child(even) .feat-shot { order: 0; }
+      .feat-copy { padding: 18px 14px 14px; }
+      .tech { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-head { grid-template-columns: 1fr; gap: 20px; }
+      .charts, .reading { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
+      .timeline::before { display: none; }
+      .cta .container { grid-template-columns: 1fr; gap: 28px; }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 80px 0; }
+      .header-nav { display: none !important; }
+      .header-right .btn { display: none !important; }
+      .hamburger { display: flex !important; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .blocks-head { flex-direction: column; align-items: flex-start; gap: 18px; margin-bottom: 40px; }
+      body.js-ready .feat.reveal:not(.active),
+      body.js-ready .feat.reveal:nth-child(even):not(.active) { transform: translateY(40px); }
+      .feats { gap: 18px; }
+      .feat { border-radius: 26px; }
+      .gain { grid-template-columns: 1fr; gap: 6px; }
+      .facts div { grid-template-columns: 1fr; gap: 4px; }
+      .timeline { grid-template-columns: 1fr; row-gap: 0; padding-left: 4px; }
+      .timeline::before { display: block; left: 11px; right: auto; top: 0; bottom: 0; width: 1px; height: auto; }
+      .tl { padding: 0 0 30px 40px; }
+      .tl::before { left: 4px; top: 2px; }
+      .cta { padding: 96px 0; }
+    }
+    @media (max-width: 760px) {
+      .gl-on #track { height: 470vh; }
+      #cross { left: 18px; right: 18px; }
+      .bot { left: 18px; right: 18px; bottom: 18px; grid-template-columns: 1fr auto; }
+      .bot .mid { display: none; }
+      .bot p { max-width: 17em; font-size: 11px; }
+      #hint { top: 92px; }
+      html:not(.gl-on) .fk-fallback { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      html:not(.gl-on) .bot { margin: 48px 18px 0; }
+    }
+    @media (max-width: 520px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .stats-grid { gap: 10px; }
+      .tile { padding: 20px 18px; }
+      .tech { grid-template-columns: 1fr; }
+      .cta-btns .btn { width: 100%; justify-content: center; }
+    }
+
+    /* ============================================================
+       FLOATING PILL NAV + LIQUID-METAL CTA (identisch zur Startseite)
+    ============================================================ */
+    .site-header {
+      background: transparent !important; border-bottom: none !important;
+      -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+      padding: 14px 16px !important; display: flex; justify-content: center; pointer-events: none;
+    }
+    .site-header.scrolled { padding: 10px 16px !important; }
+    .site-header .header-inner {
+      pointer-events: auto; width: 100%; max-width: 1040px; gap: 12px;
+      padding: 8px 10px 8px 20px; border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.55); background: rgba(255,255,255,.62);
+      -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%);
+      box-shadow: 0 8px 30px rgba(0,0,0,.10);
+      transition: background-color .4s ease, box-shadow .4s ease, border-color .4s ease, padding .4s ease;
+    }
+    .site-header.scrolled .header-inner {
+      background: rgba(255,255,255,.80); box-shadow: 0 12px 34px rgba(0,0,0,.16); border-color: rgba(255,255,255,.7);
+    }
+    .site-header .header-nav { gap: 4px; }
+    .site-header .header-nav a {
+      position: relative; padding: 8px 14px; border-radius: 9999px;
+      color: rgba(10,10,10,.72); font-weight: 600; transition: color .25s ease;
+    }
+    .site-header .header-nav a::after {
+      content: ''; position: absolute; left: 14px; right: 14px; bottom: 4px; width: auto;
+      height: 2px; border-radius: 2px; background: var(--black);
+      transform: scaleX(0); transform-origin: left; transition: transform .3s cubic-bezier(.76,0,.24,1);
+    }
+    .site-header .header-nav a:hover { color: var(--black); }
+    .site-header .header-nav a:hover::after { width: auto; transform: scaleX(1); }
+    .site-header .header-right .btn { border-radius: 9999px; }
+
+    #lm-btn{
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      height:42px; border-radius:9999px; isolation:isolate; text-decoration:none;
+      -webkit-tap-highlight-color:transparent;
+      box-shadow:0 0 0 1px rgba(0,0,0,.30), 0 9px 9px rgba(0,0,0,.10), 0 2px 5px rgba(0,0,0,.16);
+      transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+    }
+    #lm-btn:hover{ transform:translateY(-1px); box-shadow:0 0 0 1px rgba(0,0,0,.40), 0 12px 16px rgba(0,0,0,.14), 0 4px 6px rgba(0,0,0,.16); }
+    #lm-btn:active{ transform:translateY(0) scale(.98); }
+    #lm-shader{
+      position:absolute; inset:0; border-radius:9999px; overflow:hidden; z-index:0;
+      background:linear-gradient(100deg,#8f8f8f,#f4f4f4,#bdbdbd,#ffffff,#9a9a9a,#e8e8e8,#8f8f8f);
+      background-size:220% 100%; animation:lmSheen 4.5s linear infinite;
+    }
+    #lm-btn .lm-core{ position:absolute; inset:2px; border-radius:9999px; z-index:1; background:linear-gradient(180deg,#242424 0%,#000 100%); }
+    #lm-btn .lm-label{
+      position:relative; z-index:2; padding:0 22px; color:#a8a8a8; font-size:.86rem; font-weight:600;
+      letter-spacing:.01em; white-space:nowrap; text-shadow:0 1px 2px rgba(0,0,0,.45);
+    }
+    @keyframes lmSheen{ from{background-position:0% 50%} to{background-position:220% 50%} }
+    @media (prefers-reduced-motion: reduce){
+      #lm-shader{ animation:none !important; }
+      .feat-shot.tall.play img, .tk-track { animation: none; }
+      .hl i, .cap-in, #cue .cue-in { animation: none !important; transform: none !important; opacity: 1 !important; }
+    }
+    /* Zahlen-Kacheln auf weißem Grund leicht grau */
+    .section:not(.section-alt) .tile:not(.tile-dark) { background: var(--gray-50); border-color: var(--gray-50); }
+    @media (max-width: 768px) { #lm-btn { display: none; } }
+  </style>
+  <link rel="stylesheet" href="site-motion.css" />
+  <script src="site-motion.js" defer></script>
+  <style>
+    /* Fortschrittsbalken: auf der dunklen Bühne sichtbar, auf Weiß auch */
+    .m-progress { background: var(--fk-orange) !important; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">Irtona.de</a>
+    <nav class="header-nav">
+      <a href="/">Start</a>
+      <a href="/portfolio">Referenzen</a>
+      <a href="/preise">Pakete</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/kontakt">Kontakt</a>
+    </nav>
+    <div class="header-right">
+      <a href="/kontakt" id="lm-btn" aria-label="Projekt starten">
+        <span id="lm-shader" aria-hidden="true"></span>
+        <span class="lm-core" aria-hidden="true"></span>
+        <span class="lm-label">Projekt starten</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE OVERLAY -->
+<div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Navigation">
+  <nav class="mobile-nav-links">
+    <a href="/">Start <span class="mobile-nav-arrow">→</span></a>
+    <a href="/portfolio">Referenzen <span class="mobile-nav-arrow">→</span></a>
+    <a href="/#prozess">Ablauf <span class="mobile-nav-arrow">→</span></a>
+    <a href="/preise">Pakete <span class="mobile-nav-arrow">→</span></a>
+    <a href="/#faq">FAQ <span class="mobile-nav-arrow">→</span></a>
+    <a href="/kontakt">Projekt starten <span class="mobile-nav-arrow">→</span></a>
+  </nav>
+  <div class="mobile-meta">
+    <span>Irtona.de © 2026</span>
+    <span>Steinheim an der Murr, DE</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     BÜHNE: das Band
+============================================================ -->
+<div id="track">
+  <main class="stage" id="stage">
+    <h1 aria-label="Meine Futterkiste: eine Referenz von Irtona.de">
+      <div class="hl" id="l1" aria-hidden="true"><span><i style="--i:0">M</i><i style="--i:1">e</i><i style="--i:2">i</i><i style="--i:3">n</i><i style="--i:4">e</i></span></div>
+      <div class="hl" id="l2" aria-hidden="true"><span><i style="--i:3">F</i><i style="--i:4">u</i><i style="--i:5">t</i><i style="--i:6">t</i><i style="--i:7">e</i><i style="--i:8">r</i><i style="--i:9">k</i><i style="--i:10">i</i><i style="--i:11">s</i><i style="--i:12">t</i><i style="--i:13">e</i></span></div>
+    </h1>
+    <div id="cap"><span class="cap-in">Ein Futterladen in Höpfigheim, neu ins Netz gebracht.</span></div>
+    <div id="glow"></div>
+    <div id="rule"></div>
+    <script>
+      /* Starttitel: so groß wie möglich, ohne an den Rand zu stoßen. Läuft sofort,
+         damit der Titel schon beim ersten Bild richtig sitzt; das Band-Skript nutzt dieselbe Funktion. */
+      window.__fkFit = function () {
+        var st = document.documentElement.style, W = innerWidth, l1 = document.getElementById('l1'), l2 = document.getElementById('l2');
+        var t1 = l1.style.transform, t2 = l2.style.transform;
+        l1.style.transform = l2.style.transform = 'none';
+        // halbe Breite der längeren Zeile; beim Start stehen beide Zeilen mittig
+        var m = 0, off = [];
+        [l1, l2].forEach(function (l) { var r = l.firstElementChild.getBoundingClientRect(); m = Math.max(m, r.width / 2); off.push(W / 2 - (r.left + r.width / 2)); });
+        var fs = parseFloat(getComputedStyle(l1).fontSize);
+        l1.style.transform = t1; l2.style.transform = t2;
+        var s0 = Math.max(1, Math.min(1.6, (W * .45) / (m || 1)));
+        window.__fkS0 = s0; window.__fkFs = fs; window.__fkOff = off;
+        st.setProperty('--s0', s0.toFixed(3));
+        st.setProperty('--o1', (off[0] * s0) + 'px'); st.setProperty('--o2', (off[1] * s0) + 'px');
+        st.setProperty('--capy', ((.03 + s0) * fs + 34) + 'px');
+      };
+      if (document.documentElement.classList.contains('gl-on')) {
+        window.__fkFit();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(window.__fkFit);
+      }
+    </script>
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <a id="hint" href="https://meine-futterkiste.de/" target="_blank" rel="noopener">ZUR LIVE-SEITE &nbsp;→</a>
+    <div id="ghint">Karte antippen für Details</div>
+    <div id="cue" aria-hidden="true"><div class="cue-in">Scrollen<b></b></div></div>
+
+    <!-- Statisches Raster, falls kein WebGL -->
+    <div class="fk-fallback" aria-label="Bausteine der Website">
+      <a href="#f-start"><img src="fk-hero.webp" alt="Startbereich der Futterkiste-Website mit drei Hunden" loading="lazy"><span>Erster Eindruck</span></a>
+      <a href="#f-sortiment"><img src="fk-sortiment.webp" alt="Sortiment mit Filtern und Produktkacheln" loading="lazy"><span>Sortiment</span></a>
+      <a href="#f-barf"><img src="fk-barf.webp" alt="BARF-Rechner mit Tagesration" loading="lazy"><span>BARF-Rechner</span></a>
+      <a href="#f-zeiten"><img src="fk-zeiten.webp" alt="Öffnungszeiten mit Sonderzeit aus Google" loading="lazy"><span>Öffnungszeiten live</span></a>
+      <a href="#f-bewertungen"><img src="fk-bewertungen.webp" alt="Google-Bewertungen mit 5,0 Sternen" loading="lazy"><span>Google-Bewertungen</span></a>
+      <a href="#f-mobil"><img src="fk-mobil.webp" alt="Drei Handy-Ansichten der Website" loading="lazy"><span>Fürs Handy</span></a>
+    </div>
+
+    <footer class="bot">
+      <p>Referenzprojekt 2026. Neue Website für einen Fachhandel für BARF und gesunde Hundeernährung.</p>
+      <div class="mid">DESIGN<s>/</s>SORTIMENT<s>/</s>BARF-RECHNER<s>/</s>GOOGLE</div>
+      <a class="r" href="https://meine-futterkiste.de/" target="_blank" rel="noopener">LIVE ANSEHEN</a>
+    </footer>
+    <div id="name"></div>
+  </main>
+</div>
+<div class="fk-ticker" aria-hidden="true">
+  <div class="tk-track">
+    <span>Startbereich</span><b></b><span>Über uns</span><b></b><span>Sortiment</span><b></b><span>Merkliste</span><b></b><span>BARF-Rechner</span><b></b><span>Öffnungszeiten aus Google</span><b></b><span>Bewertungen</span><b></b><span>Kontaktformular</span><b></b>
+    <span>Startbereich</span><b></b><span>Über uns</span><b></b><span>Sortiment</span><b></b><span>Merkliste</span><b></b><span>BARF-Rechner</span><b></b><span>Öffnungszeiten aus Google</span><b></b><span>Bewertungen</span><b></b><span>Kontaktformular</span><b></b>
+  </div>
+</div>
+
+<!-- ============================================================
+     FEATURE-KARTEN (direkt unter dem Band)
+============================================================ -->
+<section class="section section-alt" id="bausteine" style="padding-top:40px">
+  <div class="container">
+    <div class="blocks-head">
+      <div>
+        <span class="section-label">Was drinsteckt</span>
+        <h2 class="section-heading">Acht Bausteine,<br>ein Ziel: mehr Besuch.</h2>
+      </div>
+      <p>Jeder Teil der Seite hat eine Aufgabe. Hier steht, was wir gebaut haben und was es dem Laden bringt.</p>
+    </div>
+
+    <div class="feats">
+      <article class="feat reveal" id="f-start">
+        <div class="feat-shot tall"><img src="fk-hero.webp" alt="Startbereich der Futterkiste-Website mit Aussie, Dackel und Golden Retriever über einer grünen Kante" loading="lazy" width="1200" height="1583"></div>
+        <div class="feat-copy">
+          <div class="feat-top"><span class="feat-num">01</span><span class="feat-tag">Startbereich</span></div>
+          <h3>Ein erster Eindruck, der hängen bleibt</h3>
+          <p>Drei freigestellte Hunde schauen über eine grüne Kante, darüber eine klare Botschaft und ein Knopf ins Sortiment. Auf dem Handy gibt es einen eigenen Aufbau mit einem großen Hund und den wichtigsten Zahlen direkt im Balken.</p>
+          <div class="gain"><small>Das bringt es</small><p>Man versteht in einer Sekunde, worum es geht, und scrollt weiter.</p></div>
+        </div>
+      </article>
+
+      <article class="feat reveal" id="f-ueber">
+        <div class="feat-shot tall"><img src="fk-ueber.webp" alt="Über-uns-Bereich: Beagle frisst aus dem Napf, daneben Text und vier Versprechen des Ladens" loading="lazy" width="1200" height="1058"></div>
+        <div class="feat-copy">
+          <div class="feat-top"><span class="feat-num">02</span><span class="feat-tag">Über uns</span></div>
+          <h3>Ein Laden mit Gesicht</h3>
+          <p>Ein freigestellter Beagle direkt auf dem Hintergrund, dazu ein handgeschriebener Satz und vier kurze Versprechen: markenunabhängig, BARF-Profis, faire Preise, persönlich vor Ort. Die Inhaberin steht mit Namen da, samt Hinweis auf den Futterexperten, mit dem der Laden zusammenarbeitet.</p>
+          <div class="gain"><small>Das bringt es</small><p>Man weiß, wer hinter dem Laden steht, bevor man zum ersten Mal reinkommt.</p></div>
+        </div>
+      </article>
+
+      <article class="feat reveal" id="f-sortiment">
+        <div class="feat-shot tall"><img src="fk-merkliste.webp" alt="Sortiment mit aktivem Filter Merkliste: acht gemerkte Produkte mit orangem Stern" loading="lazy" width="1200" height="983"></div>
+        <div class="feat-copy">
+          <div class="feat-top"><span class="feat-num">03</span><span class="feat-tag">Produkte und Merkliste</span></div>
+          <h3>Filtern, suchen, merken</h3>
+          <p>Über 70 Produkte von sieben Marken, sortiert nach BARF, Trockenfutter und Dosen, Snacks und Zubehör, dazu ein Markenmenü und eine Suche. Mit dem Stern merkt man sich Favoriten. Die Merkliste speichert der Browser, sie ist beim nächsten Besuch also noch da, ganz ohne Konto oder Anmeldung. Bewusst kein Shop.</p>
+          <div class="gain"><small>Das bringt es</small><p>Kundschaft kommt mit einer fertigen Liste in den Laden.</p></div>
+        </div>
+      </article>
+
+      <article class="feat reveal" id="f-barf">
+        <div class="feat-shot mid"><img src="fk-barf.webp" alt="BARF-Rechner: 20 kg Hund, Tagesration 500 g aufgeteilt in Muskelfleisch, Pansen, Knochen, Innereien und Gemüse" loading="lazy" width="1200" height="679"></div>
+        <div class="feat-copy">
+          <div class="feat-top"><span class="feat-num">04</span><span class="feat-tag">BARF-Rechner</span></div>
+          <h3>Ein Rechner als Gesprächsöffner</h3>
+          <p>Gewicht einstellen, Aktivität wählen, fertig. Der Rechner zeigt die Tagesration und teilt sie auf: Muskelfleisch, Pansen, Knochen, Innereien sowie Gemüse und Obst. Mit Quelle und dem klaren Hinweis, dass er keine Beratung ersetzt.</p>
+          <div class="gain"><small>Das bringt es</small><p>Ein leichter Einstieg ins Thema, der Lust auf das Gespräch im Laden macht.</p></div>
+        </div>
+      </article>
+
+      <article class="feat reveal" id="f-zeiten">
+        <div class="feat-shot"><img src="fk-zeiten.webp" alt="Öffnungszeiten am Desktop und auf dem Handy, Freitag 13.11. als geschlossen markiert" loading="lazy" width="1440" height="905"></div>
+        <div class="feat-copy">
+          <div class="feat-top"><span class="feat-num">05</span><span class="feat-tag">Öffnungszeiten</span></div>
+          <h3>Öffnungszeiten, die sich selbst anpassen</h3>
+          <p>Die Zeiten kommen direkt aus dem Google-Unternehmensprofil. Trägt der Laden dort Urlaub oder einen freien Tag ein, zieht die Website am nächsten Tag von selbst nach. Der heutige Tag ist markiert, ein Hinweis zeigt, ob gerade offen ist, und Sonderzeiten erscheinen zusätzlich oben als Banner. Ein Zwischenspeicher hält die Abfragen im kostenlosen Rahmen.</p>
+          <div class="gain"><small>Das bringt es</small><p>Gepflegt wird nur noch bei Google. Niemand steht vor verschlossener Tür.</p></div>
+        </div>
+      </article>
+
+      <article class="feat reveal" id="f-bewertungen">
+        <div class="feat-shot"><img src="fk-bewertungen.webp" alt="Google-Bewertungen: 5,0 aus 18 Bewertungen und vier Rezensionen im Wortlaut" loading="lazy" width="1200" height="735"></div>
+        <div class="feat-copy">
+          <div class="feat-top"><span class="feat-num">06</span><span class="feat-tag">Bewertungen</span></div>
+          <h3>Echte Bewertungen statt Werbesprüche</h3>
+          <p>5,0 Sterne aus 18 Google-Bewertungen, die Texte im Wortlaut und mit Link zum Profil. Ein Knopf führt direkt zum Bewerten, damit zufriedene Kundschaft es leicht hat.</p>
+          <div class="gain"><small>Das bringt es</small><p>Vertrauen, das jeder selbst nachprüfen kann.</p></div>
+        </div>
+      </article>
+
+      <article class="feat reveal" id="f-kontakt">
+        <div class="feat-shot mid"><img src="fk-formular.webp" alt="Kontaktbereich mit Formular: Name, Telefon oder E-Mail, Anliegen, Name und Gewicht des Hundes, Nachricht" loading="lazy" width="1200" height="600"></div>
+        <div class="feat-copy">
+          <div class="feat-top"><span class="feat-num">07</span><span class="feat-tag">Kontaktformular</span></div>
+          <h3>Anfragen mit allem, was zählt</h3>
+          <p>Name, Telefon oder E-Mail, das Anliegen als Auswahl und auf Wunsch Name und Gewicht des Hundes. Die Nachricht landet direkt im Postfach des Ladens. Ein unsichtbares Feld, ein Limit für Links und eine Sperre gegen Massenanfragen halten Spam draußen.</p>
+          <div class="gain"><small>Das bringt es</small><p>Anfragen kommen vollständig an, Rückfragen werden seltener.</p></div>
+        </div>
+      </article>
+
+      <article class="feat reveal" id="f-mobil">
+        <div class="feat-shot"><img src="fk-mobil.webp" alt="Drei Handy-Ansichten: Startseite, Sortiment und Bewertungen" loading="lazy" width="1440" height="905"></div>
+        <div class="feat-copy">
+          <div class="feat-top"><span class="feat-num">08</span><span class="feat-tag">Handy</span></div>
+          <h3>Fürs Handy gebaut, nicht nur verkleinert</h3>
+          <p>Eigener Startbereich, Wischreihen für Beratung und Bewertungen, ein Menü, das beim Scrollen mitkommt, und unten eine feste Leiste mit Anrufen, Nachricht und Anfahrt.</p>
+          <div class="gain"><small>Das bringt es</small><p>Wer unterwegs sucht, ist mit einem Tipp am Telefon oder auf dem Weg.</p></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     AUSGANGSLAGE
+============================================================ -->
+<section class="section" id="projekt">
+  <div class="container brief">
+    <div>
+      <span class="section-label">Referenz · Tierfachhandel</span>
+      <h2 class="section-heading">Online so persönlich<br>wie im Laden.</h2>
+      <p class="lead" style="margin-top:1.6rem">Meine Futterkiste ist ein inhabergeführter Fachhandel für BARF und gesunde Hundeernährung in Steinheim-Höpfigheim. Gaby Hess berät jede Kundin und jeden Kunden persönlich, markenunabhängig und mit viel Wissen über Rohfütterung.</p>
+      <p class="lead">Die alte WordPress-Seite war nicht mehr auf dem aktuellen Stand. Das Ziel für die neue Seite war klar: <strong>zeigen, was im Regal steht, die Beratung in den Mittelpunkt stellen und so wenig Pflege wie möglich verursachen.</strong> Bewusst ohne Onlineshop, denn verkauft wird im Laden.</p>
+    </div>
+    <dl class="facts reveal">
+      <div><dt>Kunde</dt><dd>Meine Futterkiste, Gabriele und Frank Hess GbR</dd></div>
+      <div><dt>Ort</dt><dd>Steinheim-Höpfigheim</dd></div>
+      <div><dt>Online</dt><dd>Seit Oktober 2026</dd></div>
+      <div><dt>Umfang</dt><dd>Onepager mit Sortiment, BARF-Rechner, Öffnungszeiten aus Google, Bewertungen, Kontaktformular, Impressum und Datenschutz</dd></div>
+      <div><dt>Live</dt><dd><a href="https://meine-futterkiste.de/" target="_blank" rel="noopener">meine-futterkiste.de ↗</a></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================================================
+     UNTER DER HAUBE
+============================================================ -->
+<section class="section section-alt" id="technik">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Unter der Haube</span>
+      <h2 class="section-heading">Was man nicht sieht,<br>aber merkt.</h2>
+      <p>Die Seite ist ohne Baukasten und ohne Plugins gebaut. Das macht sie schnell, sicher und günstig im Betrieb.</p>
+    </div>
+    <div class="tech reveal">
+      <div>
+        <h3>Schnell geladen</h3>
+        <p>Bilder als WebP in passenden Größen, Schriften auf dem eigenen Server, das Wichtigste wird zuerst geladen. Im Oktober haben wir die Ladezeit auf dem Handy noch einmal gezielt verbessert.</p>
+      </div>
+      <div>
+        <h3>Datenschutz im Griff</h3>
+        <p>Schriften, Bilder, Videos und Icons liegen beim eigenen Hoster. Nur die Google-Karte kommt von außen. Impressum und Datenschutz passen genau zu dem, was die Seite tut.</p>
+      </div>
+      <div>
+        <h3>Bei Google auffindbar</h3>
+        <p>Search Console eingerichtet, strukturierte Daten für das Geschäft, und die alten WordPress-Adressen leiten auf die passenden Abschnitte weiter. So gehen keine Besucher verloren.</p>
+      </div>
+      <div>
+        <h3>Leicht zu pflegen</h3>
+        <p>Öffnungszeiten pflegt der Laden nur noch bei Google. Neue Produkte, Bilder und Texte trägt Irtona nach, ohne dass ein Baukasten oder Updates im Weg stehen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ZAHLEN
+============================================================ -->
+<section class="section" id="zahlen">
+  <div class="container">
+    <div class="stats-head">
+      <div>
+        <span class="section-label">Entwicklung seit dem Start</span>
+        <h2 class="section-heading">Ehrliche Zahlen<br>statt großer Worte.</h2>
+      </div>
+      <p class="lead">Die ersten vier Wochen aus der Google Search Console, vom 13. Oktober bis 9. November 2026. Die Markierung am 21. Oktober zeigt, ab wann die neue Seite bei Google zählt.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="tile"><div class="tile-label">Klicks</div><div class="tile-num" id="t-clicks">67</div><div class="tile-sub">aus der Google-Suche</div></div>
+      <div class="tile"><div class="tile-label">Impressionen</div><div class="tile-num" id="t-impr">732</div><div class="tile-sub">so oft in den Ergebnissen</div></div>
+      <div class="tile"><div class="tile-label">Klickrate</div><div class="tile-num" id="t-ctr">9,2 %</div><div class="tile-sub">etwa jede elfte Einblendung</div></div>
+      <div class="tile"><div class="tile-label">Ø Position</div><div class="tile-num" id="t-pos">5,6</div><div class="tile-sub">also auf der ersten Seite</div></div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-card reveal">
+        <h3>Klicks pro Tag</h3>
+        <div class="chart-sub">Google-Suche, 13.10. bis 09.11.2026</div>
+        <div class="chart draw" id="c-clicks" data-key="clicks" data-unit="Klicks" role="img" aria-label="Liniendiagramm der täglichen Klicks, 13. Oktober bis 9. November 2026, Höchstwert 10 am 28. Oktober"></div>
+        <details><summary>Als Tabelle anzeigen</summary><div class="tbl-wrap" data-table="clicks"></div></details>
+      </div>
+      <div class="chart-card reveal">
+        <h3>Impressionen pro Tag</h3>
+        <div class="chart-sub">Google-Suche, 13.10. bis 09.11.2026</div>
+        <div class="chart draw" id="c-impr" data-key="impr" data-unit="Impressionen" role="img" aria-label="Liniendiagramm der täglichen Impressionen, 13. Oktober bis 9. November 2026, Höchstwert 53 am 21. Oktober"></div>
+        <details><summary>Als Tabelle anzeigen</summary><div class="tbl-wrap" data-table="impr"></div></details>
+      </div>
+    </div>
+
+    <div class="reading">
+      <div class="tile reveal">
+        <div class="tile-label">Einordnung</div>
+        <p>Vor der Markierung kamen im Schnitt <strong>2,8 Klicks am Tag</strong>, danach <strong>2,3</strong>. Die Klickrate blieb mit gut 9 Prozent gleich. Ein Trend lässt sich nach vier Wochen noch nicht ablesen, denn Google ordnet eine umgebaute Seite erst nach und nach neu ein.</p>
+        <p>Was man schon sieht: Mit <strong>Platz 5,6 im Schnitt</strong> steht die Futterkiste auf der ersten Ergebnisseite, und etwa jede elfte Einblendung wird angeklickt.</p>
+      </div>
+      <div class="tile tile-dark reveal">
+        <div class="tile-label">Im Laden</div>
+        <h3>Spürbar mehr los.</h3>
+        <p>Seit dem Start der neuen Seite kommen merklich mehr Leute in den Laden. Gezählt wurde das nicht, deshalb steht hier bewusst keine Zahl.</p>
+      </div>
+    </div>
+
+    <div class="stats-grid" style="margin-top:16px">
+      <div class="tile"><div class="tile-label">Google-Bewertung</div><div class="tile-num">5,0</div><div class="tile-sub">aus 18 Bewertungen</div></div>
+      <div class="tile"><div class="tile-label">Sortiment</div><div class="tile-num">73</div><div class="tile-sub">Produkte online zu sehen</div></div>
+      <div class="tile" id="t-ps-m"><div class="tile-label">Marken</div><div class="tile-num">7</div><div class="tile-sub">von Graf Barf bis Portapet</div></div>
+      <div class="tile" id="t-ps-d"><div class="tile-label">Öffnungszeiten</div><div class="tile-num">Täglich</div><div class="tile-sub">frisch aus Google, ohne Pflege</div></div>
+    </div>
+    <p class="src">Quelle: Google Search Console, Tageswerte aus dem Search-Console-Diagramm.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     ZEITSTRAHL
+============================================================ -->
+<section class="section section-alt" id="ablauf">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">So lief es ab</span>
+      <h2 class="section-heading">Vom ersten Entwurf<br>bis live aus Google.</h2>
+      <p>Erst online, dann Schritt für Schritt besser. Jede Runde mit dem Laden abgestimmt.</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl"><time>Anfang Okt.</time><h3>Konzept und Design</h3><p>Aufbau, Farben und Hundebilder, abgeleitet aus Logo und Laden.</p></div>
+      <div class="tl"><time>Mitte Okt.</time><h3>Livegang</h3><p>Neue Seite mit Impressum, Datenschutz und Kontaktformular online.</p></div>
+      <div class="tl"><time>17.10.</time><h3>Handy und Bewertungen</h3><p>Eigener mobiler Aufbau, echte Google-Bewertungen, alles lokal.</p></div>
+      <div class="tl hl-dot"><time>21.10.</time><h3>Neue Seite bei Google</h3><p>Ab hier zählen die Zahlen der neuen Seite. Das Sortiment wächst.</p></div>
+      <div class="tl"><time>25.10.</time><h3>Performance-Runde</h3><p>Bilder als WebP, Schriften lokal, schnellerer Start auf dem Handy.</p></div>
+      <div class="tl"><time>03.11.</time><h3>Zeiten live aus Google</h3><p>Öffnungszeiten und Sonderzeiten kommen jetzt automatisch.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA
+============================================================ -->
+<section class="cta">
+  <div class="container">
+    <h2>Dein Laden<br>als Nächstes?</h2>
+    <div>
+      <p>Wir bauen Websites für kleine Unternehmen, die zeigen, was dich vor Ort ausmacht. Persönlich abgestimmt und zum Festpreis.</p>
+      <div class="cta-btns">
+        <a href="/kontakt" class="btn btn-light btn-lg">Projekt starten</a>
+        <a href="https://meine-futterkiste.de/" class="btn btn-ghost-light btn-lg" target="_blank" rel="noopener">Seite ansehen ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">Irtona.de</a>
+        <p>Zukunftssicheres Webdesign. Maßgeschneidert für kleine Unternehmen.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/irtona.de" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Agentur</h5><ul><li><a href="/">Startseite</a></li><li><a href="/#leistungen">Leistungen</a></li><li><a href="/portfolio">Referenzen</a></li><li><a href="/kontakt">Projekt anfragen</a></li></ul></div>
+      <div class="footer-col"><h5>Pakete</h5><ul><li><a href="/#preise">Start: 490 €</a></li><li><a href="/#preise">Wachstum: 890 €</a></li><li><a href="/#preise">Premium: 1.290 €</a></li><li><a href="/kontakt">Individuell</a></li></ul></div>
+      <div class="footer-col"><h5>Rechtliches</h5><ul><li><a href="/impressum">Impressum</a></li><li><a href="/datenschutz">Datenschutz</a></li><li><a href="/agb">AGB</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Irtona.de Webdesign. Alle Rechte vorbehalten.</p>
+      <div class="footer-legal"><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a><a href="/agb">AGB</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SEITEN-SKRIPT (Header, Menü, Reveal, Diagramme)
+============================================================ -->
+<script>
+document.body.classList.add('js-ready');
+
+// Header Scroll
+const siteHeader = document.getElementById('site-header');
+window.addEventListener('scroll', () => {
+  siteHeader.classList.toggle('scrolled', window.scrollY > 30);
+}, { passive: true });
+
+// Reveal on Scroll
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// Hamburger Menü
+const hamburger = document.getElementById('hamburger');
+const mobileOverlay = document.getElementById('mobileOverlay');
+function setMenu(open) {
+  mobileOverlay.classList.toggle('is-open', open);
+  hamburger.classList.toggle('is-active', open);
+  document.body.classList.toggle('menu-open', open);
+  hamburger.setAttribute('aria-expanded', String(open));
+}
+hamburger.addEventListener('click', () => setMenu(!mobileOverlay.classList.contains('is-open')));
+mobileOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+// Screenshots fahren langsam durch, sobald sie im Bild sind
+const shotObs = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('play', e.isIntersecting)), { threshold: .3 });
+document.querySelectorAll('.feat-shot.tall').forEach(el => shotObs.observe(el));
+
+/* ------------------------------------------------------------
+   ZAHLEN: alles Nachtragbare steht hier an einer Stelle.
+   Tageswerte aus der Search Console (13.10. bis 09.11.2026).
+   pagespeed.after: null = noch nicht nachgemessen.
+------------------------------------------------------------ */
+const STATS = {
+  start: '2026-10-13',
+  markDay: 8, // 21.10. = neue Seite bei Google
+  clicks: [4,2,0,7,2,2,1,4,6,2,4,0,0,2,1,10,3,2,0,4,2,1,1,1,2,0,2,2],
+  impr:   [31,35,28,44,27,15,21,38,53,30,42,15,23,20,18,30,22,22,17,29,18,29,23,20,21,17,19,25],
+  pagespeed: { before: { mobile: 65, desktop: 81 }, after: null }
+};
+
+(function stats() {
+  const days = STATS.clicks.map((_, i) => { const d = new Date(STATS.start + 'T12:00:00'); d.setDate(d.getDate() + i); return d; });
+  const fmt = d => String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.';
+  const wd = d => ['So','Mo','Di','Mi','Do','Fr','Sa'][d.getDay()];
+
+  // PageSpeed: erst sichtbar, wenn nachgemessen (STATS.pagespeed.after = { mobile, desktop })
+  const ps = STATS.pagespeed;
+  if (ps.after) {
+    [['m', 'mobile', 'PageSpeed mobil'], ['d', 'desktop', 'PageSpeed Desktop']].forEach(([k, n, label]) => {
+      document.getElementById('t-ps-' + k).innerHTML = '<div class="tile-label">' + label + '</div><div class="tile-num">' + ps.after[n] +
+        '</div><div class="tile-sub">von 100, vor der Performance-Runde ' + ps.before[n] + '</div>';
+    });
+  }
+
+  // Tabellen
+  document.querySelectorAll('[data-table]').forEach(w => {
+    const key = w.dataset.table;
+    let h = '<table><thead><tr><th>Tag</th><th>' + (key === 'clicks' ? 'Klicks' : 'Impressionen') + '</th></tr></thead><tbody>';
+    STATS[key].forEach((v, i) => { h += '<tr><td>' + wd(days[i]) + ' ' + fmt(days[i]) + '</td><td>' + v + '</td></tr>'; });
+    w.innerHTML = h + '</tbody></table>';
+  });
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (t, a, p) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); if (p) p.appendChild(n); return n; };
+
+  function draw(box) {
+    const data = STATS[box.dataset.key], unit = box.dataset.unit;
+    const W = box.clientWidth, H = box.clientHeight, L = 34, R = 10, T = 22, B = 26;
+    const max = Math.max(...data), step = max <= 12 ? 4 : max <= 30 ? 10 : 20, top = Math.ceil(max / step) * step;
+    const x = i => L + (W - L - R) * i / (data.length - 1), y = v => T + (H - T - B) * (1 - v / top);
+    box.innerHTML = '';
+    const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, 'aria-hidden': 'true' }, box);
+    for (let v = 0; v <= top; v += step) {
+      el('line', { class: 'grid-l', x1: L, x2: W - R, y1: y(v), y2: y(v) }, svg);
+      const t = el('text', { class: 'axis-t', x: L - 8, y: y(v) + 4, 'text-anchor': 'end' }, svg); t.textContent = v;
+    }
+    [0, 7, 14, 21, 27].forEach(i => {
+      const t = el('text', { class: 'axis-t', x: x(i), y: H - 6, 'text-anchor': i === 0 ? 'start' : i === 27 ? 'end' : 'middle' }, svg);
+      t.textContent = fmt(days[i]);
+    });
+    const mx = x(STATS.markDay);
+    el('line', { class: 'mark-l', x1: mx, x2: mx, y1: T - 8, y2: H - B }, svg);
+    const mt = el('text', { class: 'mark-t', x: mx + 6, y: T - 10 }, svg); mt.textContent = 'Neue Seite bei Google';
+    const pts = data.map((v, i) => [x(i), y(v)]);
+    const d = 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L');
+    el('path', { class: 'area', d: d + ` L${x(data.length - 1)} ${y(0)} L${x(0)} ${y(0)} Z` }, svg);
+    const line = el('path', { class: 'line', d }, svg);
+    const len = line.getTotalLength(); box.style.setProperty('--len', len);
+    const cross = el('line', { class: 'cross', y1: T, y2: H - B }, svg);
+    const dot = el('circle', { class: 'dot', r: 5 }, svg);
+    const tip = document.createElement('div'); tip.className = 'tip'; box.appendChild(tip);
+    const hit = el('rect', { x: L, y: 0, width: W - L - R, height: H, fill: 'transparent' }, svg);
+    const move = ev => {
+      const r = box.getBoundingClientRect(), px = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
+      const i = Math.max(0, Math.min(data.length - 1, Math.round((px - L) / (W - L - R) * (data.length - 1))));
+      cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i));
+      dot.setAttribute('cx', x(i)); dot.setAttribute('cy', y(data[i]));
+      tip.innerHTML = '<b>' + data[i] + ' ' + (data[i] === 1 && unit === 'Klicks' ? 'Klick' : unit === 'Impressionen' && data[i] === 1 ? 'Impression' : unit) + '</b>' + wd(days[i]) + ', ' + fmt(days[i]) + (i === STATS.markDay ? ' · neue Seite' : '');
+      const tw = tip.offsetWidth, tx = Math.min(W - tw, Math.max(0, x(i) - tw / 2));
+      tip.style.transform = `translate(${tx}px, ${Math.max(0, y(data[i]) - 62)}px)`;
+      box.classList.add('hover');
+    };
+    hit.addEventListener('pointermove', move);
+    hit.addEventListener('pointerdown', move);
+    hit.addEventListener('pointerleave', () => box.classList.remove('hover'));
+  }
+  const boxes = [...document.querySelectorAll('.chart')];
+  // Neu zeichnen, sobald sich die Breite ändert (Layout, Drehen, Fenstergröße)
+  const ro = new ResizeObserver(es => es.forEach(e => {
+    const b = e.target, w = Math.round(b.clientWidth);
+    if (w > 0 && w !== b._w) { b._w = w; draw(b); }
+  }));
+  boxes.forEach(b => { b._w = Math.round(b.clientWidth); draw(b); ro.observe(b); });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { requestAnimationFrame(() => e.target.classList.add('drawn')); io.unobserve(e.target); } }), { threshold: .4 });
+  boxes.forEach(b => io.observe(b));
+})();
+</script>
+
+<!-- ============================================================
+     DAS BAND (three.js, lokal)
+============================================================ -->
+<script type="module">
+import * as THREE from 'three';
+
+if (document.documentElement.classList.contains('gl-on')) {
+try {
+window.__fkReady = true;
+
+const SMALL = innerWidth < 760;
+// [Name, Bild, Ziel-Karte unten]
+const WORK = [
+  ['Erster Eindruck', 'fk-hero.webp', 'f-start'],
+  ['Sortiment', 'fk-sortiment.webp', 'f-sortiment'],
+  ['BARF-Rechner', 'fk-barf.webp', 'f-barf'],
+  ['Öffnungszeiten live', 'fk-zeiten.webp', 'f-zeiten'],
+  ['Google-Bewertungen', 'fk-bewertungen.webp', 'f-bewertungen'],
+  ['Fürs Handy', 'fk-mobil.webp', 'f-mobil'],
+  ['Imagebanner', SMALL ? 'fk-herz.webp' : 'fk-herz.mp4', ''],
+  ['Kontakt und FAQ', 'fk-kontakt.webp', 'f-kontakt'],
+];
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const mix = (a, b, t) => a + (b - a) * t;
+const ease = t => t * t * (3 - 2 * t);
+const out = t => 1 - (1 - t) ** 3;
+const span = (p, a, b) => clamp((p - a) / (b - a));
+
+/* ---------- renderer ---------- */
+const canvas = $('gl');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setClearColor(0, 0);
+renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+const scene = new THREE.Scene();
+const FOV = 35, camera = new THREE.PerspectiveCamera(FOV, 1, .1, 100);
+const ANISO = renderer.capabilities.getMaxAnisotropy();
+
+/* ---------- ribbon path ---------- */
+let path, PATH_L = 1;
+const SAMPLES = 1200, pathP = [], pathT = [];
+const PH0 = -1.5, PH1 = Math.PI * 2 + 1.35;
+function buildPath() {
+  const pts = [];
+  for (let i = 0; i <= 160; i++) {
+    const t = i / 160, ph = mix(PH0, PH1, t), cs = Math.cos(ph), u = 2 * t - 1;
+    // flacher Bogen nah an der Kamera, dann lange Wege weit dahinter
+    const depth = cs > 0 ? 7.6 + 16.4 * cs ** .9 : 7.6 + 2.2 * cs;
+    const edge = .84 + .5 * span(.14 - t, 0, .14) + .8 * span(t, .84, 1);
+    pts.push(new THREE.Vector3(edge * Math.sin(ph) * depth * .561, .5 * Math.sign(u) * Math.abs(u) ** 1.4 * depth * .63, -depth));
+  }
+  path = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
+  path.arcLengthDivisions = 1500;
+  PATH_L = path.getLength(); pathP.length = pathT.length = 0;
+  for (let i = 0; i <= SAMPLES; i++) { const u = i / SAMPLES; pathP.push(path.getPointAt(u)); pathT.push(path.getTangentAt(u)); }
+}
+const at = (s, op, ot) => {
+  const f = clamp(s / PATH_L) * SAMPLES, i = Math.min(SAMPLES - 1, Math.floor(f)), k = f - i;
+  op.lerpVectors(pathP[i], pathP[i + 1], k); ot.lerpVectors(pathT[i], pathT[i + 1], k).normalize();
+};
+
+/* ---------- cards ---------- */
+const CARD_W = 2.1, CARD_H = 1.32, GAP = .03, STEP = CARD_W + GAP, NX = 28, NY = 3;
+const vs = `varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`;
+// wie Vorlage, plus "pan": hohe Screenshots fahren langsam von oben nach unten
+const fs = `uniform sampler2D map;uniform vec2 cover;uniform float aspect,ready,radius,pan;varying vec2 vUv;
+void main(){
+  vec2 q=(abs(vUv-.5)-.5)*vec2(aspect,1.)+radius;
+  float d=length(max(q,0.))+min(max(q.x,q.y),0.)-radius;
+  float px=fwidth(d),a=1.-smoothstep(-px,px,d);
+  if(a<.01)discard;
+  vec2 uv=vUv;if(!gl_FrontFacing)uv.x=1.-uv.x;
+  vec2 t=(uv-.5)*cover+.5;t.y+=(pan-.5)*(1.-cover.y);
+  vec3 c=mix(vec3(.075),texture2D(map,t).rgb,ready);
+  float edge=smoothstep(-.012-px,-.012,d);
+  gl_FragColor=vec4(mix(c,vec3(1.),edge*.1),a);
+}`;
+const loader = new THREE.TextureLoader();
+const setCover = (mat, w, h) => {
+  const va = w / h, ca = CARD_W / CARD_H;
+  mat.uniforms.cover.value.set(va > ca ? ca / va : 1, va > ca ? 1 : va / ca);
+  mat.uniforms.ready.value = 1;
+};
+const cards = WORK.map(([title, src, goal], i) => {
+  const geo = new THREE.PlaneGeometry(1, 1, NX, NY);
+  const mat = new THREE.ShaderMaterial({vertexShader:vs, fragmentShader:fs, transparent:true, side:THREE.DoubleSide,
+    uniforms:{map:{value:null}, cover:{value:new THREE.Vector2(1, 1)}, aspect:{value:CARD_W / CARD_H}, ready:{value:0}, radius:{value:.018}, pan:{value:1}}});
+  const mesh = new THREE.Mesh(geo, mat); mesh.frustumCulled = false; mesh.visible = false; scene.add(mesh);
+  const c = {i, title, goal, v:null, geo, mat, mesh, rect:null, src};
+  if (/\.mp4$/.test(src)) {
+    // Video erst laden, wenn das Band losläuft
+    const v = document.createElement('video');
+    Object.assign(v, {muted:true, loop:true, playsInline:true, preload:'none'});
+    v.setAttribute('playsinline', ''); v.poster = 'fk-herz.jpg';
+    const tex = new THREE.VideoTexture(v);
+    tex.colorSpace = THREE.NoColorSpace; tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+    mat.uniforms.map.value = tex;
+    v.addEventListener('loadeddata', () => setCover(mat, v.videoWidth, v.videoHeight));
+    c.v = v;
+  } else {
+    loader.load(src, tex => {
+      tex.colorSpace = THREE.NoColorSpace; tex.anisotropy = ANISO;
+      mat.uniforms.map.value = tex; setCover(mat, tex.image.width, tex.image.height);
+    });
+  }
+  return c;
+});
+
+/* ---------- layout ---------- */
+const GZ = 8;
+let W = 1, H = 1, asp = 1, cols = 3, rows = 2, tanH = .3153;
+function resize() {
+  W = innerWidth; H = innerHeight; asp = W / H;
+  renderer.setPixelRatio(Math.min(devicePixelRatio, SMALL ? 1.5 : 2)); renderer.setSize(W, H, false);
+  camera.aspect = asp; camera.fov = asp < 16 / 9 ? Math.atan(.561 / asp) * 360 / Math.PI : FOV; camera.updateProjectionMatrix();
+  tanH = Math.tan(camera.fov * Math.PI / 360);
+  cols = asp < .9 ? 2 : 3; rows = asp < .9 ? 3 : 2;
+  if (window.__fkFit) window.__fkFit();
+}
+addEventListener('resize', resize); resize(); buildPath();
+function grid(i) {
+  const vh = 2 * GZ * tanH, vw = vh * asp, gw = vw * (cols === 3 ? .74 : .88), gap = gw * .017;
+  const cw = (gw - gap * (cols - 1)) / cols, ch = cw / (CARD_W / CARD_H), gh = ch * rows + gap * 1.6 * (rows - 1);
+  const c = i % cols, r = Math.floor(i / cols);
+  return {x:-gw / 2 + cw / 2 + c * (cw + gap), y:gh / 2 - ch / 2 - r * (ch + gap * 1.6), w:cw, h:ch, vw, vh, c, r};
+}
+
+/* ---------- scroll ---------- */
+const track = $('track');
+let target = 0, p = 0, running = true;
+// Die Animation endet bei P_END (Raster steht, kurzes Halten), danach geht es direkt weiter nach unten
+const P_END = .82;
+const readScroll = () => { target = clamp((scrollY - track.offsetTop) / (track.offsetHeight - innerHeight)) * P_END; };
+addEventListener('scroll', readScroll, {passive:true}); addEventListener('resize', readScroll); readScroll();
+p = target;
+new IntersectionObserver(es => { running = es[0].isIntersecting; }).observe(track);
+
+/* ---------- pose ---------- */
+const op = new THREE.Vector3(), ot = new THREE.Vector3(), up = new THREE.Vector3(), Y = new THREE.Vector3(0, 1, 0), vp = new THREE.Vector3();
+function poseRibbon(c, head) {
+  const pos = c.geo.attributes.position, centre = head - c.i * STEP;
+  for (let iy = 0; iy <= NY; iy++) for (let ix = 0; ix <= NX; ix++) {
+    const k = iy * (NX + 1) + ix, lu = ix / NX - .5, lv = .5 - iy / NY;
+    at(centre + lu * CARD_W, op, ot);
+    // Blatt aufrecht halten, leicht in die Kurve gelehnt
+    up.copy(Y).addScaledVector(ot, -Y.dot(ot)).normalize();
+    vp.copy(op).addScaledVector(up, lv * CARD_H);
+    pos.setXYZ(k, vp.x, vp.y, vp.z);
+  }
+  pos.needsUpdate = true;
+}
+function poseGrid(c, q) {
+  const g = grid(c.i), pos = c.geo.attributes.position;
+  const dx = (g.c - (cols - 1) / 2) * 1.2, dy = g.r < rows / 2 ? 1 : -1;
+  const ox = dx * g.vw * .62 * (1 - q), oy = dy * g.vh * (g.c === 1 ? .95 : .34) * (1 - q), tilt = (1 - q) * .22 * (g.c - 1 || .5) * dy;
+  const cs = Math.cos(tilt), sn = Math.sin(tilt);
+  for (let iy = 0; iy <= NY; iy++) for (let ix = 0; ix <= NX; ix++) {
+    const k = iy * (NX + 1) + ix, x = (ix / NX - .5) * g.w, y = (.5 - iy / NY) * g.h;
+    pos.setXYZ(k, g.x + ox + x * cs - y * sn, g.y + oy + x * sn + y * cs, -GZ - (1 - q) * .6 * Math.sin(ix / NX * Math.PI));
+  }
+  pos.needsUpdate = true;
+  c.rect = g;
+}
+
+const RIB_A = .14, RIB_B = .63;
+const intro = ['hint', 'glow', 'cue'].map($);
+function render(time) {
+  const pp = p;
+  // Start: Titel groß in der Mitte. Beim Scrollen schrumpft er auf Normalgröße,
+  // dann laufen die Zeilen gegenläufig über die Seite.
+  const S0 = window.__fkS0 || 1, fs = window.__fkFs || 0, off = window.__fkOff || [0, 0];
+  const k = out(span(pp, 0, .12)), S = mix(S0, 1, k);
+  const run = mix(0, 100, span(pp, .015, .58));
+  // Mittelpunkt-Ausgleich verschwindet beim Schrumpfen, dann bleibt der Versatz der Vorlage
+  const o1 = off[0] * S * (1 - k), o2 = off[1] * S * (1 - k);
+  $('l1').style.transform = `translate3d(calc(${run}vw + ${o1}px),0,0) scale(${S})`;
+  $('l2').style.transform = `translate3d(calc(${-run}vw + ${o2}px),0,0) scale(${S})`;
+  // Untertitel bleibt immer unter der zweiten Zeile
+  const capA = 1 - span(pp, .52, .57), capY = (.03 + S) * fs + 34;
+  $('cap').style.opacity = capA; $('cap').style.transform = `translate(-50%,calc(-50% + ${capY}px))`;
+  const ia = 1 - span(pp, 0, .05);
+  intro.forEach(e => { e.style.opacity = ia; });
+  $('hint').style.pointerEvents = ia > .5 ? 'auto' : 'none';
+  $('rule').style.transform = `scaleX(${ease(span(pp, .70, .79))})`;
+  $('ghint').style.opacity = span(pp, .76, .8);
+  // Band, dann Raster
+  const pr = span(pp, RIB_A, RIB_B), head = mix(0, PATH_L + cards.length * STEP, pr);
+  const tt = time * .001;
+  for (const c of cards) {
+    const s = head - c.i * STEP, end = PATH_L - CARD_W;
+    if (s < end) {
+      c.mesh.visible = s > CARD_W; c.rect = null;
+      if (c.mesh.visible) poseRibbon(c, head);
+    } else if (c.i < cols * rows) {
+      // jede Karte fliegt in ihren Platz, sobald sie das Band verlässt
+      const st = mix(RIB_A, RIB_B, (end + c.i * STEP) / (PATH_L + cards.length * STEP)), q = out(span(pp, st, st + .13));
+      c.mesh.visible = q > .001;
+      if (c.mesh.visible) poseGrid(c, q);
+    } else { c.mesh.visible = false; c.rect = null; }
+    if (c.mesh.visible) {
+      // langsames Auf und Ab mit kurzen Pausen oben und unten
+      const ph = (tt * .05 + c.i * .17) % 2, tri = ph < 1 ? ph : 2 - ph;
+      c.mat.uniforms.pan.value = 1 - ease(clamp((tri - .12) / .76));
+    }
+  }
+  renderer.render(scene, camera);
+}
+
+/* ---------- hover + klick ---------- */
+const nameEl = $('name'), stage = $('stage');
+function hitTest(e) {
+  if (p <= .74) return null;
+  const nx = (e.clientX / W - .5), ny = (.5 - e.clientY / H);
+  let hit = null;
+  for (const c of cards) { const g = c.rect; if (!g) continue; const x = nx * g.vw, y = ny * g.vh; if (Math.abs(x - g.x) < g.w / 2 && Math.abs(y - g.y) < g.h / 2) hit = c; }
+  return hit;
+}
+stage.addEventListener('pointermove', e => {
+  const hit = e.pointerType === 'mouse' ? hitTest(e) : null;
+  nameEl.style.opacity = hit ? 1 : 0;
+  stage.classList.toggle('is-hit', !!hit);
+  if (hit) { nameEl.textContent = hit.title; nameEl.style.transform = `translate(${e.clientX + 14}px,${e.clientY + 16}px)`; }
+});
+stage.addEventListener('pointerleave', () => { nameEl.style.opacity = 0; stage.classList.remove('is-hit'); });
+stage.addEventListener('click', e => {
+  if (e.target.closest('a')) return;
+  const hit = hitTest(e);
+  const to = hit && hit.goal && document.getElementById(hit.goal);
+  if (to) to.scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+/* ---------- loop ---------- */
+let videoArmed = false;
+function loop(time) {
+  if (running) {
+    p += (target - p) * .09;
+    if (Math.abs(target - p) < .00005) p = target;
+    if (!videoArmed && p > .2) {
+      cards.forEach(c => { if (c.v && !c.v.src) { c.v.src = c.src; c.v.load(); } });
+      videoArmed = true;
+    }
+    for (const c of cards) {
+      if (!c.v || !c.v.src) continue;
+      if (c.mesh.visible && c.v.paused) c.v.play().catch(() => {});
+      else if (!c.mesh.visible && !c.v.paused) c.v.pause();
+    }
+    render(time || 0);
+  } else {
+    cards.forEach(c => { if (c.v && !c.v.paused) c.v.pause(); });
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+} catch (err) {
+  // Kein WebGL-Kontext o. ä.: zurück zum statischen Raster
+  console.warn('Band deaktiviert:', err);
+  document.documentElement.classList.remove('gl-on');
+}
+}
+</script>
+</body>
+</html>
